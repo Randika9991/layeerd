@@ -12,12 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.dto.DeliverForm;
-import lk.ijse.global_flavour.dto.Delivery;
-import lk.ijse.global_flavour.dto.EmployeeSetAndGet;
-import lk.ijse.global_flavour.dto.tm.CashierVehicleTM;
-import lk.ijse.global_flavour.dto.tm.DeliverFormTM;
-import lk.ijse.global_flavour.dto.tm.EmployeeTM;
-import lk.ijse.global_flavour.dto.tm.ItemTM;
+import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
 import lk.ijse.global_flavour.model.*;
 import lk.ijse.global_flavour.util.AlertController;
 

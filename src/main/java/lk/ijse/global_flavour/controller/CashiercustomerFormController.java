@@ -1,7 +1,6 @@
 //all added
 package lk.ijse.global_flavour.controller;
 
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,14 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.EmployeeSetAndGet;
-import lk.ijse.global_flavour.dto.tm.CashierCustomerTM;
-import lk.ijse.global_flavour.dto.tm.ItemTM;
-import lk.ijse.global_flavour.model.AdminSalaryModel;
+import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
 import lk.ijse.global_flavour.dto.CashierCustomer;
-import lk.ijse.global_flavour.model.EmployeeSetAndGetModel;
-import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 

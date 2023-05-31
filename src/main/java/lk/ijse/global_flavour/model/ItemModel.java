@@ -6,7 +6,7 @@ import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.Item;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
-import lk.ijse.global_flavour.dto.tm.ItemTM;
+import lk.ijse.global_flavour.view.tdm.ItemTM;
 import lk.ijse.global_flavour.util.SQLUtil;
 
 import java.sql.Connection;

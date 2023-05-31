@@ -3,7 +3,7 @@ package lk.ijse.global_flavour.model;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.Delivery;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
-import lk.ijse.global_flavour.dto.tm.OrderTM;
+import lk.ijse.global_flavour.view.tdm.OrderTM;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -248,8 +248,8 @@ public class CreateNewAccountController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/loginpage.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/loginpage.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

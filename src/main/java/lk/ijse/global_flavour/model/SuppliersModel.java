@@ -4,8 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.Suppliers;
-import lk.ijse.global_flavour.dto.tm.EmployeeTM;
-import lk.ijse.global_flavour.dto.tm.SuppliersTM;
+import lk.ijse.global_flavour.view.tdm.SuppliersTM;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

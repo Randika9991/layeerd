@@ -26,14 +26,12 @@ import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomer;
 import lk.ijse.global_flavour.dto.Item;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
-import lk.ijse.global_flavour.dto.tm.CartTM;
-import lk.ijse.global_flavour.dto.tm.OrderTM;
+import lk.ijse.global_flavour.view.tdm.OrderTM;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
 import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.model.OrderModel;
 import lk.ijse.global_flavour.model.PlaceOrderModel;
 import lk.ijse.global_flavour.util.AlertController;
-import lk.ijse.global_flavour.util.ButtonColourController;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -325,7 +323,7 @@ public class OrderFormController implements Initializable {
 
     @FXML
     void btnNewCustomerOnAction(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/cashiercustomer_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/cashiercustomer_form.fxml"));
         adminAncPane.getChildren().add(load);
     }
 
@@ -369,7 +367,7 @@ public class OrderFormController implements Initializable {
                         parameters.put("param1", printcash);
                         parameters.put("param2", finalTotal);
 
-                        InputStream resource = this.getClass().getResourceAsStream("/lk.ijse.global_flavour.reports/orderPlace.jrxml");
+                        InputStream resource = this.getClass().getResourceAsStream("/assets/reports/orderPlace.jrxml");
                         try {
                             JasperReport jasperReport = JasperCompileManager.compileReport(resource);
                             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, DBConnection.getInstance().getConnection());
@@ -401,9 +399,9 @@ public class OrderFormController implements Initializable {
         if (radioButton.isSelected()) {
             Stage stage = new Stage();
             Parent root = null;
-            root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/delivery.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/view/delivery.fxml"));
             Scene scene = new Scene(root);
-            stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-deliver-food-101.png"));
+            stage.getIcons().add(new Image("assets/icons8-deliver-food-101.png"));
             stage.setScene(scene);
             stage.show();
 

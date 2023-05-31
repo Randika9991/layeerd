@@ -12,7 +12,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.Optional;
 import javafx.scene.paint.Color;
 
@@ -45,7 +44,7 @@ public class AlertController {
 
 
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-help-100.png"));
+        stage.getIcons().add(new Image("assets/icons8-help-100.png"));
         ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(okButton,cancelButton);
@@ -58,7 +57,7 @@ public class AlertController {
     }
     public static void animationMesseageCorect(String Title, String Message) {
 
-        Image image = new Image("lk.ijse.global_flavour.assets/icons8-ok.gif");
+        Image image = new Image("assets/icons8-ok.gif");
 
         // Create an alert with a title, message, and icon
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -68,7 +67,7 @@ public class AlertController {
         alert.getDialogPane().setStyle("-fx-background-color: linear-gradient(to top right  ,#bcbcbc,#bcbcbc,#404040);");
         alert.getDialogPane().lookup(".header-panel .label").setStyle("-fx-text-fill: red;");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-ok.gif"));
+        stage.getIcons().add(new Image("assets/icons8-ok.gif"));
         alert.setGraphic(new ImageView(image));
         alert.showAndWait();
 
@@ -76,7 +75,7 @@ public class AlertController {
 
     public static void animationMesseagewrong(String Title, String Message) {
 
-        Image image = new Image("lk.ijse.global_flavour.assets/icons8-brake-warning.gif");
+        Image image = new Image("assets/icons8-brake-warning.gif");
 
         // Create an alert with a title, message, and icon
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -87,7 +86,7 @@ public class AlertController {
         alert.getDialogPane().setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         alert.setGraphic(new ImageView(image));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-high-importance-96.png"));
+        stage.getIcons().add(new Image("assets/icons8-high-importance-96.png"));
 
         alert.showAndWait();
 

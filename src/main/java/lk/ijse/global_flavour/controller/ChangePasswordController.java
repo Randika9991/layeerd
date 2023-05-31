@@ -10,9 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.dto.ChangePassword;
-import lk.ijse.global_flavour.dto.Item;
 import lk.ijse.global_flavour.model.ChangePasswordModel;
-import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.io.IOException;
@@ -126,7 +124,7 @@ public class ChangePasswordController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/loginpage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/view/loginpage.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

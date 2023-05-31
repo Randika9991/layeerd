@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.dao.AdminSalaryDAO;
 import lk.ijse.global_flavour.dao.AdminSalaryDAOImpl;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
-import lk.ijse.global_flavour.dto.tm.AdminSalaryTM;
+import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import lk.ijse.global_flavour.model.AdminSalaryModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
@@ -100,13 +100,9 @@ public class AdminSalaryFormController {
 
                     boolean isSaved = adminSalary.save(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
 
-
-
                     if (isSaved) {
                         AlertController.animationMesseageCorect("CONFIRMATION", "Salary Save Success!");
-                        TBLsalary.getItems().add(new AdminSalaryTM(salaryId, employeId, salaryAmount, salaryPayment));
-                      //  onActionGetAllSallary();
-
+                       onActionGetAllSallary();
                     }
                 } catch (SQLException e) {
                     AlertController.animationMesseagewrong("Error", "something went wrong!");
@@ -132,8 +128,8 @@ public class AdminSalaryFormController {
                 boolean isUpdated = adminSalary.update(new AdminSalaryDTO(salId, employeId, salaryAmount, salaryPayment));
                 if (isUpdated) {
                     AlertController.animationMesseageCorect("CONFIRMATION", "Salary updated!");
-                    TBLsalary.getItems().add(new AdminSalaryTM(salId, employeId, salaryAmount, salaryPayment));
-                   // onActionGetAllSallary();
+
+                   onActionGetAllSallary();
                 }
             } catch (SQLException throwables) {
                 AlertController.animationMesseagewrong("Error", "something went wrong!");
@@ -156,10 +152,10 @@ public class AdminSalaryFormController {
             if (ok) {
                 String code = txtSalaryId.getText();
                 try {
-                    boolean isDeleted = AdminSalaryModel.delete(code);
+                    boolean isDeleted = adminSalary.delete(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION", "Delete Success!");
-                        //onActionGetAllCustom();
+                        onActionGetAllSallary();
                     }
                 } catch (SQLException e) {
                     AlertController.animationMesseagewrong("Error", "something went wrong!");

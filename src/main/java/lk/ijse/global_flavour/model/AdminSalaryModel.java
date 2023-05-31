@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
-import lk.ijse.global_flavour.dto.tm.AdminSalaryTM;
+import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import lk.ijse.global_flavour.util.SQLUtil;
 
 import java.sql.PreparedStatement;

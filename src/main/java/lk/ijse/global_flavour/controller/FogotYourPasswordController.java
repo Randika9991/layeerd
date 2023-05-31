@@ -14,9 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.dto.FogotYourPassword;
-import lk.ijse.global_flavour.dto.LoginSetAndGet;
 import lk.ijse.global_flavour.model.FogotYourPasswordModel;
-import lk.ijse.global_flavour.model.LoginSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
 
 import javax.mail.MessagingException;
@@ -159,8 +157,8 @@ public class FogotYourPasswordController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/loginpage.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/loginpage.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -173,8 +171,8 @@ public class FogotYourPasswordController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/changepassword.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/changepassword.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -108,9 +108,9 @@ public class LoginPageController {
                                 AlertController.notificationBar("SPICY FLAVOUR ","Login Success!");
                                 Stage stage = new Stage();
                                 Parent root = null;
-                                stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
+                                stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
                                 stage.setTitle("SPICY FLAVOUR");
-                                root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/admindashboard.fxml"));
+                                root = FXMLLoader.load(getClass().getResource("/view/admindashboard.fxml"));
                                 Scene scene = new Scene(root);
                                 stage.setScene(scene);
                                 stage.show();
@@ -119,8 +119,8 @@ public class LoginPageController {
                                 Stage stage = new Stage();
                                 Parent root = null;
                                 stage.setTitle("SPICY FLAVOUR");
-                                stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-                                root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/cashierdashboard.fxml"));
+                                stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+                                root = FXMLLoader.load(getClass().getResource("/view/cashierdashboard.fxml"));
                                 Scene scene = new Scene(root);
                                 stage.setTitle("GLOBAL FLAVOUR");
                                 stage.setScene(scene);
@@ -146,8 +146,8 @@ public class LoginPageController {
                                     Stage stage = new Stage();
                                     Parent root = null;
                                     stage.setTitle("SPICY FLAVOUR");
-                                    stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-                                    root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/fogotpassworld.fxml"));
+                                    stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+                                    root = FXMLLoader.load(getClass().getResource("/view/fogotpassworld.fxml"));
                                     Scene scene = new Scene(root);
                                     stage.setScene(scene);
                                     stage.show();
@@ -179,8 +179,8 @@ public class LoginPageController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/fogotpassworld.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/fogotpassworld.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -193,8 +193,8 @@ public class LoginPageController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/createnewaccount.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/createnewaccount.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

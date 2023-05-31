@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierVehicle;
-import lk.ijse.global_flavour.dto.Item;
-import lk.ijse.global_flavour.dto.tm.CashierVehicleTM;
-import lk.ijse.global_flavour.dto.tm.ItemTM;
+import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

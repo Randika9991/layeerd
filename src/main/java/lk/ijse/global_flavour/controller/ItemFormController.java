@@ -14,7 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.dto.Item;
-import lk.ijse.global_flavour.dto.tm.ItemTM;
+import lk.ijse.global_flavour.view.tdm.ItemTM;
 import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;

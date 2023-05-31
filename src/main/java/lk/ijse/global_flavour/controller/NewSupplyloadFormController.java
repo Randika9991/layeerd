@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.dto.Item;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
-import lk.ijse.global_flavour.dto.tm.AddSupplyLoadTM;
+import lk.ijse.global_flavour.view.tdm.AddSupplyLoadTM;
 import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.model.SupplyModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -24,7 +24,6 @@ import lk.ijse.global_flavour.util.ValidateField;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class NewSupplyloadFormController {
 

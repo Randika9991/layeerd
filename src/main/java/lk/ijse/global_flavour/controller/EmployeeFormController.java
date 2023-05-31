@@ -4,7 +4,6 @@ package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,16 +13,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import lk.ijse.global_flavour.dto.EmployeeSetAndGet;
-import lk.ijse.global_flavour.dto.tm.AdminSalaryTM;
-import lk.ijse.global_flavour.dto.tm.EmployeeTM;
-import lk.ijse.global_flavour.model.AdminSalaryModel;
+import lk.ijse.global_flavour.view.tdm.EmployeeTM;
 import lk.ijse.global_flavour.model.EmployeeSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class EmployeeFormController {

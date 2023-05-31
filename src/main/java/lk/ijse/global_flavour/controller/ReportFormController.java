@@ -19,7 +19,7 @@ public class ReportFormController {
 
     @FXML
     void SupplyLoadOnAction(ActionEvent event) {
-        InputStream resource = this.getClass().getResourceAsStream("/lk.ijse.global_flavour.reports/SupplyLoadDetail.jrxml");
+        InputStream resource = this.getClass().getResourceAsStream("/assets/reports/SupplyLoadDetail.jrxml");
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
@@ -31,7 +31,7 @@ public class ReportFormController {
 
     @FXML
     void SalOnAction(ActionEvent event) {
-        InputStream resource = this.getClass().getResourceAsStream("/lk.ijse.global_flavour.reports/SalaryRepor.jrxml");
+        InputStream resource = this.getClass().getResourceAsStream("/assets/reports/SalaryRepor.jrxml");
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
@@ -43,7 +43,7 @@ public class ReportFormController {
     }
     @FXML
     void EmpOnAction(ActionEvent event) {
-        InputStream resource = this.getClass().getResourceAsStream("/lk.ijse.global_flavour.reports/Employee.jrxml");
+        InputStream resource = this.getClass().getResourceAsStream("/assets/reports/Employee.jrxml");
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());
@@ -56,7 +56,7 @@ public class ReportFormController {
 
     @FXML
     void supOnAction(ActionEvent event) {
-        InputStream resource = this.getClass().getResourceAsStream("/lk.ijse.global_flavour.reports/SuplierReport.jrxml");
+        InputStream resource = this.getClass().getResourceAsStream("/assets/reports/SuplierReport.jrxml");
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport(resource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DBConnection.getInstance().getConnection());

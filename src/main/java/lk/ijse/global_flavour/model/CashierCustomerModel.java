@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomer;
-import lk.ijse.global_flavour.dto.tm.CashierCustomerTM;
+import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.util.SQLUtil;
 
 import java.sql.Connection;

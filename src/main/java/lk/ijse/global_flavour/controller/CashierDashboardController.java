@@ -1,7 +1,6 @@
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +14,6 @@ import lk.ijse.global_flavour.util.ButtonColourController;
 import lk.ijse.global_flavour.util.TimeAndDateController;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class CashierDashboardController {
 
@@ -59,7 +56,7 @@ public class CashierDashboardController {
 
     @FXML
     void btnOnHome(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/home_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/home_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(HomeBtn,adminAncPane);
@@ -72,7 +69,7 @@ public class CashierDashboardController {
 
     @FXML
     void btnOnCustom(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/cashiercustomer_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/cashiercustomer_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(CustBtn,adminAncPane);
@@ -80,7 +77,7 @@ public class CashierDashboardController {
 
     @FXML
     void btnOnItem(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/item_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/item_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(ItmBtn,adminAncPane);
@@ -88,7 +85,7 @@ public class CashierDashboardController {
 
     @FXML
     void btnOnOrder(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/order_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/order_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(OrderBtn,adminAncPane);
@@ -96,7 +93,7 @@ public class CashierDashboardController {
 
     @FXML
     void SupplierLoadOnAction(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/newsupplyload_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/newsupplyload_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(BtnSupplierLoad,adminAncPane);
@@ -104,7 +101,7 @@ public class CashierDashboardController {
 
     @FXML
     void btnOnDeliver(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/Deliver_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/Deliver_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(deliverBtn,adminAncPane);
@@ -113,7 +110,7 @@ public class CashierDashboardController {
 
     @FXML
     public void btnOnVehical(ActionEvent actionEvent) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/cashiervehicle_form.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/view/cashiervehicle_form.fxml"));
         adminAncPane.getChildren().clear();
         adminAncPane.getChildren().add(load);
         ButtonColourController.btncolor(vehicalBtn1,adminAncPane);
@@ -124,8 +121,8 @@ public class CashierDashboardController {
         Stage stage = new Stage();
         Parent root = null;
         stage.setTitle("SPICY FLAVOUR");
-        stage.getIcons().add(new Image("lk.ijse.global_flavour.assets/icons8-chilli-100.png"));
-        root = FXMLLoader.load(getClass().getResource("/lk.ijse.global_flavour.view/loginpage.fxml"));
+        stage.getIcons().add(new Image("assets/icons8-chilli-100.png"));
+        root = FXMLLoader.load(getClass().getResource("/view/loginpage.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

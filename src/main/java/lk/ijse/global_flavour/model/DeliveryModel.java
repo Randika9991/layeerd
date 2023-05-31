@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.DeliverForm;
 import lk.ijse.global_flavour.dto.Delivery;
-import lk.ijse.global_flavour.dto.tm.DeliverFormTM;
+import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
