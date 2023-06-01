@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-import lk.ijse.global_flavour.dto.EmployeeSetAndGet;
+import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.EmployeeTM;
 import lk.ijse.global_flavour.model.EmployeeSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -159,7 +159,7 @@ public class EmployeeFormController {
                                 System.out.println(employeeEmail);
 
 
-                                EmployeeSetAndGet cus = new EmployeeSetAndGet(employeeId, employeeName, employeeAddress, employeeDOB,employeeContact,employeeEmail,employeeNic,employeeJobTittle);
+                                EmployeeDTO cus = new EmployeeDTO(employeeId, employeeName, employeeAddress, employeeDOB,employeeContact,employeeEmail,employeeNic,employeeJobTittle);
 
                                 try {
                                     boolean isSaved = EmployeeSetAndGetModel.save(cus);
@@ -216,10 +216,10 @@ public class EmployeeFormController {
                             String nic = txtEmpNic.getText();
                             String jobTittle = txtEmpJobTitle.getText();
 
-                            EmployeeSetAndGet employeeSetAndGet = new EmployeeSetAndGet(employeeId12, name, address, dOB, contact, email, nic, jobTittle);
+                            EmployeeDTO employeeDTO = new EmployeeDTO(employeeId12, name, address, dOB, contact, email, nic, jobTittle);
                             try {
 
-                                boolean isUpdated = EmployeeSetAndGetModel.change(employeeSetAndGet);
+                                boolean isUpdated = EmployeeSetAndGetModel.change(employeeDTO);
                                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                                 onActionGetAllEmployee();
                             } catch (SQLException e) {
@@ -276,7 +276,7 @@ public class EmployeeFormController {
         String empid = txtsearchEmployee.getText();
 
         try {
-            EmployeeSetAndGet cust = EmployeeSetAndGetModel.search(empid);
+            EmployeeDTO cust = EmployeeSetAndGetModel.search(empid);
             if (cust != null) {
                 txtEmpId.setText(cust.getEmployeeId());
                 txtEmpName.setText(cust.getEmployeeName());
@@ -315,7 +315,7 @@ public class EmployeeFormController {
         String empid = txtEmpId.getText();
 
         try {
-            EmployeeSetAndGet cust = EmployeeSetAndGetModel.search(empid);
+            EmployeeDTO cust = EmployeeSetAndGetModel.search(empid);
             if (cust != null) {
                 txtEmpId.setText(cust.getEmployeeId());
                 txtEmpName.setText(cust.getEmployeeName());

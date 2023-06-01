@@ -8,7 +8,12 @@ import lombok.*;
 @Setter
 @ToString
 
-public class EmployeeSetAndGet {
+public class EmployeeDTO {
+
+    public EmployeeDTO(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
     private String employeeId;
     private String employeeName;
     private String Address;
@@ -17,6 +22,8 @@ public class EmployeeSetAndGet {
     private String email;
     private String nic;
     private String jobTittle;
+
+
 
 
 }

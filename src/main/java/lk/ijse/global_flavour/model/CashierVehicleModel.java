@@ -76,10 +76,7 @@ public class CashierVehicleModel {
             ObservableList<CashierVehicleTM> dataList = FXCollections.observableArrayList();
 
             while (resultSet.next()) {
-                dataList.add(new CashierVehicleTM(
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3)
+                dataList.add(new CashierVehicleTM(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)
                 ));
             }
             return dataList;

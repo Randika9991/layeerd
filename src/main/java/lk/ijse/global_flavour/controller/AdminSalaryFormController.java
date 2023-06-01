@@ -1,4 +1,5 @@
 //all added
+//used admin salaryDAO object create AdminSalaryDAOImpl
 
 package lk.ijse.global_flavour.controller;
 
@@ -17,12 +18,14 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.dao.AdminSalaryDAO;
 import lk.ijse.global_flavour.dao.AdminSalaryDAOImpl;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
+import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import lk.ijse.global_flavour.model.AdminSalaryModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 
@@ -120,12 +123,13 @@ public class AdminSalaryFormController {
             AlertController.animationMesseagewrong("Error", "Employee details not saved. \nPlease make sure to fill the request fields.");
         } else {
             String employeId = String.valueOf(COBEmployeEmpId.getValue());
-            String salId = txtSalaryId.getText();
+            String salaryId = txtSalaryId.getText();
             String salaryAmount = txtSalaryAmountId.getText();
             String salaryPayment = String.valueOf(CBMPayM.getValue());
 
             try {
-                boolean isUpdated = adminSalary.update(new AdminSalaryDTO(salId, employeId, salaryAmount, salaryPayment));
+                System.out.println("waiting");
+                boolean isUpdated = adminSalary.update(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
                 if (isUpdated) {
                     AlertController.animationMesseageCorect("CONFIRMATION", "Salary updated!");
 
@@ -185,12 +189,14 @@ public class AdminSalaryFormController {
         String id = txtsearchSalary.getText();
 
         try {
-            AdminSalaryDTO itSalary = AdminSalaryModel.search(id);
-            if (itSalary != null) {
-                COBEmployeEmpId.setValue(itSalary.getEmployId());
-                txtSalaryId.setText(itSalary.getSalaryId());
-                txtSalaryAmountId.setText(itSalary.getAmount());
-                CBMPayM.setValue(itSalary.getPayment());
+
+            ArrayList<AdminSalaryDTO> itSalary = adminSalary.search(id);
+
+            for (AdminSalaryDTO e : itSalary){
+                COBEmployeEmpId.setValue(e.getEmployId());
+                txtSalaryId.setText(e.getSalaryId());
+                txtSalaryAmountId.setText(e.getAmount());
+                CBMPayM.setValue(e.getPayment());
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error", "something went wrong!");
@@ -198,9 +204,11 @@ public class AdminSalaryFormController {
     }
 
     @FXML
+    ////////////////////////////////////////////////////typing keyboard search
     void searchSalaryID(KeyEvent event) throws SQLException {
         String searchValue = txtsearchSalary.getText().trim();
-        ObservableList<AdminSalaryTM> obList = AdminSalaryModel.getAllSalary();
+
+        ObservableList<AdminSalaryTM> obList = adminSalary.getAllSalaryKeyBord();
 
         if (!searchValue.isEmpty()) {
             ObservableList<AdminSalaryTM> filteredData = obList.filtered(new Predicate<AdminSalaryTM>() {
@@ -213,10 +221,19 @@ public class AdminSalaryFormController {
         } else {
             TBLsalary.setItems(obList);
         }
+
     }
+    ////////////////////////////////////////////////////typing keyboard search
+
+
+
+
+
+
+
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         onActionGetAllEmployeeaddToSalary();
         CBMPayM.getItems().addAll("Cash", "Card");
         onActionGetAllSallary();
@@ -231,22 +248,28 @@ public class AdminSalaryFormController {
         tabColumPaymentMethord.setCellValueFactory(new PropertyValueFactory<>("payment"));
     }
 
-    void onActionGetAllSallary() {
-        try {
-            ObservableList<AdminSalaryTM> EmpList = AdminSalaryModel.getAllSalary();
-            TBLsalary.setItems(EmpList);
+    void onActionGetAllSallary() throws SQLException {
 
+        TBLsalary.getItems().clear();
+        try {
+            /*Get all items*/
+            ArrayList<AdminSalaryDTO> allItems = adminSalary.getAll();
+            for (AdminSalaryDTO i : allItems) {
+                TBLsalary.getItems().add(new AdminSalaryTM(i.getSalaryId(), i.getEmployId(), i.getAmount(), i.getPayment()));
+            }
         } catch (SQLException e) {
-            AlertController.animationMesseagewrong("Error", "something went wrong!");
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     void onActionGetAllEmployeeaddToSalary() {
 
         try {
-            ObservableList<String> EmpList = AdminSalaryModel.getAll();
 
-            COBEmployeEmpId.getItems().addAll(EmpList);
+            ArrayList<EmployeeDTO> EmpList = adminSalary.getAllEmployee();
+            for (EmployeeDTO e : EmpList) {
+                COBEmployeEmpId.getItems().addAll(e.getEmployeeId());
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error", "something went wrong!");

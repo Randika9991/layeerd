@@ -3,13 +3,13 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.EmployeeSetAndGet;
+import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.EmployeeTM;
 
 import java.sql.*;
 
 public class EmployeeSetAndGetModel {
-    public static boolean save(EmployeeSetAndGet EmployeeAdd) throws SQLException {  //data baes ekata dana set eka
+    public static boolean save(EmployeeDTO EmployeeAdd) throws SQLException {  //data baes ekata dana set eka
 
         String sql = "INSERT INTO employee(empId, empName, addrsss, dob, contactNo, email, nic, jobTitle) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -29,7 +29,7 @@ public class EmployeeSetAndGetModel {
         }
     }
 
-    public static EmployeeSetAndGet search(String id) throws SQLException {
+    public static EmployeeDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM employee WHERE empId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -37,7 +37,7 @@ public class EmployeeSetAndGetModel {
             ResultSet resultSet = pstm.executeQuery();
 
             if(resultSet.next()) {
-                return new EmployeeSetAndGet(
+                return new EmployeeDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -75,20 +75,20 @@ public class EmployeeSetAndGetModel {
         }
     }
 
-    public static boolean change(EmployeeSetAndGet employeeSetAndGet) throws SQLException {
+    public static boolean change(EmployeeDTO employeeDTO) throws SQLException {
 
         String sql = "UPDATE employee SET empName = ?,addrsss = ?, dob = ?,contactNo = ?, email = ?,nic = ?,jobTitle = ? WHERE empId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
 
-            pstm.setString(1, employeeSetAndGet.getEmployeeName());
-            pstm.setString(2, employeeSetAndGet.getAddress());
-            pstm.setString(3, employeeSetAndGet.getDOB());
-            pstm.setString(4, employeeSetAndGet.getCotactNo());
-            pstm.setString(5, employeeSetAndGet.getEmail());
-            pstm.setString(6, employeeSetAndGet.getNic());
-            pstm.setString(7, employeeSetAndGet.getJobTittle());
-            pstm.setString(8, employeeSetAndGet.getEmployeeId());
+            pstm.setString(1, employeeDTO.getEmployeeName());
+            pstm.setString(2, employeeDTO.getAddress());
+            pstm.setString(3, employeeDTO.getDOB());
+            pstm.setString(4, employeeDTO.getCotactNo());
+            pstm.setString(5, employeeDTO.getEmail());
+            pstm.setString(6, employeeDTO.getNic());
+            pstm.setString(7, employeeDTO.getJobTittle());
+            pstm.setString(8, employeeDTO.getEmployeeId());
 
             return pstm.executeUpdate() > 0;
         }
