@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderModel {
@@ -73,16 +74,17 @@ public class OrderModel {
         }
         return count;
     }
+    public static List<String> loadIds() throws SQLException {
+        Connection con = DBConnection.getInstance().getConnection();
+        ResultSet resultSet = con.createStatement().executeQuery("SELECT custId FROM customer");
 
-    public static XYChart.Series lineChartData() throws SQLException, ClassNotFoundException {
-        String sql="SELECT MONTHNAME(date),sum(payment) from orders group by MONTHNAME(date)";
-        ResultSet resultSet= SQLUtil.execute(sql);
-        XYChart.Series series=new XYChart.Series();
-        while (resultSet.next()){
-            series.getData().add(new XYChart.Data(resultSet.getString(1),resultSet.getInt(2)));
+        List<String> data = new ArrayList<>();
+
+        while (resultSet.next()) {
+            data.add(resultSet.getString(1));
         }
-        return series;
-
+        return data;
     }
+
 }
 

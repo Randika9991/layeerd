@@ -23,7 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.CashierCustomer;
+import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.Item;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
@@ -178,7 +178,7 @@ public class OrderFormController implements Initializable {
     private void loadCustomerIds() {
         try {
             ObservableList<String> obList = FXCollections.observableArrayList();
-            List<String> ids = CashierCustomerModel.loadIds();
+            List<String> ids = OrderModel.loadIds();
 
             for (String id : ids) {
                 obList.add(id);
@@ -194,7 +194,7 @@ public class OrderFormController implements Initializable {
         String id = String.valueOf(cmbCustomerId.getValue());
 
         try {
-            CashierCustomer customer = CashierCustomerModel.search(id);
+            CashierCustomerDTO customer = CashierCustomerModel.search(id);
             lblCustomerName.setText(customer.getCustomerName());
         } catch (SQLException e) {
             e.printStackTrace();

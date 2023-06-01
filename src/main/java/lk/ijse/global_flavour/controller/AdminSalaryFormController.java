@@ -1,11 +1,10 @@
-//all added
-//used admin salaryDAO object create AdminSalaryDAOImpl
 
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,6 +81,10 @@ public class AdminSalaryFormController {
     void salIdOnAction(ActionEvent event) {
 
     }
+
+    //all added
+    //used admin salaryDAO object create AdminSalaryDAOImpl
+
 
     AdminSalaryDAO adminSalary = new AdminSalaryDAOImpl();
 
@@ -203,12 +206,16 @@ public class AdminSalaryFormController {
         }
     }
 
+
+
+
+
     @FXML
     ////////////////////////////////////////////////////typing keyboard search
     void searchSalaryID(KeyEvent event) throws SQLException {
         String searchValue = txtsearchSalary.getText().trim();
 
-        ObservableList<AdminSalaryTM> obList = adminSalary.getAllSalaryKeyBord();
+        ObservableList<AdminSalaryTM> obList = adminSalary.getAllKeyType();
 
         if (!searchValue.isEmpty()) {
             ObservableList<AdminSalaryTM> filteredData = obList.filtered(new Predicate<AdminSalaryTM>() {
@@ -228,10 +235,6 @@ public class AdminSalaryFormController {
 
 
 
-
-
-
-
     @FXML
     void initialize() throws SQLException {
         onActionGetAllEmployeeaddToSalary();
@@ -241,12 +244,7 @@ public class AdminSalaryFormController {
         lblInvalidsalary.setVisible(false);
     }
 
-    void setCellValuefactory() {
-        tabColumEmployeID.setCellValueFactory(new PropertyValueFactory<>("employId"));
-        tabColumSalaryID.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
-        tabColumSalaryAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        tabColumPaymentMethord.setCellValueFactory(new PropertyValueFactory<>("payment"));
-    }
+
 
     void onActionGetAllSallary() throws SQLException {
 
@@ -274,6 +272,13 @@ public class AdminSalaryFormController {
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error", "something went wrong!");
         }
+    }
+
+    void setCellValuefactory() {
+        tabColumEmployeID.setCellValueFactory(new PropertyValueFactory<>("employId"));
+        tabColumSalaryID.setCellValueFactory(new PropertyValueFactory<>("salaryId"));
+        tabColumSalaryAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        tabColumPaymentMethord.setCellValueFactory(new PropertyValueFactory<>("payment"));
     }
 
     public void lblClearAllOnAction(ActionEvent actionEvent) {

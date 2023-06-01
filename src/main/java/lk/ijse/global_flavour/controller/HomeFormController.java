@@ -6,6 +6,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
+import lk.ijse.global_flavour.model.HomeModel;
 import lk.ijse.global_flavour.model.OrderDetailModel;
 import lk.ijse.global_flavour.model.OrderModel;
 import lk.ijse.global_flavour.util.TimeAndDateController;
@@ -34,7 +35,7 @@ public class HomeFormController {
 
     private void countTotalCust(){
         try {
-            int count = CashierCustomerModel.getTotCustomers();
+            int count = HomeModel.getTotCustomers();
             lblTotalCustomer.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -45,7 +46,7 @@ public class HomeFormController {
 
     private void countTotalEmp(){
         try {
-            int count = CashierCustomerModel.getTotEmployee();
+            int count = HomeModel.getTotEmployee();
             lblTotalEmployee.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -94,7 +95,7 @@ public class HomeFormController {
 
 
         try {
-            XYChart.Series series = OrderModel.lineChartData();
+            XYChart.Series series = HomeModel.lineChartData();
             series.setName("Income Chart");
             lineChart.getData().add(series);
         } catch (SQLException throwables) {

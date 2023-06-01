@@ -61,17 +61,17 @@ public class AdminSalaryDAOImpl implements AdminSalaryDAO{
     }
 
     @Override
-    public ObservableList<AdminSalaryTM> getAllSalaryKeyBord() throws SQLException {
-
+    public ObservableList<AdminSalaryTM> getAllKeyType() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM salary");
-            ObservableList<AdminSalaryTM> dataList = FXCollections.observableArrayList();
+        ObservableList<AdminSalaryTM> dataList = FXCollections.observableArrayList();
 
-            while (rst.next()) {
-                dataList.add(new AdminSalaryTM(rst.getString(1), rst.getString(2), rst.getString(3),rst.getString(4)));
-            }
-            return dataList;
+        while (rst.next()) {
+            dataList.add(new AdminSalaryTM(rst.getString(1), rst.getString(2), rst.getString(3),rst.getString(4)));
         }
+        return dataList;
+    }
 
+    @Override
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException {
 
         ResultSet rst = SQLUtil.execute("SELECT empId from employee");

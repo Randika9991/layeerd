@@ -46,13 +46,14 @@ public class ChangePasswordController {
 
     @FXML
     void SaveOnAction(ActionEvent event) {
+        String userName = getNameShireChangePasswordController();
+        String empId = null;
+        String Password = txtPassword.getText();
+        String email = loginPageController.getEmail();
+        String jobTittle = getAdminShireChangePasswordController();
 
         if(fogotYourPasswordController.getEmailShireChangePasswordController2().isEmpty()){
-            String userName = getNameShireChangePasswordController();
-            String empId = null;
-            String Password = txtPassword.getText();
-            String email = loginPageController.getEmail();
-            String jobTittle = getAdminShireChangePasswordController();
+
 
             if(txtPassword.getText().isEmpty()&&txtConformPassword.getText().isEmpty()){
                 AlertController.animationMesseagewrong("Error","Please Enter Password!");
@@ -80,12 +81,6 @@ public class ChangePasswordController {
                 }
             }
         }else {
-            String userName = fogotYourPasswordController.getNameShireChangePasswordController2();
-            String empId = null;
-            String Password = txtPassword.getText();
-            String email = FogotYourPasswordController.getEmailShireChangePasswordController2();
-            String jobTittle = FogotYourPasswordController.getAdminShireChangePasswordController2();
-
             if(txtPassword.getText().isEmpty()&&txtConformPassword.getText().isEmpty()){
                 AlertController.animationMesseagewrong("Error","Please Enter Password!");
             }else {

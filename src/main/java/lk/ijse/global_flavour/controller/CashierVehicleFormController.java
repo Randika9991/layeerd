@@ -10,13 +10,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.CashierVehicle;
+import lk.ijse.global_flavour.dao.CashierVehicleDAO;
+import lk.ijse.global_flavour.dao.CashierVehicleDAOImpl;
+import lk.ijse.global_flavour.dto.CashierVehicleDTO;
+import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 import lk.ijse.global_flavour.model.CashierVehicleModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class CashierVehicleFormController {
@@ -52,6 +56,8 @@ public class CashierVehicleFormController {
     @FXML
     private Label lblInvalidVehical;
 
+    CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
+
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
         if(txtVehiId.getText().isEmpty()||txtVehiNo.getText().isEmpty()||txtVehitype.getText().isEmpty()){
@@ -60,15 +66,14 @@ public class CashierVehicleFormController {
         }else {
 
             if(ValidateField.VehicalIdCheck(txtVehiId.getText())){
+
                 lblInvalidVehical.setVisible(false);
                 String vehiId = txtVehiId.getText();
                 String vehiNo = txtVehiNo.getText();
                 String vehitype = txtVehitype.getText();
 
-                CashierVehicle allvehi = new CashierVehicle(vehiId, vehiNo,vehitype);
-
                 try {
-                    boolean isSaved = CashierVehicleModel.save(allvehi);
+                    boolean isSaved = vehicleDAO.save(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
                     if (isSaved) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Vehicle Save Success!");
                         onActionGetAllItem();
@@ -97,16 +102,15 @@ public class CashierVehicleFormController {
             String vehiNo = txtVehiNo.getText();
             String vehitype = txtVehitype.getText();
 
-            CashierVehicle allvehi = new CashierVehicle(vehiId, vehiNo,vehitype);
-
             try {
-                boolean isUpdated = CashierVehicleModel.update(allvehi);
+                boolean isUpdated = vehicleDAO.update(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
+
                 if(isUpdated){
                     AlertController.animationMesseageCorect("CONFIRMATION","Vehicle updated!");
                     onActionGetAllItem();
                 }
 
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 AlertController.animationMesseagewrong("Error","something went wrong!");
             }
@@ -124,9 +128,9 @@ public class CashierVehicleFormController {
             boolean ok = AlertController.okconfirmmessage("Are you Sure. Do you wont Delete item");
 
             if(ok){
-                String code = txtVehiId.getText();
+
                 try {
-                    boolean isDeleted = CashierVehicleModel.delete(code);
+                    boolean isDeleted = vehicleDAO.delete(txtVehiId.getText());
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllItem();
@@ -143,13 +147,14 @@ public class CashierVehicleFormController {
         String id = txtsearchVehical.getText();
 
         try {
-            CashierVehicle cust = CashierVehicleModel.search(id);
-            if (cust != null) {
-                txtVehiId.setText(cust.getVehicleId());
-                txtVehiNo.setText(cust.getVehicleNo());
-                txtVehitype.setText(cust.getVehicleType());
+            ArrayList<CashierVehicleDTO> cust = vehicleDAO.search(id);
+            for (CashierVehicleDTO c : cust) {
+                txtVehiId.setText(c.getVehicleId());
+                txtVehiNo.setText(c.getVehicleNo());
+                txtVehitype.setText(c.getVehicleType());
 
             }
+
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
@@ -159,7 +164,7 @@ public class CashierVehicleFormController {
     @FXML
     void searchCusOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ObservableList<CashierVehicleTM>obList= CashierVehicleModel.getAll();
+        ObservableList<CashierVehicleTM>obList= vehicleDAO.getAllKeyType();
 
         if (!searchValue.isEmpty()) {
             ObservableList<CashierVehicleTM> filteredData = obList.filtered(new Predicate<CashierVehicleTM>(){
@@ -199,11 +204,13 @@ public class CashierVehicleFormController {
     }
 
     void onActionGetAllItem() {
+        mainCOMVehical.getItems().clear();
         try {
-            ObservableList<CashierVehicleTM> supList = CashierVehicleModel.getAll();
-            mainCOMVehical.setItems(supList);
+            ArrayList<CashierVehicleDTO> supList = vehicleDAO.getAll();
+            for (CashierVehicleDTO c : supList) {
+                mainCOMVehical.getItems().add(new CashierVehicleTM(c.getVehicleId(), c.getVehicleNo(), c.getVehicleType()));
 
-
+            }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }

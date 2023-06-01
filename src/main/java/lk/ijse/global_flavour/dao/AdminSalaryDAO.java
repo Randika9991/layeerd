@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public interface AdminSalaryDAO extends CrudDAO<AdminSalaryDTO,String> {
 
-    ObservableList<AdminSalaryTM> getAllSalaryKeyBord() throws SQLException;
+    ObservableList<AdminSalaryTM> getAllKeyType() throws SQLException;
 
     ArrayList<EmployeeDTO> getAllEmployee() throws SQLException ;
 

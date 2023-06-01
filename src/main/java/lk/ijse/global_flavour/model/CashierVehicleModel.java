@@ -3,7 +3,7 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.CashierVehicle;
+import lk.ijse.global_flavour.dto.CashierVehicleDTO;
 import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CashierVehicleModel {
-    public static boolean save(CashierVehicle itmAdd) throws SQLException {  //data baes ekata dana set eka
+    public static boolean save(CashierVehicleDTO itmAdd) throws SQLException {  //data baes ekata dana set eka
         String sql = "INSERT INTO vehicle(vehiId, vehiNo, vehiType) " +
                 "VALUES(?, ?, ?)";
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -24,7 +24,7 @@ public class CashierVehicleModel {
         }
     }
 
-    public static CashierVehicle search(String id) throws SQLException {
+    public static CashierVehicleDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM vehicle WHERE vehiId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -33,7 +33,7 @@ public class CashierVehicleModel {
 
             ResultSet resultSet = pstm.executeQuery();
             if(resultSet.next()) {
-                return new CashierVehicle(
+                return new CashierVehicleDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3)
@@ -44,7 +44,7 @@ public class CashierVehicleModel {
         }
     }
 
-    public static boolean update(CashierVehicle vehiAdd) throws SQLException {
+    public static boolean update(CashierVehicleDTO vehiAdd) throws SQLException {
         String sql = "UPDATE vehicle SET vehiNo = ?, vehiType = ? WHERE vehiId = ?";
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
 

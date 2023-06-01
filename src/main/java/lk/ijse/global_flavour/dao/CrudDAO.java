@@ -1,5 +1,8 @@
 package lk.ijse.global_flavour.dao;
 
+import javafx.collections.ObservableList;
+import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,5 +16,7 @@ public interface CrudDAO <T,t>{
       ArrayList<T> search(t salId) throws SQLException ;
 
       boolean delete(t id) throws SQLException ;
+
+     // ObservableList<T> getAllKeyType() throws SQLException;
 
 }

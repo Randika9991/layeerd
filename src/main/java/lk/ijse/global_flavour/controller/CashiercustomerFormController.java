@@ -2,7 +2,6 @@
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,14 +10,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.dao.CashierCustomerDAO;
+import lk.ijse.global_flavour.dao.CashierCustomerDAOImpl;
+import lk.ijse.global_flavour.dto.AdminSalaryDTO;
+import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
-import lk.ijse.global_flavour.dto.CashierCustomer;
+import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class CashiercustomerFormController {
@@ -77,7 +80,15 @@ public class CashiercustomerFormController {
     @FXML
     private Label lblAlredyAddedContact;
 
+    //all added
+    //used admin CashierCustomerDAO object create CashierCustomerDAOImpl
 
+    CashierCustomerDAO cashierCustomerDAO = new CashierCustomerDAOImpl();
+
+    @FXML
+    void cusIdOnAction(ActionEvent event) {
+
+    }
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
         if(txtCusId.getText().isEmpty() || txtCusName.getText().isEmpty() || txtCusAddress.getText().isEmpty() ||txtCusContact.getText().isEmpty()||txtCusEmail1.getText().isEmpty()){
@@ -88,31 +99,23 @@ public class CashiercustomerFormController {
                 if(ValidateField.emailCheck(txtCusEmail1.getText())){
                     if(ValidateField.contactCheck(txtCusContact.getText())){
                         if(ValidateField.CustomerIdCheck(txtCusId.getText())){
-                            if(preContact.equals(txtCusContact.getText())){
-                                lblAlredyAddedContact.setVisible(true);
+                            lblInvalidCustomID.setVisible(false);
+                            String CusId = txtCusId.getText();
+                            String CusName = txtCusName.getText();
+                            String CusContact = txtCusContact.getText();
+                            String CusAddress = txtCusAddress.getText();
+                            String CusEmail1 = txtCusEmail1.getText();
 
-                            }else {
-                                lblInvalidCustomID.setVisible(false);
-                                String CusId = txtCusId.getText();
-                                String CusName = txtCusName.getText();
-                                String CusContact = txtCusContact.getText();
-                                String CusAddress = txtCusAddress.getText();
-                                String CusEmail1 = txtCusEmail1.getText();
-
-
-                                CashierCustomer allCustom = new CashierCustomer(CusId, CusName,CusContact,CusAddress,CusEmail1);
-
-                                try {
+                            try {
 //
-                                    boolean isSaved = CashierCustomerModel.save(allCustom);
-                                    if (isSaved) {
-                                        AlertController.animationMesseageCorect("CONFIRMATION","Customer Save Success!");
-                                        onActionGetAllCustom();
-                                    }
-                                } catch (SQLException e) {
-                                    System.out.println(e);
-                                    AlertController.animationMesseagewrong("Error","something went wrong!");
+                                boolean isSaved = cashierCustomerDAO.save(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
+                                if (isSaved) {
+                                    AlertController.animationMesseageCorect("CONFIRMATION","Customer Save Success!");
+                                    onActionGetAllCustom();
                                 }
+                            } catch (SQLException e) {
+                                System.out.println(e);
+                                AlertController.animationMesseagewrong("Error","something went wrong!");
                             }
 
                         }else {
@@ -149,14 +152,15 @@ public class CashiercustomerFormController {
                         String CusAddress = txtCusAddress.getText();
                         String CusEmail1 = txtCusEmail1.getText();
 
-
-                        CashierCustomer allCustom = new CashierCustomer(CusId, CusName,CusContact,CusAddress,CusEmail1);
-
                         try {
-                            boolean isUpdated = CashierCustomerModel.update(allCustom);
-                            AlertController.animationMesseageCorect("CONFIRMATION","Customer updated!");
-                            onActionGetAllCustom();
-                        } catch (SQLException e) {
+                            boolean isUpdated = cashierCustomerDAO.update(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
+
+                            if (isUpdated) {
+                                AlertController.animationMesseageCorect("CONFIRMATION","Customer updated!");
+                                onActionGetAllCustom();
+                            }
+
+                        } catch (SQLException | ClassNotFoundException e) {
                             e.printStackTrace();
                             AlertController.animationMesseagewrong("Error","something went wrong!");
                         }
@@ -186,7 +190,7 @@ public class CashiercustomerFormController {
             if(ok){
                 String code = txtCusId.getText();
                 try {
-                    boolean isDeleted = CashierCustomerModel.delete(code);
+                    boolean isDeleted = cashierCustomerDAO.delete(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllCustom();
@@ -204,13 +208,14 @@ public class CashiercustomerFormController {
         String id = txtsearchCustom.getText();
 
         try {
-            CashierCustomer cust = CashierCustomerModel.search(id);
-            if (cust != null) {
-                txtCusId.setText(cust.getCustomerId());
-                txtCusName.setText(cust.getCustomerName());
-                txtCusContact.setText(cust.getContactNo());
-                txtCusAddress.setText(cust.getAddress());
-                txtCusEmail1.setText(cust.getEmail());
+            ArrayList<CashierCustomerDTO> cust = cashierCustomerDAO.search(id);
+
+            for (CashierCustomerDTO c : cust) {
+                txtCusId.setText(c.getCustomerId());
+                txtCusName.setText(c.getCustomerName());
+                txtCusContact.setText(c.getContactNo());
+                txtCusAddress.setText(c.getAddress());
+                txtCusEmail1.setText(c.getEmail());
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -218,26 +223,9 @@ public class CashiercustomerFormController {
 
     }
 
-    @FXML
-    void cusIdOnAction(ActionEvent event) {
 
-    }
 
-    @FXML
-    void searchCusOnKey(KeyEvent event) throws SQLException {
-        String searchValue=txtsearchCustom.getText().trim();
-        ObservableList<CashierCustomerTM>obList= CashierCustomerModel.getAll();
 
-        if (!searchValue.isEmpty()) {
-            ObservableList<CashierCustomerTM> filteredData = obList.filtered(new Predicate<CashierCustomerTM>(){
-                @Override
-                public boolean test(CashierCustomerTM cashierCustomerTM) {
-                    return String.valueOf(cashierCustomerTM.getCustomerId()).toLowerCase().contains(searchValue.toLowerCase());        }
-            });
-            mainCOMCustomer.setItems(filteredData);} else {
-            mainCOMCustomer.setItems(obList);
-        }
-    }
 
     @FXML
     void supplierOnMouse(MouseEvent event) {
@@ -255,56 +243,24 @@ public class CashiercustomerFormController {
     }
 
     @FXML
-    void txtContactNumberOnMouseClick(MouseEvent event) {
-        lblInvalidContactNo.setVisible(false);
-    }
+    void searchCusOnKey(KeyEvent event) throws SQLException {
+        String searchValue=txtsearchCustom.getText().trim();
+        ObservableList<CashierCustomerTM>obList= cashierCustomerDAO.getAllKeyType();
 
-    @FXML
-    void txtemailOnMouseClick(MouseEvent event) {
-        lblInvalidEmail.setVisible(false);
-
-    }
-
-    String preContact;
-    private void loadCustomerContact() {
-        try {
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            List<String> ids = CashierCustomerModel.loadContact();
-
-            for (String id : ids) {
-                obList.add(id);
-            }
-            //cmbCustomerId.setItems(obList);
-            preContact= String.valueOf(obList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            AlertController.animationMesseagewrong("Error","something went wrong!");
+        if (!searchValue.isEmpty()) {
+            ObservableList<CashierCustomerTM> filteredData = obList.filtered(new Predicate<CashierCustomerTM>(){
+                @Override
+                public boolean test(CashierCustomerTM cashierCustomerTM) {
+                    return String.valueOf(cashierCustomerTM.getCustomerId()).toLowerCase().contains(searchValue.toLowerCase());        }
+            });
+            mainCOMCustomer.setItems(filteredData);}
+        else {
+            mainCOMCustomer.setItems(obList);
         }
     }
-
-    String preemail;
-    private void loadCustomeremail() {
-        try {
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            List<String> ids = CashierCustomerModel.loademail();
-
-            for (String id : ids) {
-                obList.add(id);
-            }
-            //cmbCustomerId.setItems(obList);
-            preemail= String.valueOf(obList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            AlertController.animationMesseagewrong("Error","something went wrong!");
-        }
-    }
-
-
 
     @FXML
     void initialize() {
-        loadCustomeremail();
-        loadCustomerContact();
         onActionGetAllCustom();
         setCellValuefactory();
         lblInvalidContactNo.setVisible(false);
@@ -315,10 +271,25 @@ public class CashiercustomerFormController {
         lblAlredyAddedContact.setVisible(false);
     }
 
+    @FXML
+    void txtContactNumberOnMouseClick(MouseEvent event) {
+        lblInvalidContactNo.setVisible(false);
+    }
+
+    @FXML
+    void txtemailOnMouseClick(MouseEvent event) {
+        lblInvalidEmail.setVisible(false);
+
+    }
+
     void onActionGetAllCustom() {
+        mainCOMCustomer.getItems().clear();
         try {
-            ObservableList<CashierCustomerTM> supList = CashierCustomerModel.getAll();
-            mainCOMCustomer.setItems(supList);
+            ArrayList<CashierCustomerDTO> supList = cashierCustomerDAO.getAll();
+            for (CashierCustomerDTO i : supList) {
+                mainCOMCustomer.getItems().add(new CashierCustomerTM(i.getCustomerId(), i.getCustomerName(), i.getContactNo(), i.getAddress(),i.getEmail()));
+            }
+            //mainCOMCustomer.setItems(supList);
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }

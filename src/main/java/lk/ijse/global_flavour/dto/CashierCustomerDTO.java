@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class CashierCustomer {
+public class CashierCustomerDTO {
     private String CustomerId;
     private String CustomerName;
     private String ContactNo;

@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class CashierVehicle {
+public class CashierVehicleDTO {
 
     private String vehicleId;
     private String vehicleNo;
