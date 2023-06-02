@@ -9,8 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.dto.ChangePassword;
-import lk.ijse.global_flavour.model.ChangePasswordModel;
+import lk.ijse.global_flavour.dao.custom.ChangePasswordDAO;
+import lk.ijse.global_flavour.dao.custom.impl.ChangePasswordDAOImpl;
+import lk.ijse.global_flavour.dto.ChangePasswordDTO;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.io.IOException;
@@ -44,6 +45,11 @@ public class ChangePasswordController {
     @FXML
     private Label lblName1;
 
+    ChangePasswordDAO passwordDAO = new ChangePasswordDAOImpl();
+
+    //all added
+    //used admin ChangePasswordDAO object create ChangePasswordDAOImpl
+
     @FXML
     void SaveOnAction(ActionEvent event) {
         String userName = getNameShireChangePasswordController();
@@ -64,13 +70,15 @@ public class ChangePasswordController {
                     AlertController.animationMesseagewrong("Error","Please Enter Your ConformPassword!");
                 }else {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
-                        ChangePassword itemAll = new ChangePassword(userName, empId, Password,email,jobTittle);
 
                         try {
-                            boolean isUpdated = ChangePasswordModel.update(itemAll);
-                            AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");
+                            boolean isUpdated = passwordDAO.update(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
+
                             //onActionGetAllItem();
-                        } catch (SQLException e) {
+                            if (isUpdated) {
+                                AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");
+                            }
+                        } catch (SQLException | ClassNotFoundException e) {
 
                             AlertController.animationMesseagewrong("Error","something went wrong!");
                         }
@@ -90,13 +98,14 @@ public class ChangePasswordController {
                     AlertController.animationMesseagewrong("Error","Please Enter Your ConformPassword!");
                 }else {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
-                        ChangePassword itemAll = new ChangePassword(userName, empId, Password,email,jobTittle);
 
                         try {
-                            boolean isUpdated = ChangePasswordModel.update(itemAll);
-                            AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");
+                            boolean isUpdated = passwordDAO.update(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
                             //onActionGetAllItem();
-                        } catch (SQLException e) {
+                            if (isUpdated) {
+                                AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");
+                            }
+                        } catch (SQLException | ClassNotFoundException e) {
 
                             AlertController.animationMesseagewrong("Error","something went wrong!");
                         }

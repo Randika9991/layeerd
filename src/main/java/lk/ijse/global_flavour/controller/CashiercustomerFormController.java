@@ -2,6 +2,7 @@
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.CashierCustomerDAO;
-import lk.ijse.global_flavour.dao.CashierCustomerDAOImpl;
-import lk.ijse.global_flavour.dto.AdminSalaryDTO;
-import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
+import lk.ijse.global_flavour.dao.custom.CashierCustomerDAO;
+import lk.ijse.global_flavour.dao.custom.impl.CashierCustomerDAOImpl;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
-import lk.ijse.global_flavour.model.CashierCustomerModel;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
@@ -223,10 +221,6 @@ public class CashiercustomerFormController {
 
     }
 
-
-
-
-
     @FXML
     void supplierOnMouse(MouseEvent event) {
         TablePosition pos=mainCOMCustomer.getSelectionModel().getSelectedCells().get(0);
@@ -245,17 +239,22 @@ public class CashiercustomerFormController {
     @FXML
     void searchCusOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchCustom.getText().trim();
-        ObservableList<CashierCustomerTM>obList= cashierCustomerDAO.getAllKeyType();
+        ArrayList<CashierCustomerDTO> obList= cashierCustomerDAO.getAll();
+        ObservableList<CashierCustomerTM> observableList = FXCollections.observableArrayList();
+
+        for (CashierCustomerDTO c : obList) {
+            observableList.add(new CashierCustomerTM(c.getCustomerId(),c.getCustomerName(),c.getContactNo(),c.getAddress(),c.getEmail()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<CashierCustomerTM> filteredData = obList.filtered(new Predicate<CashierCustomerTM>(){
+            ObservableList<CashierCustomerTM> filteredData = observableList.filtered(new Predicate<CashierCustomerTM>(){
                 @Override
                 public boolean test(CashierCustomerTM cashierCustomerTM) {
                     return String.valueOf(cashierCustomerTM.getCustomerId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             mainCOMCustomer.setItems(filteredData);}
         else {
-            mainCOMCustomer.setItems(obList);
+            mainCOMCustomer.setItems(observableList);
         }
     }
 

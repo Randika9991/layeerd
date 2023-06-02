@@ -1,4 +1,4 @@
-package lk.ijse.global_flavour.util;
+package lk.ijse.global_flavour.dao.custom.impl.util;
 
 import lk.ijse.global_flavour.db.DBConnection;
 

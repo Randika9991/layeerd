@@ -1,20 +1,18 @@
-package lk.ijse.global_flavour.dao;
+package lk.ijse.global_flavour.dao.custom.impl;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lk.ijse.global_flavour.db.DBConnection;
+import lk.ijse.global_flavour.dao.custom.AdminSalaryDAO;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
-import lk.ijse.global_flavour.util.SQLUtil;
+import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
-import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AdminSalaryDAOImpl implements AdminSalaryDAO{
+public class AdminSalaryDAOImpl implements AdminSalaryDAO {
 
     @Override
     public boolean save(AdminSalaryDTO adminSalaryDTO) throws SQLException {
@@ -58,17 +56,6 @@ public class AdminSalaryDAOImpl implements AdminSalaryDAO{
     @Override
     public boolean delete(String id) throws SQLException {
         return SQLUtil.execute("DELETE FROM salary WHERE salaryId = ?", id);
-    }
-
-    @Override
-    public ObservableList<AdminSalaryTM> getAllKeyType() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM salary");
-        ObservableList<AdminSalaryTM> dataList = FXCollections.observableArrayList();
-
-        while (rst.next()) {
-            dataList.add(new AdminSalaryTM(rst.getString(1), rst.getString(2), rst.getString(3),rst.getString(4)));
-        }
-        return dataList;
     }
 
     @Override

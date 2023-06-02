@@ -1,9 +1,8 @@
 package lk.ijse.global_flavour.model;
 
-import javafx.scene.chart.XYChart;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
-import lk.ijse.global_flavour.util.SQLUtil;
+import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -65,15 +64,6 @@ public class OrderModel {
             );
         }
 
-    public static int getTotalSales() throws SQLException, ClassNotFoundException {
-        String sql="SELECT count(orderId) FROM orders ";
-        ResultSet resultSet= SQLUtil.execute(sql);
-        int count=0;
-        while (resultSet.next()){
-            count=resultSet.getInt(1);
-        }
-        return count;
-    }
     public static List<String> loadIds() throws SQLException {
         Connection con = DBConnection.getInstance().getConnection();
         ResultSet resultSet = con.createStatement().executeQuery("SELECT custId FROM customer");

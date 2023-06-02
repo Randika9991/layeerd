@@ -57,7 +57,7 @@ public class HomeFormController {
 
     private void countTotalSales(){
         try {
-            int count = OrderModel.getTotalSales();
+            int count = HomeModel.getTotalSales();
             lblTotalSales.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -79,7 +79,7 @@ public class HomeFormController {
     public void setDataToPieChart() {
         ObservableList<PieChart.Data> pieChartData = null;
         try {
-            pieChartData = OrderDetailModel.getDataToPieChart();
+            pieChartData = HomeModel.getDataToPieChart();
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }

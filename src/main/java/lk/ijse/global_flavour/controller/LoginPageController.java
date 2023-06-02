@@ -37,7 +37,9 @@ public class LoginPageController {
     public static String getNameShireChangePasswordController() {
         return nameShireChangePasswordController;
     }
-    public String getEmail() { return emailShirePasswordConrollerAndChangePasswordController;}
+    public String getEmail() {
+        return emailShirePasswordConrollerAndChangePasswordController;
+    }
 
     int i = 0;
 

@@ -8,10 +8,10 @@ import lombok.*;
 @Setter
 @ToString
 
-public class ChangePassword {
-    private String usrname;
-    private String empid;
+public class UserCreateAcount {
+
+    private String name;
     private String password;
     private String email;
-    private String jobtitel;
+    private String jobTitle;
 }

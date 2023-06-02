@@ -8,12 +8,10 @@ import lombok.*;
 @Setter
 @ToString
 
-public class CreateNewAccount {
+public class ChangePasswordDTO {
     private String usrname;
     private String empid;
     private String password;
     private String email;
     private String jobtitel;
 }
-
-

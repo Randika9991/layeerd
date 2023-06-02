@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
-import lk.ijse.global_flavour.util.SQLUtil;
+import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

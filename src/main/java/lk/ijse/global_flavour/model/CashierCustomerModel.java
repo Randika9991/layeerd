@@ -5,14 +5,10 @@ import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
-import lk.ijse.global_flavour.util.SQLUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CashierCustomerModel {
     public static boolean save(CashierCustomerDTO cashiAdd) throws SQLException {  //data baes ekata dana set eka

@@ -4,6 +4,7 @@ package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import lk.ijse.global_flavour.dao.custom.EmployeeDAO;
+import lk.ijse.global_flavour.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
+import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 import lk.ijse.global_flavour.view.tdm.EmployeeTM;
 import lk.ijse.global_flavour.model.EmployeeSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -20,6 +24,7 @@ import lk.ijse.global_flavour.util.ValidateField;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class EmployeeFormController {
@@ -123,7 +128,10 @@ public class EmployeeFormController {
         lblInvalidEmail.setVisible(false);
     }
 
+    //all added
+    //used admin EmployeeDAO object create EmployeeDAOImpl
 
+    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
     @FXML
     void buttonSaveOnACT(ActionEvent actionEvent) {
@@ -149,20 +157,10 @@ public class EmployeeFormController {
                                 String employeeAddress = txtEmpAddress.getText();
                                 String employeeEmail = txtEmpEmail.getText();
 
-                                System.out.println(employeeId);
-                                System.out.println(employeeName);
-                                System.out.println(employeeNic);
-                                System.out.println(employeeDOB);
-                                System.out.println(employeeJobTittle);
-                                System.out.println(employeeContact);
-                                System.out.println(employeeAddress);
-                                System.out.println(employeeEmail);
-
-
                                 EmployeeDTO cus = new EmployeeDTO(employeeId, employeeName, employeeAddress, employeeDOB,employeeContact,employeeEmail,employeeNic,employeeJobTittle);
 
                                 try {
-                                    boolean isSaved = EmployeeSetAndGetModel.save(cus);
+                                    boolean isSaved = employeeDAO.save(cus);
                                     if (isSaved) {
                                         AlertController.animationMesseageCorect("CONFIRMATION","Employee Save Success!");
                                         onActionGetAllEmployee();
@@ -219,10 +217,10 @@ public class EmployeeFormController {
                             EmployeeDTO employeeDTO = new EmployeeDTO(employeeId12, name, address, dOB, contact, email, nic, jobTittle);
                             try {
 
-                                boolean isUpdated = EmployeeSetAndGetModel.change(employeeDTO);
+                                boolean isUpdated = employeeDAO.update(employeeDTO);
                                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                                 onActionGetAllEmployee();
-                            } catch (SQLException e) {
+                            } catch (SQLException | ClassNotFoundException e) {
                                 e.printStackTrace();
                                 AlertController.animationMesseagewrong("Error","something went wrong!");
                             }
@@ -259,7 +257,7 @@ public class EmployeeFormController {
                 String code = txtEmpId.getText();
 
                 try {
-                    boolean isDeleted = EmployeeSetAndGetModel.delete(code);
+                    boolean isDeleted = employeeDAO.delete(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllEmployee();
@@ -276,17 +274,12 @@ public class EmployeeFormController {
         String empid = txtsearchEmployee.getText();
 
         try {
-            EmployeeDTO cust = EmployeeSetAndGetModel.search(empid);
-            if (cust != null) {
-                txtEmpId.setText(cust.getEmployeeId());
-                txtEmpName.setText(cust.getEmployeeName());
-                txtEmpAddress.setText(cust.getAddress());
-                txtEmpDOBBox.setValue(LocalDate.parse(cust.getDOB()));
-                txtEmpContact.setText(cust.getCotactNo());
-                txtEmpEmail.setText(cust.getEmail());
-                txtEmpNic.setText(cust.getNic());
-                txtEmpJobTitle.setText(cust.getJobTittle());
+            ArrayList<EmployeeDTO> arrayList = employeeDAO.search(empid);
+
+            for (EmployeeDTO cust: arrayList){
+                tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
             }
+
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
@@ -315,38 +308,39 @@ public class EmployeeFormController {
         String empid = txtEmpId.getText();
 
         try {
-            EmployeeDTO cust = EmployeeSetAndGetModel.search(empid);
-            if (cust != null) {
-                txtEmpId.setText(cust.getEmployeeId());
-                txtEmpName.setText(cust.getEmployeeName());
-                txtEmpAddress.setText(cust.getAddress());
-                txtEmpDOBBox.setValue(LocalDate.parse(cust.getDOB()));
-                txtEmpContact.setText(cust.getCotactNo());
-                txtEmpEmail.setText(cust.getEmail());
-                txtEmpNic.setText(cust.getNic());
-                txtEmpJobTitle.setText(cust.getJobTittle());
+            ArrayList<EmployeeDTO> arrayList = employeeDAO.search(empid);
+            for (EmployeeDTO cust : arrayList){
+                tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
     }
 
+    //////////////////////////////////////////////////////
+
     @FXML
     void searchEmployeeID(KeyEvent event) throws SQLException {
 
         String searchValue=txtsearchEmployee.getText().trim();
-        ObservableList<EmployeeTM>obList=EmployeeSetAndGetModel.getAll();
+        ArrayList<EmployeeDTO> obList=employeeDAO.getAll();
+        ObservableList<EmployeeTM> observableList = FXCollections.observableArrayList();
+        for (EmployeeDTO e : obList) {
+            observableList.add(new EmployeeTM(e.getEmployeeId(), e.getEmployeeName(), e.getAddress(), e.getDOB(), e.getCotactNo(), e.getEmail(), e.getNic(), e.getJobTittle()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<EmployeeTM> filteredData = obList.filtered(new Predicate<EmployeeTM>(){
+            ObservableList<EmployeeTM> filteredData = observableList.filtered(new Predicate<EmployeeTM>(){
                 @Override
                 public boolean test(EmployeeTM employeetm) {
                     return String.valueOf(employeetm.getEmployeeId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             tablEmplyee.setItems(filteredData);} else {
-            tablEmplyee.setItems(obList);
+            tablEmplyee.setItems(observableList);
         }
     }
+
+    //////////////////////////////////////////////////
 
     @FXML
     void initialize() {
@@ -370,14 +364,17 @@ public class EmployeeFormController {
     }
 
     void onActionGetAllEmployee() {
+        tablEmplyee.getItems().clear();
         try {
-            ObservableList<EmployeeTM> EmpList = EmployeeSetAndGetModel.getAll();
-            tablEmplyee.setItems(EmpList);
+            ArrayList<EmployeeDTO> EmpList = employeeDAO.getAll();
+
+            for (EmployeeDTO cust :EmpList) {
+                tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
-
     }
 
     public void lblClearAllOnAction(ActionEvent actionEvent) {

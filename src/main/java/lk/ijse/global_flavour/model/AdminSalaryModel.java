@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
-import lk.ijse.global_flavour.util.SQLUtil;
+import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -2,6 +2,7 @@
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.CashierVehicleDAO;
-import lk.ijse.global_flavour.dao.CashierVehicleDAOImpl;
+import lk.ijse.global_flavour.dao.custom.CashierVehicleDAO;
+import lk.ijse.global_flavour.dao.custom.impl.CashierVehicleDAOImpl;
+import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
-import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
-import lk.ijse.global_flavour.model.CashierVehicleModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
@@ -55,6 +55,9 @@ public class CashierVehicleFormController {
 
     @FXML
     private Label lblInvalidVehical;
+
+    //all added
+    //used admin CashierVehicleDAO object create CashierCustomerDAOImpl
 
     CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
 
@@ -164,16 +167,21 @@ public class CashierVehicleFormController {
     @FXML
     void searchCusOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ObservableList<CashierVehicleTM>obList= vehicleDAO.getAllKeyType();
+        ArrayList<CashierVehicleDTO> obList = vehicleDAO.getAll();
+        ObservableList<CashierVehicleTM> observableList = FXCollections.observableArrayList();
+
+        for (CashierVehicleDTO c : obList) {
+            observableList.add(new CashierVehicleTM(c.getVehicleId(), c.getVehicleNo(), c.getVehicleType()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<CashierVehicleTM> filteredData = obList.filtered(new Predicate<CashierVehicleTM>(){
+            ObservableList<CashierVehicleTM> filteredData = observableList.filtered(new Predicate<CashierVehicleTM>(){
                 @Override
                 public boolean test(CashierVehicleTM itemTM) {
                     return String.valueOf(itemTM.getVehicleId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             mainCOMVehical.setItems(filteredData);} else {
-            mainCOMVehical.setItems(obList);
+            mainCOMVehical.setItems(observableList);
         }
 
 

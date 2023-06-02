@@ -14,12 +14,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.AdminSalaryDAO;
-import lk.ijse.global_flavour.dao.AdminSalaryDAOImpl;
+import lk.ijse.global_flavour.dao.custom.AdminSalaryDAO;
+import lk.ijse.global_flavour.dao.custom.impl.AdminSalaryDAOImpl;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
-import lk.ijse.global_flavour.model.AdminSalaryModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
@@ -215,8 +214,11 @@ public class AdminSalaryFormController {
     void searchSalaryID(KeyEvent event) throws SQLException {
         String searchValue = txtsearchSalary.getText().trim();
 
-        ObservableList<AdminSalaryTM> obList = adminSalary.getAllKeyType();
-
+        ArrayList<AdminSalaryDTO> arrayList = adminSalary.getAll();
+        ObservableList<AdminSalaryTM> obList = FXCollections.observableArrayList();
+        for (AdminSalaryDTO a: arrayList) {
+            obList.add(new AdminSalaryTM(a.getSalaryId(), a.getEmployId(), a.getAmount(), a.getPayment()));
+        }
         if (!searchValue.isEmpty()) {
             ObservableList<AdminSalaryTM> filteredData = obList.filtered(new Predicate<AdminSalaryTM>() {
                 @Override

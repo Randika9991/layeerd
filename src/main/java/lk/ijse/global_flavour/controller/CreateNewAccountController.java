@@ -11,17 +11,18 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.global_flavour.dao.custom.CreateNewAccountDAO;
+import lk.ijse.global_flavour.dao.custom.impl.CreateNewAccountDAOImpl;
 import lk.ijse.global_flavour.dto.*;
-import lk.ijse.global_flavour.model.*;
 import lk.ijse.global_flavour.model.CreateNewAccountModel;
 
 import lk.ijse.global_flavour.dto.LoginSetAndGet;
-import lk.ijse.global_flavour.model.LoginSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CreateNewAccountController {
 
@@ -62,6 +63,12 @@ public class CreateNewAccountController {
     String nameUserInputPart2 = new String();
     String emailUserInputPart2 = new String();
 
+    CreateNewAccountDAO newAccountDTO = new CreateNewAccountDAOImpl();
+
+    //all added
+    //used CreateNewAccountDAO object create CreateNewAccountDAOImpl
+    //only used CreateNewAccountDTO
+
     @FXML
     void buttonCheckNameOnACT(ActionEvent event) {
         if(txtEnterName.getText().isEmpty()){
@@ -72,7 +79,7 @@ public class CreateNewAccountController {
             String nameUserInput = new String();
 
             try {
-                LoginSetAndGet logSetGet = LoginSetAndGetModel.search(name);
+                CreateNewAccountDTO logSetGet = newAccountDTO.searchUserName(name);
                 if (logSetGet != null) {
                     nameUserInput = logSetGet.getUsrname();
                 }
@@ -104,12 +111,11 @@ public class CreateNewAccountController {
             if(ValidateField.emailCheck(txtEnteremail.getText())){
                 lblInvalidEmail.setVisible(false);
                 try {
-                    CreateNewAccount item = CreateNewAccountModel.search(email);
-                    if (item != null) {
-                        emailUserInput=item.getEmail();
+
+                    CreateNewAccountDTO logSetGet = newAccountDTO.searchUserEmail(email);
+                    if (logSetGet != null) {
+                        emailUserInput = logSetGet.getEmail();
                     }
-
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                     AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -173,7 +179,7 @@ public class CreateNewAccountController {
                                                             String emailUserInput = new String();
 
                                                             try {
-                                                                LoginSetAndGet logSetGet = LoginSetAndGetModel.search(name);
+                                                                CreateNewAccountDTO logSetGet = newAccountDTO.searchUserName(name);
                                                                 if (logSetGet != null) {
                                                                     admincashiarUserInput = logSetGet.getJobtitel();
                                                                     nameUserInput = logSetGet.getUsrname();
@@ -186,24 +192,17 @@ public class CreateNewAccountController {
                                                             if(admincashiarUserInput.equals(cmbAdminCashiar.getValue())&&nameUserInput.equals(txtEnterName.getText())&&emailUserInput.equals(txtEnteremail.getText())){
                                                                 AlertController.animationMesseagewrong("Error","Already Create this Account . try again");
 
-//                                        txtConfirmPassword.setText("");
-//
-//                                        txtEnterName.setText("");
-//                                        txtPassword.setText("");
-//                                        txtConfirmPassword.setText("");
-//                                        txtEnteremail.setText("");
-
                                                             }else {
 
                                                                 String password = txtPassword.getText();
                                                                 String email = txtEnteremail.getText();
                                                                 String tittle = String.valueOf(cmbAdminCashiar.getValue());
 
-                                                                UserCreateAcountSetAndGet cus = new UserCreateAcountSetAndGet(nameUserInputPart2, password, emailUserInputPart2, tittle);
+                                                                CreateNewAccountDTO cus = new CreateNewAccountDTO(nameUserInputPart2,null, password, emailUserInputPart2, tittle);
 
                                                                 try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
-                                                                    boolean isSaved = UserCreateAcountSetAndGetModel.save(cus);
+                                                                    boolean isSaved = newAccountDTO.save(cus);
                                                                     if (isSaved) {
                                                                         AlertController.animationMesseageCorect("CONFIRMATION","Account Created !");
                                                                         txtEnterName.setText("");

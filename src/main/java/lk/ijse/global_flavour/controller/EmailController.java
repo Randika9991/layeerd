@@ -9,7 +9,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+//all added
+//do not change
 public class EmailController {
         public static void sendEmail(String recipient, String subject, String body) throws MessagingException {
             Properties props = new Properties();

@@ -1,14 +1,13 @@
 package lk.ijse.global_flavour.model;
 
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.ChangePassword;
-import lk.ijse.global_flavour.dto.Item;
+import lk.ijse.global_flavour.dto.ChangePasswordDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ChangePasswordModel {
-    public static boolean update(ChangePassword supAdd) throws SQLException {
+    public static boolean update(ChangePasswordDTO supAdd) throws SQLException {
 
         String sql = "UPDATE user SET empId = ?, password = ?, email = ?, jobTitle = ? WHERE userName = ?";
 

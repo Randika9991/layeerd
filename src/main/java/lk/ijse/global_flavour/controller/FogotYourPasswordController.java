@@ -77,7 +77,6 @@ public class FogotYourPasswordController {
         String adminCashiInput = new String();
         String youserInput=new String();
 
-
         if(loginPageController.getEmail().isEmpty()){
             String emailUserInput = new String();
             try {
@@ -87,8 +86,6 @@ public class FogotYourPasswordController {
                     emailUserInput=logSetGet.getEmail();
                     adminCashiInput=logSetGet.getJobtitel();
                     youserInput=logSetGet.getUsrname();
-
-
 
                 }
             } catch (SQLException e) {
@@ -112,7 +109,6 @@ public class FogotYourPasswordController {
             }else {
                 AlertController.animationMesseagewrong("Error","Can't find Email!");
             }
-
         }else {
             if(txtEnteremail.getText().isEmpty()){
                 AlertController.animationMesseagewrong("Error","Please Enter Email!");
@@ -132,23 +128,18 @@ public class FogotYourPasswordController {
                     AlertController.animationMesseagewrong("Error","Please Enter Correct Email!");
                 }
             }
-
         }
-
     }
 
     @FXML
     public void addOnAction(ActionEvent actionEvent) {
-
         int addotp= Integer.parseInt(txtEnterOTP.getText());
 
         if (randomnum==addotp) {
             txtChangePassword.setVisible(true);
         }else {
             AlertController.animationMesseagewrong("Error","Wrong OTP Please Try again!");
-
         }
-
     }
 
     @FXML
