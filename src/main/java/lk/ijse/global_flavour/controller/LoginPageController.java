@@ -103,7 +103,6 @@ public class LoginPageController {
             }else if (COMAdminCashierlogin.getValue()!="Admin"&&COMAdminCashierlogin.getValue()!="Cashier"){
                 AlertController.animationMesseagewrong("Error","Please Change admin or Cashier!");
             }else {
-
                     if(admincashiar.equals(admincashiarUserInput)&&txtUserName.getText().equals(nameUserInput)){
                         if(admincashiar.equals(admincashiarUserInput)&&txtUserName.getText().equals(nameUserInput)&&txtLogPassword.getText().equals(passwordUserInput)){
                             if(admincashiar.equals("Admin")){
@@ -165,10 +164,6 @@ public class LoginPageController {
                         AlertController.animationMesseagewrong("Error","Wrong user Name and Password.Please try again!");
                     }
 
-
-
-
-
             }
         }
     }
@@ -176,7 +171,7 @@ public class LoginPageController {
     public void forgotYourPasswordOnAction(javafx.event.ActionEvent actionEvent) throws IOException {
         emailShirePasswordConrollerAndChangePasswordController="";
         adminShireChangePasswordController="";
-        nameShireChangePasswordController="";
+        nameShireChangePasswordController ="";
 
         Stage stage = new Stage();
         Parent root = null;
@@ -190,7 +185,6 @@ public class LoginPageController {
 
     }
 
-
     public void dontHaveAccountOnActon(javafx.event.ActionEvent actionEvent) throws IOException {
         Stage stage = new Stage();
         Parent root = null;
@@ -202,7 +196,6 @@ public class LoginPageController {
         stage.show();
         loginAncPane.getScene().getWindow().hide();
     }
-
 
     @FXML
     void initialize() {

@@ -4,9 +4,11 @@ package lk.ijse.global_flavour.controller;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +17,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.Suppliers;
+import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
+import lk.ijse.global_flavour.dao.custom.impl.SuppliersDAOImpl;
+import lk.ijse.global_flavour.dto.SuppliersDTO;
+import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.view.tdm.SuppliersTM;
 import lk.ijse.global_flavour.model.SuppliersModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -77,6 +82,11 @@ public class SuppliersFormController {
     @FXML
     private Label lblInvalidSupplier;
 
+    //all added
+    //used SuppliersDAO object create SuppliersDAOImpl
+
+    SuppliersDAO suppliersDAO = new SuppliersDAOImpl();
+
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
         if(txtsupName.getText().isEmpty()||txtsupAddress.getText().isEmpty()){
@@ -93,11 +103,9 @@ public class SuppliersFormController {
                             String supContact = txtsupContact.getText();
                             String supEmail = txtsupEmail.getText();
 
-                            Suppliers itemSup = new Suppliers(SupId, SupName, SupAddress,supEmail,supContact);
-
                             try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
-                                boolean isSaved = SuppliersModel.save(itemSup);
+                                boolean isSaved = suppliersDAO.save(new SuppliersDTO(SupId, SupName, SupAddress,supEmail,supContact));
                                 if (isSaved) {
                                     AlertController.animationMesseageCorect("CONFIRMATION","Supplier Save Success!");
                                     onActionGetAllSuppliers();
@@ -124,8 +132,6 @@ public class SuppliersFormController {
                 lblInvalidSupplier.setVisible(true);
             }
         }
-
-
     }
 
     @FXML
@@ -137,24 +143,24 @@ public class SuppliersFormController {
                 if(ValidateField.emailCheck(txtsupEmail.getText())){
                     if(ValidateField.contactCheck(txtsupContact.getText())){
 
-
                         String SupId = txtsupId.getText();
                         String SupName = txtsupName.getText();
                         String SupAddress = txtsupAddress.getText();
                         String supContact = txtsupContact.getText();
                         String supEmail = txtsupEmail.getText();
 
-                        Suppliers itemSup = new Suppliers(SupId, SupName, SupAddress, supEmail, supContact);
+                       // SuppliersDTO itemSup = new SuppliersDTO(SupId, SupName, SupAddress, supEmail, supContact);
 
                         try {
-                            boolean isUpdated = SuppliersModel.update(itemSup);
-                            AlertController.animationMesseageCorect("CONFIRMATION","Supplier updated!");
-                            onActionGetAllSuppliers();
-                        } catch (SQLException e) {
+                            boolean isUpdated = suppliersDAO.update( new SuppliersDTO(SupId, SupName, SupAddress, supEmail, supContact));
+                            if (isUpdated) {
+                                AlertController.animationMesseageCorect("CONFIRMATION","Supplier updated!");
+                                onActionGetAllSuppliers();
+                            }
+                        } catch (SQLException | ClassNotFoundException e) {
                             e.printStackTrace();
                             AlertController.animationMesseagewrong("Error","something went wrong!");
                         }
-
 
                     }else {
                         lblInvalidContactNo.setVisible(true);
@@ -182,7 +188,7 @@ public class SuppliersFormController {
             if(ok) {
                 String code = txtsupId.getText();
                 try {
-                    boolean isDeleted = SuppliersModel.delete(code);
+                    boolean isDeleted = suppliersDAO.delete(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllSuppliers();
@@ -199,14 +205,22 @@ public class SuppliersFormController {
         String id = txtsupId.getText();
 
         try {
-            Suppliers cust = SuppliersModel.search(id);
-            if (cust != null) {
+            ArrayList<SuppliersDTO> arrayList = suppliersDAO.search(id);
+            for (SuppliersDTO cust : arrayList) {
                 txtsupId.setText(cust.getSupplierId());
                 txtsupName.setText(cust.getSupplierName());
                 txtsupAddress.setText(cust.getSupplierAddress());
                 txtsupContact.setText(cust.getSupplierCotact());
                 txtsupEmail.setText(cust.getSupplierEmail());
             }
+
+//            if (cust != null) {
+//                txtsupId.setText(cust.getSupplierId());
+//                txtsupName.setText(cust.getSupplierName());
+//                txtsupAddress.setText(cust.getSupplierAddress());
+//                txtsupContact.setText(cust.getSupplierCotact());
+//                txtsupEmail.setText(cust.getSupplierEmail());
+//            }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
@@ -227,21 +241,24 @@ public class SuppliersFormController {
 
     }
 
-
     @FXML
     public void searchSupOnKey(KeyEvent keyEvent) throws SQLException {
 
         String searchValue=txtsearchSupplier.getText().trim();
-        ObservableList<SuppliersTM>obList= SuppliersModel.getAll();
+        ArrayList<SuppliersDTO> obList= suppliersDAO.getAll();
+        ObservableList<SuppliersTM> observableList = FXCollections.observableArrayList();
+        for (SuppliersDTO s : obList ) {
+            observableList.add(new SuppliersTM(s.getSupplierId(), s.getSupplierName(), s.getSupplierAddress(), s.getSupplierEmail(), s.getSupplierCotact()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<SuppliersTM> filteredData = obList.filtered(new Predicate<SuppliersTM>(){
+            ObservableList<SuppliersTM> filteredData = observableList.filtered(new Predicate<SuppliersTM>(){
                 @Override
                 public boolean test(SuppliersTM suppliersTM) {
                     return String.valueOf(suppliersTM.getSupplierId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             mainCOMSupliar.setItems(filteredData);} else {
-            mainCOMSupliar.setItems(obList);
+            mainCOMSupliar.setItems(observableList);
         }
     }
 
@@ -249,14 +266,15 @@ public class SuppliersFormController {
         String id = txtsearchSupplier.getText();
 
         try {
-            Suppliers cust = SuppliersModel.search(id);
-            if (cust != null) {
+            ArrayList<SuppliersDTO> arrayList = suppliersDAO.search(id);
+            for (SuppliersDTO cust : arrayList) {
                 txtsupId.setText(cust.getSupplierId());
                 txtsupName.setText(cust.getSupplierName());
                 txtsupAddress.setText(cust.getSupplierAddress());
                 txtsupContact.setText(cust.getSupplierCotact());
                 txtsupEmail.setText(cust.getSupplierEmail());
             }
+
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
@@ -282,15 +300,16 @@ public class SuppliersFormController {
     }
 
     void onActionGetAllSuppliers() {
+        mainCOMSupliar.getItems().clear();
         try {
-            ObservableList<SuppliersTM> supList = SuppliersModel.getAll();
-            mainCOMSupliar.setItems(supList);
-
+            ArrayList<SuppliersDTO> supList = suppliersDAO.getAll();
+            for (SuppliersDTO s : supList) {
+                mainCOMSupliar.getItems().add(new SuppliersTM(s.getSupplierId(), s.getSupplierName(), s.getSupplierAddress(), s.getSupplierEmail(), s.getSupplierCotact()));
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
-
     }
 
     void setCellValuefactory(){

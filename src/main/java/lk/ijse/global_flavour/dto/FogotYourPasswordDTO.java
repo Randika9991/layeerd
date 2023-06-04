@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class FogotYourPassword {
+public class FogotYourPasswordDTO {
     private String usrname;
     private String empid;
     private String password;

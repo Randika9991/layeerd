@@ -1,15 +1,14 @@
 package lk.ijse.global_flavour.model;
 
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.FogotYourPassword;
-import lk.ijse.global_flavour.dto.LoginSetAndGet;
+import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FogotYourPasswordModel {
-    public static FogotYourPassword search(String email) throws SQLException {
+    public static FogotYourPasswordDTO search(String email) throws SQLException {
         String sql = "SELECT * FROM user WHERE email = ?";
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
 
@@ -17,7 +16,7 @@ public class FogotYourPasswordModel {
 
             ResultSet resultSet = pstm.executeQuery();
             if (resultSet.next()) {
-                return new FogotYourPassword(
+                return new FogotYourPasswordDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),

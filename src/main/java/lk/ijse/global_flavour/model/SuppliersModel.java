@@ -3,7 +3,7 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.Suppliers;
+import lk.ijse.global_flavour.dto.SuppliersDTO;
 import lk.ijse.global_flavour.view.tdm.SuppliersTM;
 
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SuppliersModel {
-    public static boolean save(Suppliers supAdd) throws SQLException {  //data baes ekata dana set eka
+    public static boolean save(SuppliersDTO supAdd) throws SQLException {  //data baes ekata dana set eka
 
         String sql = "INSERT INTO supplier(supId, SupName, Address, email ,contactNo) " +
                 "VALUES(?, ?, ?, ? ,?)";
@@ -27,7 +27,7 @@ public class SuppliersModel {
             return pstm.executeUpdate() > 0;
         }
     }
-    public static Suppliers search(String id) throws SQLException {
+    public static SuppliersDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM supplier WHERE supId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class SuppliersModel {
 
             ResultSet resultSet = pstm.executeQuery();
             if(resultSet.next()) {
-                return new Suppliers(
+                return new SuppliersDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -49,7 +49,7 @@ public class SuppliersModel {
         }
     }
 
-    public static boolean update(Suppliers supAdd) throws SQLException {
+    public static boolean update(SuppliersDTO supAdd) throws SQLException {
 
         String sql = "UPDATE supplier SET supName = ?, address = ?, email = ?, contactNo = ? WHERE supId = ?";
 
@@ -95,4 +95,5 @@ public class SuppliersModel {
             return dataList;
         }
     }
+
 }

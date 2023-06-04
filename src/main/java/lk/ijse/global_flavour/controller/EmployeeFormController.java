@@ -112,8 +112,6 @@ public class EmployeeFormController {
     @FXML
     void txtContactNumberOnMouseClick(MouseEvent event) {
         lblInvalidContactNo.setVisible(false);
-
-
     }
 
     @FXML

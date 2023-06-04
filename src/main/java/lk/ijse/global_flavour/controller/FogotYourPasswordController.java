@@ -13,7 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.dto.FogotYourPassword;
+import lk.ijse.global_flavour.dao.custom.FogotYourPasswordDAO;
+import lk.ijse.global_flavour.dao.custom.impl.FogotYourPasswordDAOImpl;
+import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
 import lk.ijse.global_flavour.model.FogotYourPasswordModel;
 import lk.ijse.global_flavour.util.AlertController;
 
@@ -66,6 +68,11 @@ public class FogotYourPasswordController {
 
     String Emailhelp2;
 
+    //all added
+    //used  FogotYourPasswordDAO object create FogotYourPasswordDAOImpl
+
+    FogotYourPasswordDAO fogotYourPasswordDAO = new FogotYourPasswordDAOImpl();
+
     @FXML
     void submitOnAction(ActionEvent event) {
         randomnum = rand.nextInt(9000);
@@ -80,7 +87,7 @@ public class FogotYourPasswordController {
         if(loginPageController.getEmail().isEmpty()){
             String emailUserInput = new String();
             try {
-                FogotYourPassword logSetGet = FogotYourPasswordModel.search(emailinput);
+                FogotYourPasswordDTO logSetGet = fogotYourPasswordDAO.searchUser(emailinput);
                 if (logSetGet != null) {
 
                     emailUserInput=logSetGet.getEmail();

@@ -3,7 +3,7 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.Item;
+import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
 import lk.ijse.global_flavour.view.tdm.ItemTM;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemModel {
-    public static boolean save(Item itmAdd) throws SQLException {  //data baes ekata dana set eka
+    public static boolean save(ItemDTO itmAdd) throws SQLException {  //data baes ekata dana set eka
         String sql = "INSERT INTO item(itemCode, ItemName, unitPrice, category ,QtyONHand) " +
                 "VALUES(?, ?, ?, ? ,?)";
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class ItemModel {
             return pstm.executeUpdate() > 0;
         }
     }
-    public static boolean update(Item supAdd) throws SQLException {
+    public static boolean update(ItemDTO supAdd) throws SQLException {
 
         String sql = "UPDATE item SET ItemName = ?, unitPrice = ?, category = ?, QtyONHand = ? WHERE itemCode = ?";
 
@@ -58,7 +58,7 @@ public class ItemModel {
         }
     }
 
-    public static Item search(String id) throws SQLException {
+    public static ItemDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM item WHERE itemCode = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -67,7 +67,7 @@ public class ItemModel {
 
             ResultSet resultSet = pstm.executeQuery();
             if(resultSet.next()) {
-                return new Item(
+                return new ItemDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -133,12 +133,12 @@ public class ItemModel {
         );
     }
 
-    public static Item findById(String itemcode) throws SQLException {
+    public static ItemDTO findById(String itemcode) throws SQLException {
         String sql = "SELECT * FROM item WHERE itemCode=?";
 
         ResultSet resultSet = SQLUtil.execute(sql,itemcode);
         if(resultSet.next()){
-            return (new Item(
+            return (new ItemDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

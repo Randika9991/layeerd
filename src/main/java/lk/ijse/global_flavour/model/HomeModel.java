@@ -19,8 +19,8 @@ public class HomeModel {
             count=resultSet.getInt(1);
         }
         return count;
-
     }
+
 
     public static int getTotEmployee() throws SQLException, ClassNotFoundException {
         String sql="SELECT COUNT(empId) FROM employee";
@@ -30,7 +30,6 @@ public class HomeModel {
             count=resultSet.getInt(1);
         }
         return count;
-
     }
 
     public static XYChart.Series lineChartData() throws SQLException, ClassNotFoundException {
@@ -41,7 +40,6 @@ public class HomeModel {
             series.getData().add(new XYChart.Data(resultSet.getString(1),resultSet.getInt(2)));
         }
         return series;
-
     }
 
     public static int getTotalSales() throws SQLException, ClassNotFoundException {
@@ -69,7 +67,6 @@ public class HomeModel {
             );
         }
         return datalist;
-
     }
 
 }

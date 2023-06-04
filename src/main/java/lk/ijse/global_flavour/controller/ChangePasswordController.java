@@ -116,12 +116,6 @@ public class ChangePasswordController {
                 }
             }
         }
-
-
-
-
-
-
     }
     @FXML
     void CloseOnAction(ActionEvent event) throws IOException {

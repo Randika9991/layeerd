@@ -183,8 +183,6 @@ public class CashierVehicleFormController {
             mainCOMVehical.setItems(filteredData);} else {
             mainCOMVehical.setItems(observableList);
         }
-
-
     }
 
     @FXML

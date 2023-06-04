@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
-import lk.ijse.global_flavour.dto.Item;
+import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
@@ -220,7 +220,7 @@ public class OrderFormController implements Initializable {
     void cmbItemOnAction(ActionEvent event) {
         String code = String.valueOf(cmbItemCode.getValue());
         try {
-            Item item = ItemModel.search(code);
+            ItemDTO item = ItemModel.search(code);
             fillItemFields(item);
 
             txtQty.requestFocus();
@@ -231,7 +231,7 @@ public class OrderFormController implements Initializable {
     }
     int QTYMyUse;
     String ItemName;
-    private void fillItemFields(Item item) {
+    private void fillItemFields(ItemDTO item) {
         lblItemName.setText(item.getItemName());
         ItemName=item.getItemName();
         lblUnitPrice.setText(item.getUnitPrice());

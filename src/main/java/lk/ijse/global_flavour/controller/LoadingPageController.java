@@ -31,6 +31,7 @@ public class LoadingPageController {
     @FXML
     private AnchorPane loadingAncPane;
 
+    //all added
 
     public void initialize() {
         new ShowSplashScreen().start();

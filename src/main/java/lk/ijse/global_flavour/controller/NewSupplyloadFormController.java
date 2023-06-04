@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.Item;
+import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
 import lk.ijse.global_flavour.view.tdm.AddSupplyLoadTM;
 import lk.ijse.global_flavour.model.ItemModel;
@@ -112,6 +112,7 @@ public class NewSupplyloadFormController {
 
     private ObservableList<AddSupplyLoadTM> obList = FXCollections.observableArrayList();
     Button btnremove;
+
     @FXML
     void btnaddcartOnAction(ActionEvent event) {
 
@@ -166,7 +167,6 @@ public class NewSupplyloadFormController {
             }
 
         }
-
 
     }
 
@@ -236,14 +236,14 @@ public class NewSupplyloadFormController {
         cmbsuppid.setStyle("-fx-prompt-text-fill:white");
     }
 
-    Item item;
+    ItemDTO item;
     int QTYMyUse;
     @FXML
     void cmbitemcodeOnAction(ActionEvent event) {
         String itemcode= String.valueOf(cmbitemcode.getValue());
 
         try {
-            item = ItemModel.findById(itemcode);
+            item = SupplyModel.findById(itemcode);
             lblchangingitmname.setText(item.getItemName());
             lblchangingcategory.setText(item.getCategory());
             lblchangingqtyonhands.setText(String.valueOf(item.getQty()));

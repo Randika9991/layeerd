@@ -3,6 +3,7 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
+import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
@@ -131,5 +132,20 @@ public class SupplyModel {
                 now1,
                 totalprice
         );
+    }
+    public static ItemDTO findById(String itemcode) throws SQLException {
+        String sql = "SELECT * FROM item WHERE itemCode=?";
+
+        ResultSet resultSet = SQLUtil.execute(sql,itemcode);
+        if(resultSet.next()){
+            return (new ItemDTO(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
+            ));
+        }
+        return null;
     }
 }

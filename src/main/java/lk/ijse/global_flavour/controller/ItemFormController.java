@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.Item;
+import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.view.tdm.ItemTM;
 import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -81,7 +81,7 @@ public class ItemFormController {
                     String itemCate = txtItemCatogory.getText();
                     String itemQTY = txtItemQTY.getText();
 
-                    Item itemAll = new Item(itemId, itemName, itemPri,itemCate,itemQTY);
+                    ItemDTO itemAll = new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY);
 
                     try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
@@ -146,7 +146,7 @@ public class ItemFormController {
             String itemCate = txtItemCatogory.getText();
             String itemQTY = txtItemQTY.getText();
 
-            Item itemAll = new Item(itemId, itemName, itemPri,itemCate,itemQTY);
+            ItemDTO itemAll = new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY);
 
             try {
                 boolean isUpdated = ItemModel.update(itemAll);
@@ -164,7 +164,7 @@ public class ItemFormController {
         String id = txtsearchItem.getText();
 
         try {
-            Item cust = ItemModel.search(id);
+            ItemDTO cust = ItemModel.search(id);
             if (cust != null) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
@@ -182,7 +182,7 @@ public class ItemFormController {
         String id = txtsearchItem.getText();
 
         try {
-            Item cust = ItemModel.search(id);
+            ItemDTO cust = ItemModel.search(id);
             if (cust != null) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
