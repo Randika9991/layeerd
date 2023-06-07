@@ -58,15 +58,4 @@ public class AdminSalaryDAOImpl implements AdminSalaryDAO {
         return SQLUtil.execute("DELETE FROM salary WHERE salaryId = ?", id);
     }
 
-    @Override
-    public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException {
-
-        ResultSet rst = SQLUtil.execute("SELECT empId from employee");
-        ArrayList<EmployeeDTO> arrayList = new ArrayList<>();
-        while (rst.next()) {
-            arrayList.add(new EmployeeDTO(rst.getString(1)));
-        }
-        return arrayList;
-    }
-
 }

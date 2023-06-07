@@ -16,6 +16,4 @@ import java.util.ArrayList;
 
 public interface AdminSalaryDAO extends CrudDAO<AdminSalaryDTO,String> {
 
-    ArrayList<EmployeeDTO> getAllEmployee() throws SQLException ;
-
 }

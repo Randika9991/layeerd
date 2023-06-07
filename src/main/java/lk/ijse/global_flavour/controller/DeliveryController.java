@@ -47,11 +47,12 @@ public class DeliveryController {
         generateNextDeliveryId();
         onActionGetAllEmployeeaddToSalary();
         GetAllVehicalId();
-        lblOrderId.setText(OrderFormController.getGenerateNextOrderIdShireDeliveryController());
+        lblOrderId.setText(orderFormController.getGenerateNextOrderIdShireDeliveryController());
     }
 
     String idShireSave;
     private void generateNextDeliveryId() {
+
         try {
             String id = DeliveryModel.getNextDeliverId();
 
@@ -63,6 +64,7 @@ public class DeliveryController {
             new Alert(Alert.AlertType.ERROR, "SQL Error!").show();
         }
     }
+
     void onActionGetAllEmployeeaddToSalary() {
 
         try {
@@ -74,6 +76,7 @@ public class DeliveryController {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
     }
+
     void GetAllVehicalId() {
 
         try {
@@ -104,22 +107,16 @@ public class DeliveryController {
             Delivery cus = new Delivery(deliverId,employeId,orderId,vehiId,location,localTime,dueDate, true);
             System.out.println(deliverId+" "+employeId+" "+orderId+" "+vehiId+" "+location+" "+localTime+" "+dueDate+" "+true);
 
-
-
-
             try {
                 PlaceOrderModel.saveDelivery(cus);
                 AlertController.animationMesseageCorect("CONFIRMATION","Delivery Save Success!");
                 deliveryAncPane.getScene().getWindow().hide();
 
-
             } catch (Exception e) {
 //            System.out.println(e);
                 AlertController.animationMesseagewrong("Error","something went wrong!");
             }
-
         }
-
     }
 
     @FXML

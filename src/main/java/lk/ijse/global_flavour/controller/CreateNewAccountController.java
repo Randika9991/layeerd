@@ -11,18 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.dao.custom.CreateNewAccountDAO;
-import lk.ijse.global_flavour.dao.custom.impl.CreateNewAccountDAOImpl;
+import lk.ijse.global_flavour.bo.custom.CreateNewAccountBO;
+import lk.ijse.global_flavour.bo.custom.impl.CreateNewAccountBOImpl;
 import lk.ijse.global_flavour.dto.*;
-import lk.ijse.global_flavour.model.CreateNewAccountModel;
 
-import lk.ijse.global_flavour.dto.LoginSetAndGet;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class CreateNewAccountController {
 
@@ -63,11 +60,17 @@ public class CreateNewAccountController {
     String nameUserInputPart2 = new String();
     String emailUserInputPart2 = new String();
 
-    CreateNewAccountDAO newAccountDTO = new CreateNewAccountDAOImpl();
+    //CreateNewAccountDAO newAccountDTO = new CreateNewAccountDAOImpl();
 
     //all added
+
     //used CreateNewAccountDAO object create CreateNewAccountDAOImpl
     //only used CreateNewAccountDTO
+
+    //use bo
+    //only added CreateNewAccountBOImpl
+
+    CreateNewAccountBO newAccountBO = new CreateNewAccountBOImpl();
 
     @FXML
     void buttonCheckNameOnACT(ActionEvent event) {
@@ -79,7 +82,7 @@ public class CreateNewAccountController {
             String nameUserInput = new String();
 
             try {
-                CreateNewAccountDTO logSetGet = newAccountDTO.searchUserName(name);
+                CreateNewAccountDTO logSetGet = newAccountBO.searchUserName(name);
                 if (logSetGet != null) {
                     nameUserInput = logSetGet.getUsrname();
                 }
@@ -112,7 +115,7 @@ public class CreateNewAccountController {
                 lblInvalidEmail.setVisible(false);
                 try {
 
-                    CreateNewAccountDTO logSetGet = newAccountDTO.searchUserEmail(email);
+                    CreateNewAccountDTO logSetGet = newAccountBO.searchUserEmail(email);
                     if (logSetGet != null) {
                         emailUserInput = logSetGet.getEmail();
                     }
@@ -179,7 +182,7 @@ public class CreateNewAccountController {
                                                             String emailUserInput = new String();
 
                                                             try {
-                                                                CreateNewAccountDTO logSetGet = newAccountDTO.searchUserName(name);
+                                                                CreateNewAccountDTO logSetGet = newAccountBO.searchUserName(name);
                                                                 if (logSetGet != null) {
                                                                     admincashiarUserInput = logSetGet.getJobtitel();
                                                                     nameUserInput = logSetGet.getUsrname();
@@ -202,7 +205,7 @@ public class CreateNewAccountController {
 
                                                                 try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
-                                                                    boolean isSaved = newAccountDTO.save(cus);
+                                                                    boolean isSaved = newAccountBO.saveNewUser(cus);
                                                                     if (isSaved) {
                                                                         AlertController.animationMesseageCorect("CONFIRMATION","Account Created !");
                                                                         txtEnterName.setText("");

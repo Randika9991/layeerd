@@ -133,22 +133,6 @@ public class ItemModel {
         );
     }
 
-    public static ItemDTO findById(String itemcode) throws SQLException {
-        String sql = "SELECT * FROM item WHERE itemCode=?";
-
-        ResultSet resultSet = SQLUtil.execute(sql,itemcode);
-        if(resultSet.next()){
-            return (new ItemDTO(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5)
-            ));
-        }
-        return null;
-    }
-
     public static boolean addQty(List<PlaceSupplyLoad> placeSupplyLoadList) throws SQLException {
         for(PlaceSupplyLoad placeSupplyLoad : placeSupplyLoadList) {
             if(!addQty(placeSupplyLoad)) {

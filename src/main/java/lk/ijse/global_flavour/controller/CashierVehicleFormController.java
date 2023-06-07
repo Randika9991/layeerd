@@ -11,9 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.custom.CashierVehicleDAO;
-import lk.ijse.global_flavour.dao.custom.impl.CashierVehicleDAOImpl;
-import lk.ijse.global_flavour.dto.CashierCustomerDTO;
+import lk.ijse.global_flavour.bo.custom.CashierVehicleBO;
+import lk.ijse.global_flavour.bo.custom.impl.CashierVehicleBOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
 import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 import lk.ijse.global_flavour.util.AlertController;
@@ -56,10 +55,14 @@ public class CashierVehicleFormController {
     @FXML
     private Label lblInvalidVehical;
 
+    // CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
     //all added
     //used admin CashierVehicleDAO object create CashierCustomerDAOImpl
 
-    CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
+    //use bo
+    //only added CashierVehicleBOImpl
+
+    CashierVehicleBO vehicleBO = new CashierVehicleBOImpl();
 
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
@@ -76,7 +79,7 @@ public class CashierVehicleFormController {
                 String vehitype = txtVehitype.getText();
 
                 try {
-                    boolean isSaved = vehicleDAO.save(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
+                    boolean isSaved = vehicleBO.saveVehicle(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
                     if (isSaved) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Vehicle Save Success!");
                         onActionGetAllItem();
@@ -106,7 +109,7 @@ public class CashierVehicleFormController {
             String vehitype = txtVehitype.getText();
 
             try {
-                boolean isUpdated = vehicleDAO.update(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
+                boolean isUpdated = vehicleBO.updateVehicle(new CashierVehicleDTO(vehiId, vehiNo,vehitype));
 
                 if(isUpdated){
                     AlertController.animationMesseageCorect("CONFIRMATION","Vehicle updated!");
@@ -133,7 +136,7 @@ public class CashierVehicleFormController {
             if(ok){
 
                 try {
-                    boolean isDeleted = vehicleDAO.delete(txtVehiId.getText());
+                    boolean isDeleted = vehicleBO.deleteVehicle(txtVehiId.getText());
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllItem();
@@ -150,7 +153,7 @@ public class CashierVehicleFormController {
         String id = txtsearchVehical.getText();
 
         try {
-            ArrayList<CashierVehicleDTO> cust = vehicleDAO.search(id);
+            ArrayList<CashierVehicleDTO> cust = vehicleBO.searchVehicle(id);
             for (CashierVehicleDTO c : cust) {
                 txtVehiId.setText(c.getVehicleId());
                 txtVehiNo.setText(c.getVehicleNo());
@@ -167,7 +170,7 @@ public class CashierVehicleFormController {
     @FXML
     void searchCusOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ArrayList<CashierVehicleDTO> obList = vehicleDAO.getAll();
+        ArrayList<CashierVehicleDTO> obList = vehicleBO.getAllVehicle();
         ObservableList<CashierVehicleTM> observableList = FXCollections.observableArrayList();
 
         for (CashierVehicleDTO c : obList) {
@@ -212,7 +215,7 @@ public class CashierVehicleFormController {
     void onActionGetAllItem() {
         mainCOMVehical.getItems().clear();
         try {
-            ArrayList<CashierVehicleDTO> supList = vehicleDAO.getAll();
+            ArrayList<CashierVehicleDTO> supList = vehicleBO.getAllVehicle();
             for (CashierVehicleDTO c : supList) {
                 mainCOMVehical.getItems().add(new CashierVehicleTM(c.getVehicleId(), c.getVehicleNo(), c.getVehicleType()));
 

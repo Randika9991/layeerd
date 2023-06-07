@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.global_flavour.bo.custom.FogotYourPasswordBO;
+import lk.ijse.global_flavour.bo.custom.impl.FogotYourPasswordBOImpl;
 import lk.ijse.global_flavour.dao.custom.FogotYourPasswordDAO;
 import lk.ijse.global_flavour.dao.custom.impl.FogotYourPasswordDAOImpl;
 import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
@@ -71,7 +73,12 @@ public class FogotYourPasswordController {
     //all added
     //used  FogotYourPasswordDAO object create FogotYourPasswordDAOImpl
 
-    FogotYourPasswordDAO fogotYourPasswordDAO = new FogotYourPasswordDAOImpl();
+    //use bo
+
+    //only added EmployeeBOImpl
+   // FogotYourPasswordDAO fogotYourPasswordDAO = new FogotYourPasswordDAOImpl();
+
+    FogotYourPasswordBO fogotYourPasswordBO = new FogotYourPasswordBOImpl();
 
     @FXML
     void submitOnAction(ActionEvent event) {
@@ -87,7 +94,7 @@ public class FogotYourPasswordController {
         if(loginPageController.getEmail().isEmpty()){
             String emailUserInput = new String();
             try {
-                FogotYourPasswordDTO logSetGet = fogotYourPasswordDAO.searchUser(emailinput);
+                FogotYourPasswordDTO logSetGet = fogotYourPasswordBO.FogotYourPasswordsearchUser(emailinput);
                 if (logSetGet != null) {
 
                     emailUserInput=logSetGet.getEmail();

@@ -9,8 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.dao.custom.ChangePasswordDAO;
-import lk.ijse.global_flavour.dao.custom.impl.ChangePasswordDAOImpl;
+import lk.ijse.global_flavour.bo.custom.ChangePasswordBO;
+import lk.ijse.global_flavour.bo.custom.impl.ChangePasswordBOImpl;
 import lk.ijse.global_flavour.dto.ChangePasswordDTO;
 import lk.ijse.global_flavour.util.AlertController;
 
@@ -45,11 +45,15 @@ public class ChangePasswordController {
     @FXML
     private Label lblName1;
 
-    ChangePasswordDAO passwordDAO = new ChangePasswordDAOImpl();
+   // ChangePasswordDAO passwordDAO = new ChangePasswordDAOImpl();
 
     //all added
     //used admin ChangePasswordDAO object create ChangePasswordDAOImpl
 
+    //use bo
+    //only added ChangePasswordBOImpl
+
+    ChangePasswordBO changePasswordBO = new ChangePasswordBOImpl();
     @FXML
     void SaveOnAction(ActionEvent event) {
         String userName = getNameShireChangePasswordController();
@@ -72,7 +76,7 @@ public class ChangePasswordController {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
 
                         try {
-                            boolean isUpdated = passwordDAO.update(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
+                            boolean isUpdated = changePasswordBO.updatePassword(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
 
                             //onActionGetAllItem();
                             if (isUpdated) {
@@ -100,7 +104,7 @@ public class ChangePasswordController {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
 
                         try {
-                            boolean isUpdated = passwordDAO.update(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
+                            boolean isUpdated = changePasswordBO.updatePassword(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
                             //onActionGetAllItem();
                             if (isUpdated) {
                                 AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");

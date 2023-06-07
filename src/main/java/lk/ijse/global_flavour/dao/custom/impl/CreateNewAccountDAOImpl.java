@@ -2,12 +2,7 @@ package lk.ijse.global_flavour.dao.custom.impl;
 
 import lk.ijse.global_flavour.dao.custom.CreateNewAccountDAO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
-import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CreateNewAccountDTO;
-import lk.ijse.global_flavour.dto.LoginSetAndGet;
-import lk.ijse.global_flavour.dto.UserCreateAcount;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

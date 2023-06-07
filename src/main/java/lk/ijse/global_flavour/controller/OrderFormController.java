@@ -26,6 +26,7 @@ import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
+import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 import lk.ijse.global_flavour.model.CashierCustomerModel;
 import lk.ijse.global_flavour.model.ItemModel;
@@ -146,10 +147,11 @@ public class OrderFormController implements Initializable {
         loadCustomerIds();
         loadItemCodes();
         setCellValueFactory();
-
         lblLowAmount.setVisible(false);
     }
+
     void setCellValueFactory() {
+
         colItemCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         COlItemName.setCellValueFactory(new PropertyValueFactory<>("description"));
         colItemCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -157,7 +159,9 @@ public class OrderFormController implements Initializable {
         colItemUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colItemTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("btn"));
+
     }
+
     private void generateNextOrderId() {
         try {
             String id = OrderModel.getNextOrderId();
@@ -176,18 +180,34 @@ public class OrderFormController implements Initializable {
     }
 
     private void loadCustomerIds() {
+
         try {
             ObservableList<String> obList = FXCollections.observableArrayList();
-            List<String> ids = OrderModel.loadIds();
 
-            for (String id : ids) {
-                obList.add(id);
+            ObservableList<CashierCustomerTM> ids = CashierCustomerModel.getAll();
+
+            for (CashierCustomerTM id : ids) {
+                obList.add(id.getCustomerId());
             }
+
             cmbCustomerId.setItems(obList);
         } catch (SQLException e) {
             e.printStackTrace();
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
+
+//        try {
+//            ObservableList<String> obList = FXCollections.observableArrayList();
+//            List<String> ids = OrderModel.loadIds();
+//
+//            for (String id : ids) {
+//                obList.add(id);
+//            }
+//            cmbCustomerId.setItems(obList);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            AlertController.animationMesseagewrong("Error","something went wrong!");
+//        }
     }
     @FXML
     void cmbCustomerOnAction(ActionEvent event) {
@@ -229,6 +249,7 @@ public class OrderFormController implements Initializable {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
     }
+
     int QTYMyUse;
     String ItemName;
     private void fillItemFields(ItemDTO item) {

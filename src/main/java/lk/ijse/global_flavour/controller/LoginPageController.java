@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import lk.ijse.global_flavour.bo.custom.LoginPageBO;
+import lk.ijse.global_flavour.bo.custom.impl.LoginPageBOImpl;
 import lk.ijse.global_flavour.dto.LoginSetAndGet;
 import lk.ijse.global_flavour.model.LoginSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -64,10 +66,7 @@ public class LoginPageController {
     @FXML
     private TextField txtPassword2;
 
-    @FXML
-    void ShowPasswordOnAction(ActionEvent event) {
-        /////////////////////////////////////////////////////////////////////////
-    }
+    LoginPageBO loginPageBO = new LoginPageBOImpl();
 
     @FXML
     void loginPageOnAction(ActionEvent event) throws IOException, AWTException {
@@ -84,7 +83,7 @@ public class LoginPageController {
         String emailUserInput = new String();
 
         try {
-            LoginSetAndGet logSetGet = LoginSetAndGetModel.search(name);
+            LoginSetAndGet logSetGet = loginPageBO.searchUser(name);
             if (logSetGet != null) {
                 admincashiarUserInput=logSetGet.getJobtitel();
                 passwordUserInput=logSetGet.getPassword();
@@ -220,6 +219,10 @@ public class LoginPageController {
         txtLogPassword.setText(txtPassword2.getText());
         txtPassword2.setVisible(false);
 
-
     }
+    @FXML
+    void ShowPasswordOnAction(ActionEvent event) {
+        /////////////////////////////////////////////////////////////////////////
+    }
+
 }

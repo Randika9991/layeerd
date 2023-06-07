@@ -13,12 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-import lk.ijse.global_flavour.dao.custom.EmployeeDAO;
-import lk.ijse.global_flavour.dao.custom.impl.EmployeeDAOImpl;
+import lk.ijse.global_flavour.bo.custom.EmployeeBO;
+import lk.ijse.global_flavour.bo.custom.impl.EmployeeBOImpl;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
-import lk.ijse.global_flavour.view.tdm.CashierVehicleTM;
 import lk.ijse.global_flavour.view.tdm.EmployeeTM;
-import lk.ijse.global_flavour.model.EmployeeSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
@@ -129,7 +127,12 @@ public class EmployeeFormController {
     //all added
     //used admin EmployeeDAO object create EmployeeDAOImpl
 
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    //EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+
+    //use bo
+    //only added EmployeeBOImpl
+
+    EmployeeBO employeeBO = new EmployeeBOImpl();
 
     @FXML
     void buttonSaveOnACT(ActionEvent actionEvent) {
@@ -158,7 +161,7 @@ public class EmployeeFormController {
                                 EmployeeDTO cus = new EmployeeDTO(employeeId, employeeName, employeeAddress, employeeDOB,employeeContact,employeeEmail,employeeNic,employeeJobTittle);
 
                                 try {
-                                    boolean isSaved = employeeDAO.save(cus);
+                                    boolean isSaved = employeeBO.saveEmployee(cus);
                                     if (isSaved) {
                                         AlertController.animationMesseageCorect("CONFIRMATION","Employee Save Success!");
                                         onActionGetAllEmployee();
@@ -215,7 +218,7 @@ public class EmployeeFormController {
                             EmployeeDTO employeeDTO = new EmployeeDTO(employeeId12, name, address, dOB, contact, email, nic, jobTittle);
                             try {
 
-                                boolean isUpdated = employeeDAO.update(employeeDTO);
+                                boolean isUpdated = employeeBO.updateEmployee(employeeDTO);
                                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                                 onActionGetAllEmployee();
                             } catch (SQLException | ClassNotFoundException e) {
@@ -255,7 +258,7 @@ public class EmployeeFormController {
                 String code = txtEmpId.getText();
 
                 try {
-                    boolean isDeleted = employeeDAO.delete(code);
+                    boolean isDeleted = employeeBO.deleteEmployee(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllEmployee();
@@ -272,7 +275,7 @@ public class EmployeeFormController {
         String empid = txtsearchEmployee.getText();
 
         try {
-            ArrayList<EmployeeDTO> arrayList = employeeDAO.search(empid);
+            ArrayList<EmployeeDTO> arrayList = employeeBO.searchEmployee(empid);
 
             for (EmployeeDTO cust: arrayList){
                 tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
@@ -306,7 +309,7 @@ public class EmployeeFormController {
         String empid = txtEmpId.getText();
 
         try {
-            ArrayList<EmployeeDTO> arrayList = employeeDAO.search(empid);
+            ArrayList<EmployeeDTO> arrayList = employeeBO.searchEmployee(empid);
             for (EmployeeDTO cust : arrayList){
                 tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
             }
@@ -321,7 +324,7 @@ public class EmployeeFormController {
     void searchEmployeeID(KeyEvent event) throws SQLException {
 
         String searchValue=txtsearchEmployee.getText().trim();
-        ArrayList<EmployeeDTO> obList=employeeDAO.getAll();
+        ArrayList<EmployeeDTO> obList=employeeBO.getAllEmployee();
         ObservableList<EmployeeTM> observableList = FXCollections.observableArrayList();
         for (EmployeeDTO e : obList) {
             observableList.add(new EmployeeTM(e.getEmployeeId(), e.getEmployeeName(), e.getAddress(), e.getDOB(), e.getCotactNo(), e.getEmail(), e.getNic(), e.getJobTittle()));
@@ -364,7 +367,7 @@ public class EmployeeFormController {
     void onActionGetAllEmployee() {
         tablEmplyee.getItems().clear();
         try {
-            ArrayList<EmployeeDTO> EmpList = employeeDAO.getAll();
+            ArrayList<EmployeeDTO> EmpList = employeeBO.getAllEmployee();
 
             for (EmployeeDTO cust :EmpList) {
                 tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));

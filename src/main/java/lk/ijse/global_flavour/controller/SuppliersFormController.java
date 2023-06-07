@@ -17,6 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.custom.SuppliersBO;
+import lk.ijse.global_flavour.bo.custom.impl.SuppliersBOImpl;
 import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
 import lk.ijse.global_flavour.dao.custom.impl.SuppliersDAOImpl;
 import lk.ijse.global_flavour.dto.SuppliersDTO;
@@ -82,10 +84,14 @@ public class SuppliersFormController {
     @FXML
     private Label lblInvalidSupplier;
 
+    //SuppliersDAO suppliersDAO = new SuppliersDAOImpl();
     //all added
     //used SuppliersDAO object create SuppliersDAOImpl
 
-    SuppliersDAO suppliersDAO = new SuppliersDAOImpl();
+    //use bo
+    //only added SuppliersBOImpl
+
+    SuppliersBO suppliersBO = new SuppliersBOImpl();
 
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
@@ -105,7 +111,7 @@ public class SuppliersFormController {
 
                             try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
-                                boolean isSaved = suppliersDAO.save(new SuppliersDTO(SupId, SupName, SupAddress,supEmail,supContact));
+                                boolean isSaved = suppliersBO.saveSuppliers(new SuppliersDTO(SupId, SupName, SupAddress,supEmail,supContact));
                                 if (isSaved) {
                                     AlertController.animationMesseageCorect("CONFIRMATION","Supplier Save Success!");
                                     onActionGetAllSuppliers();
@@ -152,7 +158,7 @@ public class SuppliersFormController {
                        // SuppliersDTO itemSup = new SuppliersDTO(SupId, SupName, SupAddress, supEmail, supContact);
 
                         try {
-                            boolean isUpdated = suppliersDAO.update( new SuppliersDTO(SupId, SupName, SupAddress, supEmail, supContact));
+                            boolean isUpdated = suppliersBO.updateSuppliers(new SuppliersDTO(SupId, SupName, SupAddress, supEmail, supContact));
                             if (isUpdated) {
                                 AlertController.animationMesseageCorect("CONFIRMATION","Supplier updated!");
                                 onActionGetAllSuppliers();
@@ -188,7 +194,7 @@ public class SuppliersFormController {
             if(ok) {
                 String code = txtsupId.getText();
                 try {
-                    boolean isDeleted = suppliersDAO.delete(code);
+                    boolean isDeleted = suppliersBO.deleteSuppliers(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllSuppliers();
@@ -205,7 +211,7 @@ public class SuppliersFormController {
         String id = txtsupId.getText();
 
         try {
-            ArrayList<SuppliersDTO> arrayList = suppliersDAO.search(id);
+            ArrayList<SuppliersDTO> arrayList = suppliersBO.searchSuppliers(id);
             for (SuppliersDTO cust : arrayList) {
                 txtsupId.setText(cust.getSupplierId());
                 txtsupName.setText(cust.getSupplierName());
@@ -245,7 +251,7 @@ public class SuppliersFormController {
     public void searchSupOnKey(KeyEvent keyEvent) throws SQLException {
 
         String searchValue=txtsearchSupplier.getText().trim();
-        ArrayList<SuppliersDTO> obList= suppliersDAO.getAll();
+        ArrayList<SuppliersDTO> obList= suppliersBO.getAllSuppliers();
         ObservableList<SuppliersTM> observableList = FXCollections.observableArrayList();
         for (SuppliersDTO s : obList ) {
             observableList.add(new SuppliersTM(s.getSupplierId(), s.getSupplierName(), s.getSupplierAddress(), s.getSupplierEmail(), s.getSupplierCotact()));
@@ -266,7 +272,7 @@ public class SuppliersFormController {
         String id = txtsearchSupplier.getText();
 
         try {
-            ArrayList<SuppliersDTO> arrayList = suppliersDAO.search(id);
+            ArrayList<SuppliersDTO> arrayList = suppliersBO.searchSuppliers(id);
             for (SuppliersDTO cust : arrayList) {
                 txtsupId.setText(cust.getSupplierId());
                 txtsupName.setText(cust.getSupplierName());
@@ -302,7 +308,7 @@ public class SuppliersFormController {
     void onActionGetAllSuppliers() {
         mainCOMSupliar.getItems().clear();
         try {
-            ArrayList<SuppliersDTO> supList = suppliersDAO.getAll();
+            ArrayList<SuppliersDTO> supList = suppliersBO.getAllSuppliers();
             for (SuppliersDTO s : supList) {
                 mainCOMSupliar.getItems().add(new SuppliersTM(s.getSupplierId(), s.getSupplierName(), s.getSupplierAddress(), s.getSupplierEmail(), s.getSupplierCotact()));
             }

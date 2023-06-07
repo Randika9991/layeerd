@@ -11,8 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.custom.CashierCustomerDAO;
-import lk.ijse.global_flavour.dao.custom.impl.CashierCustomerDAOImpl;
+import lk.ijse.global_flavour.bo.custom.CashierCustomerBO;
+import lk.ijse.global_flavour.bo.custom.impl.CashierCustomerBOImpl;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.util.AlertController;
@@ -78,10 +78,14 @@ public class CashiercustomerFormController {
     @FXML
     private Label lblAlredyAddedContact;
 
+    //CashierCustomerDAO cashierCustomerDAO = new CashierCustomerDAOImpl();
     //all added
     //used admin CashierCustomerDAO object create CashierCustomerDAOImpl
 
-    CashierCustomerDAO cashierCustomerDAO = new CashierCustomerDAOImpl();
+    //use bo
+    //only added CashierCustomerBOImpl
+
+    CashierCustomerBO customerBO = new CashierCustomerBOImpl();
 
     @FXML
     void cusIdOnAction(ActionEvent event) {
@@ -106,7 +110,7 @@ public class CashiercustomerFormController {
 
                             try {
 //
-                                boolean isSaved = cashierCustomerDAO.save(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
+                                boolean isSaved = customerBO.saveCustomer(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
                                 if (isSaved) {
                                     AlertController.animationMesseageCorect("CONFIRMATION","Customer Save Success!");
                                     onActionGetAllCustom();
@@ -151,7 +155,7 @@ public class CashiercustomerFormController {
                         String CusEmail1 = txtCusEmail1.getText();
 
                         try {
-                            boolean isUpdated = cashierCustomerDAO.update(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
+                            boolean isUpdated = customerBO.updateCustomer(new CashierCustomerDTO(CusId, CusName,CusContact,CusAddress,CusEmail1));
 
                             if (isUpdated) {
                                 AlertController.animationMesseageCorect("CONFIRMATION","Customer updated!");
@@ -188,7 +192,7 @@ public class CashiercustomerFormController {
             if(ok){
                 String code = txtCusId.getText();
                 try {
-                    boolean isDeleted = cashierCustomerDAO.delete(code);
+                    boolean isDeleted = customerBO.deleteCustomer(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                         onActionGetAllCustom();
@@ -206,7 +210,7 @@ public class CashiercustomerFormController {
         String id = txtsearchCustom.getText();
 
         try {
-            ArrayList<CashierCustomerDTO> cust = cashierCustomerDAO.search(id);
+            ArrayList<CashierCustomerDTO> cust = customerBO.searchCustomer(id);
 
             for (CashierCustomerDTO c : cust) {
                 txtCusId.setText(c.getCustomerId());
@@ -239,7 +243,7 @@ public class CashiercustomerFormController {
     @FXML
     void searchCusOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchCustom.getText().trim();
-        ArrayList<CashierCustomerDTO> obList= cashierCustomerDAO.getAll();
+        ArrayList<CashierCustomerDTO> obList= customerBO.getAllCustomer();
         ObservableList<CashierCustomerTM> observableList = FXCollections.observableArrayList();
 
         for (CashierCustomerDTO c : obList) {
@@ -284,7 +288,7 @@ public class CashiercustomerFormController {
     void onActionGetAllCustom() {
         mainCOMCustomer.getItems().clear();
         try {
-            ArrayList<CashierCustomerDTO> supList = cashierCustomerDAO.getAll();
+            ArrayList<CashierCustomerDTO> supList = customerBO.getAllCustomer();
             for (CashierCustomerDTO i : supList) {
                 mainCOMCustomer.getItems().add(new CashierCustomerTM(i.getCustomerId(), i.getCustomerName(), i.getContactNo(), i.getAddress(),i.getEmail()));
             }

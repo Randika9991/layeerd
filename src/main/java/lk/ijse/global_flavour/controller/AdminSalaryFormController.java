@@ -14,8 +14,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dao.custom.AdminSalaryDAO;
-import lk.ijse.global_flavour.dao.custom.impl.AdminSalaryDAOImpl;
+import lk.ijse.global_flavour.bo.custom.AdminSalaryBO;
+import lk.ijse.global_flavour.bo.custom.impl.AdminSalaryBOImpl;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
@@ -81,11 +81,17 @@ public class AdminSalaryFormController {
 
     }
 
+    //AdminSalaryDAO adminSalary = new AdminSalaryDAOImpl();
+
     //all added
     //used admin salaryDAO object create AdminSalaryDAOImpl
 
+    //use bo
+    //only added AdminSalaryBOImpl
 
-    AdminSalaryDAO adminSalary = new AdminSalaryDAOImpl();
+
+
+    AdminSalaryBO adminSalaryBO = new AdminSalaryBOImpl();
 
     @FXML
     void salarySaveONAct(ActionEvent event) {
@@ -93,7 +99,6 @@ public class AdminSalaryFormController {
         if (txtSalaryId.getText().isEmpty() || txtSalaryAmountId.getText().isEmpty()) {
             AlertController.animationMesseagewrong("Error", "Employee details not saved. \nPlease make sure to fill the request fields.");
         } else {
-
             if (ValidateField.SalaryCheck(txtSalaryId.getText())) {
                 lblInvalidsalary.setVisible(false);
                 String employeId = String.valueOf(COBEmployeEmpId.getValue());
@@ -102,8 +107,7 @@ public class AdminSalaryFormController {
                 String salaryPayment = String.valueOf(CBMPayM.getValue());
 
                 try {
-
-                    boolean isSaved = adminSalary.save(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
+                    boolean isSaved = adminSalaryBO.AdminSalarySave(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
 
                     if (isSaved) {
                         AlertController.animationMesseageCorect("CONFIRMATION", "Salary Save Success!");
@@ -131,7 +135,7 @@ public class AdminSalaryFormController {
 
             try {
                 System.out.println("waiting");
-                boolean isUpdated = adminSalary.update(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
+                boolean isUpdated = adminSalaryBO.AdminSalaryUpdate(new AdminSalaryDTO(salaryId, employeId, salaryAmount, salaryPayment));
                 if (isUpdated) {
                     AlertController.animationMesseageCorect("CONFIRMATION", "Salary updated!");
 
@@ -158,7 +162,7 @@ public class AdminSalaryFormController {
             if (ok) {
                 String code = txtSalaryId.getText();
                 try {
-                    boolean isDeleted = adminSalary.delete(code);
+                    boolean isDeleted = adminSalaryBO.AdminSalaryDelete(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION", "Delete Success!");
                         onActionGetAllSallary();
@@ -192,7 +196,7 @@ public class AdminSalaryFormController {
 
         try {
 
-            ArrayList<AdminSalaryDTO> itSalary = adminSalary.search(id);
+            ArrayList<AdminSalaryDTO> itSalary = adminSalaryBO.AdminSalarySearch(id);
 
             for (AdminSalaryDTO e : itSalary){
                 COBEmployeEmpId.setValue(e.getEmployId());
@@ -214,7 +218,7 @@ public class AdminSalaryFormController {
     void searchSalaryID(KeyEvent event) throws SQLException {
         String searchValue = txtsearchSalary.getText().trim();
 
-        ArrayList<AdminSalaryDTO> arrayList = adminSalary.getAll();
+        ArrayList<AdminSalaryDTO> arrayList = adminSalaryBO.AdminSalaryGetAll();
         ObservableList<AdminSalaryTM> obList = FXCollections.observableArrayList();
         for (AdminSalaryDTO a: arrayList) {
             obList.add(new AdminSalaryTM(a.getSalaryId(), a.getEmployId(), a.getAmount(), a.getPayment()));
@@ -253,7 +257,7 @@ public class AdminSalaryFormController {
         TBLsalary.getItems().clear();
         try {
             /*Get all items*/
-            ArrayList<AdminSalaryDTO> allItems = adminSalary.getAll();
+            ArrayList<AdminSalaryDTO> allItems = adminSalaryBO.AdminSalaryGetAll();
             for (AdminSalaryDTO i : allItems) {
                 TBLsalary.getItems().add(new AdminSalaryTM(i.getSalaryId(), i.getEmployId(), i.getAmount(), i.getPayment()));
             }
@@ -266,7 +270,7 @@ public class AdminSalaryFormController {
 
         try {
 
-            ArrayList<EmployeeDTO> EmpList = adminSalary.getAllEmployee();
+            ArrayList<EmployeeDTO> EmpList = adminSalaryBO.GetAllEmployee();
             for (EmployeeDTO e : EmpList) {
                 COBEmployeEmpId.getItems().addAll(e.getEmployeeId());
             }

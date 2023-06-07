@@ -21,7 +21,6 @@ public class HomeModel {
         return count;
     }
 
-
     public static int getTotEmployee() throws SQLException, ClassNotFoundException {
         String sql="SELECT COUNT(empId) FROM employee";
         ResultSet resultSet= SQLUtil.execute(sql);
