@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.global_flavour.bo.custom.impl.OrderFormBOImpl;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
@@ -140,6 +141,8 @@ public class OrderFormController implements Initializable {
 
     private ObservableList<OrderTM> obList = FXCollections.observableArrayList();
 
+    OrderFormBOImpl orderFormBO = new OrderFormBOImpl();
+
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         generateNextOrderId();
@@ -164,7 +167,7 @@ public class OrderFormController implements Initializable {
 
     private void generateNextOrderId() {
         try {
-            String id = OrderModel.getNextOrderId();
+            String id = orderFormBO.getNextOrderId();
 
             lblOrderId.setText(id);
             generateNextOrderIdShireDeliveryController=id;
@@ -184,9 +187,9 @@ public class OrderFormController implements Initializable {
         try {
             ObservableList<String> obList = FXCollections.observableArrayList();
 
-            ObservableList<CashierCustomerTM> ids = CashierCustomerModel.getAll();
+            ArrayList<CashierCustomerDTO> ids = orderFormBO.getAllCustomer();
 
-            for (CashierCustomerTM id : ids) {
+            for (CashierCustomerDTO id : ids) {
                 obList.add(id.getCustomerId());
             }
 
@@ -214,8 +217,11 @@ public class OrderFormController implements Initializable {
         String id = String.valueOf(cmbCustomerId.getValue());
 
         try {
-            CashierCustomerDTO customer = CashierCustomerModel.search(id);
-            lblCustomerName.setText(customer.getCustomerName());
+            ArrayList<CashierCustomerDTO> customer = orderFormBO.searchCustomer(id);
+            for (CashierCustomerDTO c : customer) {
+                lblCustomerName.setText(c.getCustomerName());
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -225,10 +231,10 @@ public class OrderFormController implements Initializable {
     private void loadItemCodes() {
         try {
             ObservableList<String> obList = FXCollections.observableArrayList();
-            List<String> codes = ItemModel.loadCodes();
+            ArrayList<ItemDTO> codes = orderFormBO.getAllItem();
 
-            for (String code : codes) {
-                obList.add(code);
+            for (ItemDTO c : codes) {
+                obList.add(c.getItemCode());
             }
             cmbItemCode.setItems(obList);
         } catch (SQLException e) {
@@ -240,10 +246,11 @@ public class OrderFormController implements Initializable {
     void cmbItemOnAction(ActionEvent event) {
         String code = String.valueOf(cmbItemCode.getValue());
         try {
-            ItemDTO item = ItemModel.search(code);
-            fillItemFields(item);
-
-            txtQty.requestFocus();
+            ArrayList<ItemDTO> item = orderFormBO.searchItem(code);
+            for (ItemDTO i : item){
+                //fillItemFields();
+                fillItemFields(new ItemDTO(i.getItemCode(),i.getItemName(),i.getUnitPrice(),i.getCategory(),i.getQty()));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -259,6 +266,7 @@ public class OrderFormController implements Initializable {
         lblCategory.setText(item.getCategory());
         QTYMyUse= Integer.parseInt(item.getQty());
         lblQtyOnHand.setText(item.getQty());
+        txtQty.requestFocus();
     }
 
     @FXML
@@ -325,8 +333,8 @@ public class OrderFormController implements Initializable {
                 int index = mainCOMItem.getSelectionModel().getSelectedIndex();
                 obList.remove(index);
 
-                mainCOMItem.refresh();
-                //calculateNetTotal();
+                mainCOMItem.getItems().clear();
+                calculateNetTotal();
             }
 
         });
@@ -369,7 +377,7 @@ public class OrderFormController implements Initializable {
 
 
             try {
-                boolean isSaved = PlaceOrderModel.placeOrder(oId,cId,payment,orderDTOList,orderTM,delivery);
+                boolean isSaved = orderFormBO.placeOrder(oId,cId,payment,orderDTOList,orderTM,delivery);
                 if(isSaved) {
                     double printcash = Double.parseDouble(txtInputCash.getText());
                     Double finalTotal= printcash-balance;

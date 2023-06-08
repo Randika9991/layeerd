@@ -37,7 +37,7 @@ public class CashierCustomerDAOImpl implements CashierCustomerDAO {
 
     @Override
     public ArrayList<CashierCustomerDTO> search(String salId) throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM customer WHERE custId = ?");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM customer WHERE custId = ?",salId);
 
         ArrayList<CashierCustomerDTO> arrayList = new ArrayList<>();
 

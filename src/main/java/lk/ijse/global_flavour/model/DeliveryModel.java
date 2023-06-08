@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class DeliveryModel {
-    public static boolean save(DeliveryDTO deliveryDTO) throws SQLException {  //data baes ekata dana set eka
+    /*public static boolean save(DeliveryDTO deliveryDTO) throws SQLException {  //data baes ekata dana set eka
         String sql = "INSERT INTO delivery(deliveryId,empId,orderId,vehiId,location,deliveryDate,dueDate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -29,7 +29,7 @@ public class DeliveryModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 //    public static String getNextDeliverId() throws SQLException {
 //        Connection con = DBConnection.getInstance().getConnection();
 //

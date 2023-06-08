@@ -20,7 +20,7 @@ import lk.ijse.global_flavour.bo.custom.LoginPageBO;
 import lk.ijse.global_flavour.bo.custom.impl.LoginPageBOImpl;
 //import lk.ijse.global_flavour.dto.LoginSetAndGet;
 import lk.ijse.global_flavour.dto.UserDTO;
-import lk.ijse.global_flavour.model.LoginSetAndGetModel;
+//import lk.ijse.global_flavour.model.LoginSetAndGetModel;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.awt.*;

@@ -3,6 +3,7 @@
 package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.custom.impl.ItemBOImpl;
+import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
+import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import lk.ijse.global_flavour.view.tdm.ItemTM;
 import lk.ijse.global_flavour.model.ItemModel;
 import lk.ijse.global_flavour.util.AlertController;
@@ -21,6 +25,7 @@ import lk.ijse.global_flavour.util.ValidateField;
 
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class ItemFormController {
@@ -67,6 +72,8 @@ public class ItemFormController {
     @FXML
     private Label lblInvalidItemCode;
 
+    ItemBOImpl itemBO = new ItemBOImpl();
+
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
 
@@ -81,11 +88,9 @@ public class ItemFormController {
                     String itemCate = txtItemCatogory.getText();
                     String itemQTY = txtItemQTY.getText();
 
-                    ItemDTO itemAll = new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY);
-
                     try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
-                        boolean isSaved = ItemModel.save(itemAll);
+                        boolean isSaved = itemBO.saveItem(new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY));
                         if (isSaved) {
 
                             AlertController.animationMesseageCorect("CONFIRMATION","Item Save Success!");
@@ -118,7 +123,7 @@ public class ItemFormController {
                 String code = txtItemId.getText();
 
                 try {
-                    boolean isDeleted = ItemModel.delete(code);
+                    boolean isDeleted = itemBO.deleteItem(code);
                     if (isDeleted) {
                         AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
 
@@ -146,13 +151,11 @@ public class ItemFormController {
             String itemCate = txtItemCatogory.getText();
             String itemQTY = txtItemQTY.getText();
 
-            ItemDTO itemAll = new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY);
-
             try {
-                boolean isUpdated = ItemModel.update(itemAll);
+                boolean isUpdated = itemBO.updateItem(new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY));
                 AlertController.animationMesseageCorect("CONFIRMATION","Item updated!");
                 onActionGetAllItem();
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
 
                 AlertController.animationMesseagewrong("Error","something went wrong!");
             }
@@ -164,8 +167,9 @@ public class ItemFormController {
         String id = txtsearchItem.getText();
 
         try {
-            ItemDTO cust = ItemModel.search(id);
-            if (cust != null) {
+            ArrayList<ItemDTO> arrayList = itemBO.searchItem(id);
+
+            for (ItemDTO cust : arrayList) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
                 txtItemPrice.setText(cust.getUnitPrice());
@@ -182,8 +186,9 @@ public class ItemFormController {
         String id = txtsearchItem.getText();
 
         try {
-            ItemDTO cust = ItemModel.search(id);
-            if (cust != null) {
+            ArrayList<ItemDTO> arrayList = itemBO.searchItem(id);
+
+            for (ItemDTO cust : arrayList) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
                 txtItemPrice.setText(cust.getUnitPrice());
@@ -215,7 +220,12 @@ public class ItemFormController {
     @FXML
     void searchItemOnKey(KeyEvent event) throws SQLException {
         String searchValue=txtsearchItem.getText().trim();
-        ObservableList<ItemTM>obList= ItemModel.getAll();
+        ArrayList<ItemDTO> arrayList= itemBO.getAllItem();
+
+        ObservableList<ItemTM> obList = FXCollections.observableArrayList();
+        for (ItemDTO a: arrayList) {
+            obList.add(new ItemTM(a.getItemCode(), a.getItemName(), a.getUnitPrice(), a.getCategory(),a.getQty()));
+        }
 
         if (!searchValue.isEmpty()) {
             ObservableList<ItemTM> filteredData = obList.filtered(new Predicate<ItemTM>(){
@@ -239,9 +249,15 @@ public class ItemFormController {
     }
 
     void onActionGetAllItem() {
+
+
+        mainCOMItem.getItems().clear();
         try {
-            ObservableList<ItemTM> supList = ItemModel.getAll();
-            mainCOMItem.setItems(supList);
+            ArrayList<ItemDTO> supList = itemBO.getAllItem();
+            for (ItemDTO a : supList) {
+                mainCOMItem.getItems().add(new ItemTM(a.getItemCode(), a.getItemName(), a.getUnitPrice(), a.getCategory(),a.getQty()));
+            }
+
 
 
         } catch (SQLException e) {

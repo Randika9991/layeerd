@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OrderDetailModel {
-    public static boolean save(String oId, List<OrderCartDTO> orderDTOList) throws SQLException {
+    /*public static boolean save(String oId, List<OrderCartDTO> orderDTOList) throws SQLException {
         for (OrderCartDTO dto : orderDTOList){
             if(!save(oId,dto)){
                 return false;
@@ -31,5 +31,5 @@ public class OrderDetailModel {
                 dto.getQty(),
                 dto.getUnitPrice()
         );
-    }
+    }*/
 }

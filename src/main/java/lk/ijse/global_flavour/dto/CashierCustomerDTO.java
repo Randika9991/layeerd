@@ -16,6 +16,7 @@ public class CashierCustomerDTO {
     private String email;
 
 
+
 }
 
 

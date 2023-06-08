@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderModel {
-    public static String getNextOrderId() throws SQLException {
+    /*public static String getNextOrderId() throws SQLException {
         Connection con = DBConnection.getInstance().getConnection();
 
         String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
@@ -34,15 +34,13 @@ public class OrderModel {
             return "ORD-00" + id;
         }
         return "ORD-001";
-    }
+    }*/
 
 
-        public static boolean save(String oId, String cId, double payment, LocalDate date, LocalTime time, List<OrderCartDTO> orderDTOList, boolean delivery) throws SQLException {
-            for(OrderCartDTO dto : orderDTOList) {
-                if(!save(oId,cId,payment,date,time,dto,delivery)) {
-
+    /*public static boolean save(String oId, String cId, double payment, LocalDate date, LocalTime time, List<OrderCartDTO> orderDTOList, boolean delivery) throws SQLException {
+        for(OrderCartDTO dto : orderDTOList) {
+            if(!save(oId,cId,payment,date,time,dto,delivery)) {
                     return false;
-
                 }
                 break;
             }
@@ -62,7 +60,7 @@ public class OrderModel {
                     delivery
 
             );
-        }
+        }*/
 
 //    public static List<String> loadIds() throws SQLException {
 //        Connection con = DBConnection.getInstance().getConnection();

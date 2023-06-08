@@ -9,6 +9,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.bo.custom.impl.DeliveryBOImpl;
+import lk.ijse.global_flavour.bo.custom.impl.OrderFormBOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
@@ -118,7 +119,7 @@ public class DeliveryController {
             //System.out.println(deliverId+" "+employeId+" "+orderId+" "+vehiId+" "+location+" "+localTime+" "+dueDate+" "+true);
 
             try {
-                PlaceOrderModel.saveDelivery(cus);
+                OrderFormBOImpl.saveDelivery(cus);
                 AlertController.animationMesseageCorect("CONFIRMATION","Delivery Save Success!");
                 deliveryAncPane.getScene().getWindow().hide();
 

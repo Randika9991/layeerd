@@ -24,7 +24,7 @@ import lk.ijse.global_flavour.dao.custom.impl.SuppliersDAOImpl;
 import lk.ijse.global_flavour.dto.SuppliersDTO;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
 import lk.ijse.global_flavour.view.tdm.SuppliersTM;
-import lk.ijse.global_flavour.model.SuppliersModel;
+//import lk.ijse.global_flavour.model.SuppliersModel;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.ValidateField;
 
