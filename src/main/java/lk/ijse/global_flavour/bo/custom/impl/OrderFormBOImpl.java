@@ -8,7 +8,7 @@ import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
-import lk.ijse.global_flavour.model.*;
+//import lk.ijse.global_flavour.model.*;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 
 import java.sql.Connection;
