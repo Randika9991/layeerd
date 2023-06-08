@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import lombok.*;
 
 import java.time.LocalDate;
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -17,20 +17,7 @@ public class DeliverFormTM {
     private String orderId;
     private String vehicalId;
     private String location;
-    private String deliverDate;
-    private String dueDate;
+    private LocalDate deliverDate;
+    private LocalDate dueDate;
     private String deliverStatus;
-    public DeliverFormTM(String deliverId, String empId, String orderId, String vehicalId, String location, String deliverDate, String dueDate, String deliverStatus) {
-        this.deliverId = deliverId;
-        this.empId = empId;
-        this.orderId = orderId;
-        this.vehicalId = vehicalId;
-        this.location = location;
-        this.deliverDate = deliverDate;
-        this.dueDate = dueDate;
-        this.deliverStatus = deliverStatus;
-    }
-
-
-
 }

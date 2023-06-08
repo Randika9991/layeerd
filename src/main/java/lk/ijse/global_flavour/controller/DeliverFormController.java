@@ -11,13 +11,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.DeliverForm;
+import lk.ijse.global_flavour.bo.custom.impl.DeliveryBOImpl;
+import lk.ijse.global_flavour.dao.custom.DeliveryFormDAO;
+import lk.ijse.global_flavour.dto.CashierVehicleDTO;
+import lk.ijse.global_flavour.dto.DeliverFormDTO;
+import lk.ijse.global_flavour.dto.DeliveryDTO;
+import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
 import lk.ijse.global_flavour.model.*;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class DeliverFormController {
@@ -85,23 +91,30 @@ public class DeliverFormController {
     @FXML
     private JFXComboBox cmbVehicalId;
 
+    DeliveryBOImpl deliveryBO = new DeliveryBOImpl();
+
     @FXML
     void searchOrderIdOnKey(KeyEvent event) throws SQLException {
+
         String searchValue=txtsearchOrderId.getText().trim();
-        ObservableList<DeliverFormTM>obList= DeliveryModel.getAllDeliveryFromController();
+        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+
+        ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
+
+        for(DeliverFormDTO d : obList){
+            observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<DeliverFormTM> filteredData = obList.filtered(new Predicate<DeliverFormTM>(){
+            ObservableList<DeliverFormTM> filteredData = observableList.filtered(new Predicate<DeliverFormTM>(){
                 @Override
                 public boolean test(DeliverFormTM deliverFormTM) {
                     return String.valueOf(deliverFormTM.getOrderId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             tablOrder.setItems(filteredData);} else {
-            tablOrder.setItems(obList);
+            tablOrder.setItems(observableList);
         }
-
     }
-
 
     @FXML
     void OrderMarkOnMouse(MouseEvent event) {
@@ -123,9 +136,10 @@ public class DeliverFormController {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+
         String code = lblDeliverId.getText();
         try {
-            boolean isDeleted = DeliveryModel.delete(code);
+            boolean isDeleted = deliveryBO.deleteDelivery(code);
             if (isDeleted) {
                 AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                 onActionGetAllDelivery();
@@ -148,11 +162,8 @@ public class DeliverFormController {
         String location = txtLocation.getText();
         String employee = String.valueOf(cmbEmpId.getValue());
 
-
-        DeliverForm allDeliver = new DeliverForm(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus);
         try {
-
-            boolean isUpdated = DeliveryModel.change(allDeliver);
+            boolean isUpdated = deliveryBO.changelDelivery(new DeliverFormDTO(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus));
             if(isUpdated){
                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                 onActionGetAllDelivery();
@@ -177,25 +188,22 @@ public class DeliverFormController {
     void onActionGetAllEmployeeaddToDelivery() {
 
         try {
-            ObservableList<String> EmpList = DeliveryModel.getAll();
+            ArrayList<EmployeeDTO> EmpList = deliveryBO.getAllEmployeeId();
 
-            cmbEmpId.getItems().addAll(EmpList);
+            for (EmployeeDTO e : EmpList) {
+                cmbEmpId.getItems().addAll(e.getEmployeeId());
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
     }
+
     void onActionGetAllDeliveryStatus() {
 
-        try {
-            ObservableList<String> EmpList = DeliveryModel.getAllDelivery();
-            ObservableList<Object> Emplist2 = FXCollections.observableArrayList("Completed", "Not yet Completed");
+        ObservableList<Object> Emplist2 = FXCollections.observableArrayList("Completed", "Not yet Completed");
 
-            cmbDeliveryStatus.getItems().addAll(Emplist2);
-
-        } catch (SQLException e) {
-            AlertController.animationMesseagewrong("Error","something went wrong!");
-        }
+        cmbDeliveryStatus.getItems().addAll(Emplist2);
     }
 
     @FXML
@@ -206,9 +214,10 @@ public class DeliverFormController {
     void onActionGetAllVehicalIdaddToDelivery() {
 
         try {
-            ObservableList<String> EmpList = DeliveryModel.getAllVehicalId();
-
-            cmbVehicalId.getItems().addAll(EmpList);
+            ArrayList<CashierVehicleDTO> EmpList = deliveryBO.getAllVehicleId();
+            for (CashierVehicleDTO c : EmpList) {
+                cmbVehicalId.getItems().addAll(c.getVehicleId());
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -225,13 +234,29 @@ public class DeliverFormController {
     }
 
     void onActionGetAllDelivery() {
-        try {
-            ObservableList<DeliverFormTM> supList = DeliveryModel.getAllDeliveryFromController();
-            tablOrder.setItems(supList);
 
+        tablOrder.getItems().clear();
+        try {
+            ArrayList<DeliverFormDTO> obList = deliveryBO.getAllDeliveryId();
+
+            ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
+
+            for (DeliverFormDTO d : obList){
+                observableList.add(new DeliverFormTM(d.getDeliverId(), d.getEmpId(), d.getOrderId(), d.getVehicalId(), d.getLocation(), d.getDeliverDate(), d.getDueDate(), d.getDeliverStatus()));
+
+                tablOrder.setItems(observableList);
+
+            }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
+//        try {
+//         //   ObservableList<DeliverFormTM> supList = DeliveryModel.getAllDeliveryFromController();
+//         //   tablOrder.setItems(supList);
+//
+//        } catch (SQLException e) {
+//            AlertController.animationMesseagewrong("Error","something went wrong!");
+//        }
     }
 
     void setCellValuefactory(){
@@ -273,16 +298,22 @@ public class DeliverFormController {
     @FXML
     public void searchDeliverOnKey(KeyEvent keyEvent) throws SQLException{
         String searchValue=txtsearchDelliverId.getText().trim();
-        ObservableList<DeliverFormTM>obList= DeliveryModel.getAllDeliveryFromController();
+        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+
+        ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
+
+        for(DeliverFormDTO d : obList){
+            observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<DeliverFormTM> filteredData = obList.filtered(new Predicate<DeliverFormTM>(){
+            ObservableList<DeliverFormTM> filteredData = observableList.filtered(new Predicate<DeliverFormTM>(){
                 @Override
                 public boolean test(DeliverFormTM deliverFormTM) {
                     return String.valueOf(deliverFormTM.getDeliverId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             tablOrder.setItems(filteredData);} else {
-            tablOrder.setItems(obList);
+            tablOrder.setItems(observableList);
         }
     }
 
@@ -299,16 +330,22 @@ public class DeliverFormController {
     @FXML
     public void searchVehicalOnKey(KeyEvent keyEvent) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ObservableList<DeliverFormTM>obList= DeliveryModel.getAllDeliveryFromController();
+        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+
+        ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
+
+        for(DeliverFormDTO d : obList){
+            observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
+        }
 
         if (!searchValue.isEmpty()) {
-            ObservableList<DeliverFormTM> filteredData = obList.filtered(new Predicate<DeliverFormTM>(){
+            ObservableList<DeliverFormTM> filteredData = observableList.filtered(new Predicate<DeliverFormTM>(){
                 @Override
                 public boolean test(DeliverFormTM deliverFormTM) {
                     return String.valueOf(deliverFormTM.getVehicalId()).toLowerCase().contains(searchValue.toLowerCase());        }
             });
             tablOrder.setItems(filteredData);} else {
-            tablOrder.setItems(obList);
+            tablOrder.setItems(observableList);
         }
 
     }

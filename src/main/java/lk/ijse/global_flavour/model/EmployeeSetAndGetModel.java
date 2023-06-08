@@ -9,27 +9,27 @@ import lk.ijse.global_flavour.view.tdm.EmployeeTM;
 import java.sql.*;
 
 public class EmployeeSetAndGetModel {
-    public static boolean save(EmployeeDTO EmployeeAdd) throws SQLException {  //data baes ekata dana set eka
+//    public static boolean save(EmployeeDTO EmployeeAdd) throws SQLException {  //data baes ekata dana set eka
+//
+//        String sql = "INSERT INTO employee(empId, empName, addrsss, dob, contactNo, email, nic, jobTitle) " +
+//                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
+//
+//            pstm.setString(1, EmployeeAdd.getEmployeeId());
+//            pstm.setString(2, EmployeeAdd.getEmployeeName());
+//            pstm.setString(3, EmployeeAdd.getAddress());
+//            pstm.setString(4, EmployeeAdd.getDOB());
+//            pstm.setString(5, EmployeeAdd.getCotactNo());
+//            pstm.setString(6, EmployeeAdd.getEmail());
+//            pstm.setString(7, EmployeeAdd.getNic());
+//            pstm.setString(8, EmployeeAdd.getJobTittle());
+//
+//            return pstm.executeUpdate() > 0;
+//        }
+//    }
 
-        String sql = "INSERT INTO employee(empId, empName, addrsss, dob, contactNo, email, nic, jobTitle) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
-
-            pstm.setString(1, EmployeeAdd.getEmployeeId());
-            pstm.setString(2, EmployeeAdd.getEmployeeName());
-            pstm.setString(3, EmployeeAdd.getAddress());
-            pstm.setString(4, EmployeeAdd.getDOB());
-            pstm.setString(5, EmployeeAdd.getCotactNo());
-            pstm.setString(6, EmployeeAdd.getEmail());
-            pstm.setString(7, EmployeeAdd.getNic());
-            pstm.setString(8, EmployeeAdd.getJobTittle());
-
-            return pstm.executeUpdate() > 0;
-        }
-    }
-
-    public static EmployeeDTO search(String id) throws SQLException {
+    /*public static EmployeeDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM employee WHERE empId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -51,8 +51,8 @@ public class EmployeeSetAndGetModel {
             return null;
         }
     }
-
-    public static ObservableList<EmployeeTM> getAll() throws SQLException {
+*/
+   /* public static ObservableList<EmployeeTM> getAll() throws SQLException {
         String sql = "SELECT * FROM employee";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -73,8 +73,8 @@ public class EmployeeSetAndGetModel {
             }
             return dataList;
         }
-    }
-
+    }*/
+/*
     public static boolean change(EmployeeDTO employeeDTO) throws SQLException {
 
         String sql = "UPDATE employee SET empName = ?,addrsss = ?, dob = ?,contactNo = ?, email = ?,nic = ?,jobTitle = ? WHERE empId = ?";
@@ -92,9 +92,9 @@ public class EmployeeSetAndGetModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 
-    public static boolean delete(String empid) throws SQLException {
+    /*public static boolean delete(String empid) throws SQLException {
 
         String sql = "DELETE FROM employee WHERE empId = ?";
 
@@ -103,5 +103,5 @@ public class EmployeeSetAndGetModel {
             pstm.setString(1, empid);
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 }

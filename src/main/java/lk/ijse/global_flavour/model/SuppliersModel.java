@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SuppliersModel {
-    public static boolean save(SuppliersDTO supAdd) throws SQLException {  //data baes ekata dana set eka
+    /*public static boolean save(SuppliersDTO supAdd) throws SQLException {  //data baes ekata dana set eka
 
         String sql = "INSERT INTO supplier(supId, SupName, Address, email ,contactNo) " +
                 "VALUES(?, ?, ?, ? ,?)";
@@ -26,8 +26,8 @@ public class SuppliersModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }
-    public static SuppliersDTO search(String id) throws SQLException {
+    }*/
+    /*public static SuppliersDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM supplier WHERE supId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -47,9 +47,9 @@ public class SuppliersModel {
             }
             return null;
         }
-    }
+    }*/
 
-    public static boolean update(SuppliersDTO supAdd) throws SQLException {
+    /*public static boolean update(SuppliersDTO supAdd) throws SQLException {
 
         String sql = "UPDATE supplier SET supName = ?, address = ?, email = ?, contactNo = ? WHERE supId = ?";
 
@@ -63,9 +63,9 @@ public class SuppliersModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 
-    public static boolean delete(String id) throws SQLException {
+    /*public static boolean delete(String id) throws SQLException {
 
         String sql = "DELETE FROM supplier WHERE supId = ?";
 
@@ -73,9 +73,9 @@ public class SuppliersModel {
             pstm.setString(1, id);
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 
-    public static ObservableList<SuppliersTM> getAll() throws SQLException {
+    /*public static ObservableList<SuppliersTM> getAll() throws SQLException {
         String sql = "SELECT * FROM supplier";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -94,6 +94,6 @@ public class SuppliersModel {
             }
             return dataList;
         }
-    }
+    }*/
 
 }

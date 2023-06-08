@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class DeliverForm {
+public class DeliverFormDTO {
     private String deliverId;
     private String empId;
     private String orderId;

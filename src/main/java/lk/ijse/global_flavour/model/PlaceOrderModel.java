@@ -1,7 +1,7 @@
 package lk.ijse.global_flavour.model;
 
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.Delivery;
+import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PlaceOrderModel {
 
-    private  static  Delivery delivery;
+    private  static DeliveryDTO delivery;
 
     public static boolean placeOrder(String oId, String cId, double payment, List<OrderCartDTO> orderDTOList, OrderTM orderTM, boolean delivery) throws SQLException{
 
@@ -53,7 +53,7 @@ public class PlaceOrderModel {
         }
     }
 
-    public static void saveDelivery(Delivery cus) {
+    public static void saveDelivery(DeliveryDTO cus) {
         delivery = cus;
 
     }

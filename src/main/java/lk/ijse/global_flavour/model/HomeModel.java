@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class HomeModel {
 
-    public static int getTotCustomers() throws SQLException, ClassNotFoundException {
+    /*public static int getTotCustomers() throws SQLException, ClassNotFoundException {
         String sql="SELECT COUNT(custId) FROM Customer";
         ResultSet resultSet= SQLUtil.execute(sql);
         int count=0;
@@ -66,6 +66,6 @@ public class HomeModel {
             );
         }
         return datalist;
-    }
+    }*/
 
 }

@@ -15,10 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.bo.custom.FogotYourPasswordBO;
 import lk.ijse.global_flavour.bo.custom.impl.FogotYourPasswordBOImpl;
-import lk.ijse.global_flavour.dao.custom.FogotYourPasswordDAO;
-import lk.ijse.global_flavour.dao.custom.impl.FogotYourPasswordDAOImpl;
-import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
-import lk.ijse.global_flavour.model.FogotYourPasswordModel;
+import lk.ijse.global_flavour.dto.UserDTO;
+//import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
 import lk.ijse.global_flavour.util.AlertController;
 
 import javax.mail.MessagingException;
@@ -94,7 +92,7 @@ public class FogotYourPasswordController {
         if(loginPageController.getEmail().isEmpty()){
             String emailUserInput = new String();
             try {
-                FogotYourPasswordDTO logSetGet = fogotYourPasswordBO.FogotYourPasswordsearchUser(emailinput);
+                UserDTO logSetGet = fogotYourPasswordBO.FogotYourPasswordsearchUser(emailinput);
                 if (logSetGet != null) {
 
                     emailUserInput=logSetGet.getEmail();

@@ -11,7 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.global_flavour.bo.custom.ChangePasswordBO;
 import lk.ijse.global_flavour.bo.custom.impl.ChangePasswordBOImpl;
-import lk.ijse.global_flavour.dto.ChangePasswordDTO;
+
+import lk.ijse.global_flavour.dto.UserDTO;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.io.IOException;
@@ -76,7 +77,7 @@ public class ChangePasswordController {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
 
                         try {
-                            boolean isUpdated = changePasswordBO.updatePassword(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
+                            boolean isUpdated = changePasswordBO.updatePassword(new UserDTO(userName, empId, Password,email,jobTittle));
 
                             //onActionGetAllItem();
                             if (isUpdated) {
@@ -104,7 +105,7 @@ public class ChangePasswordController {
                     if(txtPassword.getText().equals(txtConformPassword.getText())){
 
                         try {
-                            boolean isUpdated = changePasswordBO.updatePassword(new ChangePasswordDTO(userName, empId, Password,email,jobTittle));
+                            boolean isUpdated = changePasswordBO.updatePassword(new UserDTO(userName, empId, Password,email,jobTittle));
                             //onActionGetAllItem();
                             if (isUpdated) {
                                 AlertController.animationMesseageCorect("CONFIRMATION","User Password Updated!");

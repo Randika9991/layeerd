@@ -2,20 +2,22 @@ package lk.ijse.global_flavour.controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.dto.Delivery;
-import lk.ijse.global_flavour.model.DeliveryModel;
+import lk.ijse.global_flavour.bo.custom.impl.DeliveryBOImpl;
+import lk.ijse.global_flavour.dto.CashierVehicleDTO;
+import lk.ijse.global_flavour.dto.DeliveryDTO;
+import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.model.PlaceOrderModel;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class DeliveryController {
 
@@ -42,6 +44,8 @@ public class DeliveryController {
     @FXML
     private AnchorPane deliveryAncPane;
 
+    DeliveryBOImpl deliveryBO = new DeliveryBOImpl();
+
     @FXML
     void initialize() {
         generateNextDeliveryId();
@@ -53,8 +57,9 @@ public class DeliveryController {
     String idShireSave;
     private void generateNextDeliveryId() {
 
+        //createdDAO
         try {
-            String id = DeliveryModel.getNextDeliverId();
+            String id = deliveryBO.getNextDeliverId();
 
             lblDeliverId.setText(id);
             idShireSave=id;
@@ -68,9 +73,10 @@ public class DeliveryController {
     void onActionGetAllEmployeeaddToSalary() {
 
         try {
-            ObservableList<String> EmpList = DeliveryModel.getAll();
-
-            cmbEmpId.getItems().addAll(EmpList);
+            ArrayList<EmployeeDTO> EmpList = deliveryBO.getAllEmployeeId();
+            for(EmployeeDTO e : EmpList) {
+                cmbEmpId.getItems().addAll(e.getEmployeeId());
+            }
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -80,9 +86,12 @@ public class DeliveryController {
     void GetAllVehicalId() {
 
         try {
-            ObservableList<String> EmpList = DeliveryModel.getAllVeId();
+            ArrayList<CashierVehicleDTO> EmpList = deliveryBO.getAllVehicleId();
 
-            cmbVehiId.getItems().addAll(EmpList);
+            for (CashierVehicleDTO c : EmpList) {
+                cmbVehiId.getItems().addAll(c.getVehicleId());
+            }
+
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -92,6 +101,7 @@ public class DeliveryController {
     @FXML
     void buttonSaveOnACT(ActionEvent event) {
 
+        //createdDAO
         if(txtLocation.getText().isEmpty()){
             AlertController.animationMesseagewrong("Error","Delivery details not saved. \nPlease make sure to fill the request fields.");
         }else {
@@ -100,19 +110,19 @@ public class DeliveryController {
             String location = txtLocation.getText();
             String employeId = String.valueOf(cmbEmpId.getValue());
             LocalDate dueDate = DPDueDate.getValue();
-            String localTime = String.valueOf(LocalDate.now());
+          //  String localD = String.valueOf(LocalDate.now());
             String vehiId = String.valueOf(cmbVehiId.getValue());
             //boolean status = true;
 
-            Delivery cus = new Delivery(deliverId,employeId,orderId,vehiId,location,localTime,dueDate, true);
-            System.out.println(deliverId+" "+employeId+" "+orderId+" "+vehiId+" "+location+" "+localTime+" "+dueDate+" "+true);
+            DeliveryDTO cus = new DeliveryDTO(deliverId,employeId,orderId,vehiId,location,dueDate);
+            //System.out.println(deliverId+" "+employeId+" "+orderId+" "+vehiId+" "+location+" "+localTime+" "+dueDate+" "+true);
 
             try {
                 PlaceOrderModel.saveDelivery(cus);
                 AlertController.animationMesseageCorect("CONFIRMATION","Delivery Save Success!");
                 deliveryAncPane.getScene().getWindow().hide();
 
-            } catch (Exception e) {
+            }catch (Exception e) {
 //            System.out.println(e);
                 AlertController.animationMesseagewrong("Error","something went wrong!");
             }

@@ -2,31 +2,31 @@ package lk.ijse.global_flavour.dto;
 import lombok.*;
 
 import java.time.LocalDate;
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Delivery {
+public class DeliveryDTO {
     private String deliverId;
     private String empId;
     private String orderId;
     private String vehicalId;
     private String location;
-    private String deliverDate;
+    private LocalDate deliverDate;
     private LocalDate dueDate;
-    private Boolean deliverStatus;
+    private String deliverStatus;
 
 
-    public Delivery(String deliverId, String empId, String orderId, String vehicalId, String location, String deliverDate, LocalDate dueDate, Boolean deliverStatus) {
+
+    public DeliveryDTO(String deliverId, String employeId, String orderId, String vehiId, String location, LocalDate dueDate) {
         this.deliverId = deliverId;
-        this.empId = empId;
+        this.empId = employeId;
         this.orderId = orderId;
-        this.vehicalId = vehicalId;
+        this.vehicalId = vehiId;
         this.location = location;
-        this.deliverDate = deliverDate;
         this.dueDate = dueDate;
-        this.deliverStatus = deliverStatus;
     }
+
 
 }

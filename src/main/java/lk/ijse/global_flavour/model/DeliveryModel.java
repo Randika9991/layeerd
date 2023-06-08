@@ -3,88 +3,73 @@ package lk.ijse.global_flavour.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.DeliverForm;
-import lk.ijse.global_flavour.dto.Delivery;
+import lk.ijse.global_flavour.dto.DeliverFormDTO;
+import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class DeliveryModel {
-    public static boolean save(Delivery delivery) throws SQLException {  //data baes ekata dana set eka
+    public static boolean save(DeliveryDTO deliveryDTO) throws SQLException {  //data baes ekata dana set eka
         String sql = "INSERT INTO delivery(deliveryId,empId,orderId,vehiId,location,deliveryDate,dueDate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
 
-            pstm.setString(1, delivery.getDeliverId());
-            pstm.setString(2, delivery.getEmpId());
-            pstm.setString(3, delivery.getOrderId());
-            pstm.setString(4, delivery.getVehicalId());
-            pstm.setString(5, delivery.getLocation());
-            pstm.setString(6, delivery.getDeliverDate());
-            pstm.setString(7, String.valueOf(delivery.getDueDate()));
+            pstm.setString(1, deliveryDTO.getDeliverId());
+            pstm.setString(2, deliveryDTO.getEmpId());
+            pstm.setString(3, deliveryDTO.getOrderId());
+            pstm.setString(4, deliveryDTO.getVehicalId());
+            pstm.setString(5, deliveryDTO.getLocation());
+            pstm.setString(6, String.valueOf(LocalDate.now()));
+            pstm.setString(7, String.valueOf(deliveryDTO.getDueDate()));
 
             return pstm.executeUpdate() > 0;
         }
     }
-    public static String getNextDeliverId() throws SQLException {
-        Connection con = DBConnection.getInstance().getConnection();
+//    public static String getNextDeliverId() throws SQLException {
+//        Connection con = DBConnection.getInstance().getConnection();
+//
+//        String sql = "SELECT deliveryId FROM delivery ORDER BY deliveryId DESC LIMIT 1";
+//
+//        ResultSet resultSet = con.createStatement().executeQuery(sql);
+//
+//        if (resultSet.next()) {
+//            return splitOrderId(resultSet.getString(1));
+//        }
+//        return splitOrderId(null);
+//    }
+//    private static String splitOrderId(String currentId) {
+//        if(currentId != null) {
+//            String[] strings = currentId.split("DEL-");
+//            int id = Integer.parseInt(strings[1]);
+//            id++;
+//            return "DEL-" + id;
+//        }
+//        return "DEL-001";
+//    }
 
-        String sql = "SELECT deliveryId FROM delivery ORDER BY deliveryId DESC LIMIT 1";
+//    public static ObservableList<String> getAllVeId() throws SQLException {
+//        String sql = "SELECT vehiId from vehicle";
+//
+//        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
+//            ResultSet resultSet = pstm.executeQuery();
+//            ObservableList<String> dataList = FXCollections.observableArrayList();
+//
+//            while (resultSet.next()) {
+//                dataList.add(new String(
+//                        resultSet.getString(1)
+//                ));
+//
+//            }
+//            return dataList;
+//        }
+//    }
 
-        ResultSet resultSet = con.createStatement().executeQuery(sql);
-
-        if (resultSet.next()) {
-            return splitOrderId(resultSet.getString(1));
-        }
-        return splitOrderId(null);
-    }
-    private static String splitOrderId(String currentId) {
-        if(currentId != null) {
-            String[] strings = currentId.split("DEL-");
-            int id = Integer.parseInt(strings[1]);
-            id++;
-            return "DEL-" + id;
-        }
-        return "DEL-001";
-    }
-    public static ObservableList<String> getAll() throws SQLException {
-        String sql = "SELECT empId from employee";
-
-        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
-            ResultSet resultSet = pstm.executeQuery();
-            ObservableList<String> dataList = FXCollections.observableArrayList();
-
-            while (resultSet.next()) {
-                dataList.add(new String(
-                        resultSet.getString(1)
-                ));
-
-            }
-            return dataList;
-        }
-    }
-    public static ObservableList<String> getAllVeId() throws SQLException {
-        String sql = "SELECT vehiId from vehicle";
-
-        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
-            ResultSet resultSet = pstm.executeQuery();
-            ObservableList<String> dataList = FXCollections.observableArrayList();
-
-            while (resultSet.next()) {
-                dataList.add(new String(
-                        resultSet.getString(1)
-                ));
-
-            }
-            return dataList;
-        }
-    }
-
-    public static ObservableList<String> getAllDelivery() throws SQLException {
+    /*public static ObservableList<String> getAllDelivery() throws SQLException {
         String sql = "SELECT deliveryStatus from delivery";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -99,9 +84,9 @@ public class DeliveryModel {
             }
             return dataList;
         }
-    }
+    }*/
 
-    public static ObservableList<DeliverFormTM> getAllDeliveryFromController() throws SQLException {
+   /* public static ObservableList<DeliverFormTM> getAllDeliveryFromController() throws SQLException {
         String sql = "SELECT * FROM delivery";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -125,21 +110,21 @@ public class DeliveryModel {
             return dataList;
         }
     }
-
-    public static boolean change(DeliverForm deliverForm) throws SQLException {
+*/
+    /*public static boolean change(DeliverFormDTO deliverFormDTO) throws SQLException {
 
         String sql = "UPDATE delivery SET empId = ?,orderId = ?, vehiId = ?,location = ?, deliveryDate = ?,dueDate = ?,deliveryStatus = ? WHERE deliveryId = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
 
-            pstm.setString(1, deliverForm.getEmpId());
-            pstm.setString(2, deliverForm.getOrderId());
-            pstm.setString(3, deliverForm.getVehicalId());
-            pstm.setString(4, deliverForm.getLocation());
-            pstm.setString(5, String.valueOf(deliverForm.getDeliverDate()));
-            pstm.setString(6, String.valueOf(deliverForm.getDueDate()));
-            pstm.setString(7, String.valueOf(deliverForm.getDeliverStatus()));
-            pstm.setString(8, deliverForm.getDeliverId());
+            pstm.setString(1, deliverFormDTO.getEmpId());
+            pstm.setString(2, deliverFormDTO.getOrderId());
+            pstm.setString(3, deliverFormDTO.getVehicalId());
+            pstm.setString(4, deliverFormDTO.getLocation());
+            pstm.setString(5, String.valueOf(deliverFormDTO.getDeliverDate()));
+            pstm.setString(6, String.valueOf(deliverFormDTO.getDueDate()));
+            pstm.setString(7, String.valueOf(deliverFormDTO.getDeliverStatus()));
+            pstm.setString(8, deliverFormDTO.getDeliverId());
 
             return pstm.executeUpdate() > 0;
         }
@@ -170,5 +155,5 @@ public class DeliveryModel {
             pstm.setString(1, id);
             return pstm.executeUpdate() > 0;
         }
-    }
+    }*/
 }

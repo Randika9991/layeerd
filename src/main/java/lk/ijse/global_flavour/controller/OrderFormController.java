@@ -363,11 +363,7 @@ public class OrderFormController implements Initializable {
             OrderTM orderTM = null;
             for (int i = 0; i < mainCOMItem.getItems().size(); i++) {
                 orderTM = obList.get(i);
-                OrderCartDTO cartDTO = new OrderCartDTO(
-                        orderTM.getCode(),
-                        orderTM.getQty(),
-                        orderTM.getUnitPrice()
-                );
+                OrderCartDTO cartDTO = new OrderCartDTO(orderTM.getCode(), orderTM.getQty(), orderTM.getUnitPrice());
                 orderDTOList.add(cartDTO);
             }
 

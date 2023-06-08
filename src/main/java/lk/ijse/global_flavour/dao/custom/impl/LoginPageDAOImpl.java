@@ -3,7 +3,8 @@ package lk.ijse.global_flavour.dao.custom.impl;
 import lk.ijse.global_flavour.dao.custom.LoginPageDAO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.LoginSetAndGet;
+//import lk.ijse.global_flavour.dto.LoginSetAndGet;
+import lk.ijse.global_flavour.dto.UserDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,10 +38,10 @@ public class LoginPageDAOImpl implements LoginPageDAO {
     }
 
     @Override
-    public LoginSetAndGet searchUserName(String userName) throws SQLException {
+    public UserDTO searchUserName(String userName) throws SQLException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user WHERE userName = ?", userName);
         if (resultSet.next()) {
-            return new LoginSetAndGet(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+            return new UserDTO(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
         }
         return null;
     }

@@ -82,7 +82,7 @@ public class CreateNewAccountController {
             String nameUserInput = new String();
 
             try {
-                CreateNewAccountDTO logSetGet = newAccountBO.searchUserName(name);
+                UserDTO logSetGet = newAccountBO.searchUserName(name);
                 if (logSetGet != null) {
                     nameUserInput = logSetGet.getUsrname();
                 }
@@ -115,7 +115,7 @@ public class CreateNewAccountController {
                 lblInvalidEmail.setVisible(false);
                 try {
 
-                    CreateNewAccountDTO logSetGet = newAccountBO.searchUserEmail(email);
+                    UserDTO logSetGet = newAccountBO.searchUserEmail(email);
                     if (logSetGet != null) {
                         emailUserInput = logSetGet.getEmail();
                     }
@@ -182,7 +182,7 @@ public class CreateNewAccountController {
                                                             String emailUserInput = new String();
 
                                                             try {
-                                                                CreateNewAccountDTO logSetGet = newAccountBO.searchUserName(name);
+                                                                UserDTO logSetGet = newAccountBO.searchUserName(name);
                                                                 if (logSetGet != null) {
                                                                     admincashiarUserInput = logSetGet.getJobtitel();
                                                                     nameUserInput = logSetGet.getUsrname();
@@ -201,7 +201,7 @@ public class CreateNewAccountController {
                                                                 String email = txtEnteremail.getText();
                                                                 String tittle = String.valueOf(cmbAdminCashiar.getValue());
 
-                                                                CreateNewAccountDTO cus = new CreateNewAccountDTO(nameUserInputPart2,null, password, emailUserInputPart2, tittle);
+                                                                UserDTO cus = new UserDTO(nameUserInputPart2,null, password, emailUserInputPart2, tittle);
 
                                                                 try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
