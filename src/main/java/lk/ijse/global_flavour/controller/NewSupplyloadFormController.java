@@ -12,14 +12,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.custom.impl.SupplyloadFormBOImpl;
 import lk.ijse.global_flavour.dto.ItemDTO;
-import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
-import lk.ijse.global_flavour.view.tdm.AddSupplyLoadTM;
-import lk.ijse.global_flavour.model.ItemModel;
-import lk.ijse.global_flavour.model.SupplyModel;
+import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
+import lk.ijse.global_flavour.dto.SuppliersDTO;
 import lk.ijse.global_flavour.util.AlertController;
 import lk.ijse.global_flavour.util.TimeAndDateController;
 import lk.ijse.global_flavour.util.ValidateField;
+import lk.ijse.global_flavour.view.tdm.AddSupplyLoadTM;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -92,6 +92,8 @@ public class NewSupplyloadFormController {
 
     @FXML
     private JFXTextField txttotalprice;
+
+    SupplyloadFormBOImpl supplyloadFormBO = new SupplyloadFormBOImpl();
 
     private void setRemoveBtnOnAction(Button btn) {
         btn.setOnAction((e) -> {
@@ -179,21 +181,21 @@ public class NewSupplyloadFormController {
 
             if(ValidateField.priceCheck(totalprice)) {
 
-                List<PlaceSupplyLoad> placeSupplyLoadList = new ArrayList<>();
+                List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList = new ArrayList<>();
 
                 for (int i = 0; i < colMainTable.getItems().size(); i++) {
                     AddSupplyLoadTM addSupplyLoadTM = obList.get(i);
 
-                    PlaceSupplyLoad placeSupplyLoad = new PlaceSupplyLoad(
+                    PlaceSupplyLoadDTO placeSupplyLoadDTO = new PlaceSupplyLoadDTO(
                             addSupplyLoadTM.getItemcode(),
                             addSupplyLoadTM.getQuantity()
                     );
-                    placeSupplyLoadList.add(placeSupplyLoad);
+                    placeSupplyLoadDTOList.add(placeSupplyLoadDTO);
                 }
 
                 boolean isPlaced = false;
                 try {
-                    isPlaced = SupplyModel.placeLoad(loadid, suppid, totalprice, placeSupplyLoadList);
+                    isPlaced = supplyloadFormBO.placeLoad(loadid, suppid, totalprice, placeSupplyLoadDTOList);
                     if (isPlaced) {
                         AlertController.animationMesseageCorect("Confirmation","Load Added Successfully");
                         generateNextLoadId();
@@ -216,39 +218,6 @@ public class NewSupplyloadFormController {
             }
         }else{
             AlertController.animationMesseagewrong("Wrong","Load payment field can't be empty."+"\n"+"Please make sure to fill that field before you try to add the load ");
-
-        }
-
-    }
-
-    @FXML
-    void cmbSuppIdOnAction(ActionEvent event) {
-        String supp_id = String.valueOf(cmbsuppid.getValue());
-
-        try {
-            String name = SupplyModel.getSupplierName(supp_id);
-            lblchangingsuppname.setText(name);
-        } catch (Exception e) {
-            System.out.println(e);
-            new Alert(Alert.AlertType.ERROR, "Exception!").show();
-        }
-        cmbsuppid.setStyle("-fx-text-fill: white");
-        cmbsuppid.setStyle("-fx-prompt-text-fill:white");
-    }
-
-    ItemDTO item;
-    int QTYMyUse;
-    @FXML
-    void cmbitemcodeOnAction(ActionEvent event) {
-        String itemcode= String.valueOf(cmbitemcode.getValue());
-
-        try {
-            item = SupplyModel.findById(itemcode);
-            lblchangingitmname.setText(item.getItemName());
-            lblchangingcategory.setText(item.getCategory());
-            lblchangingqtyonhands.setText(String.valueOf(item.getQty()));
-            QTYMyUse= Integer.parseInt(item.getQty());
-        } catch (Exception e) {
 
         }
 
@@ -282,28 +251,77 @@ public class NewSupplyloadFormController {
     void onActionGetAllSupplierId() {
 
         try {
+            /*Get all items*/
+            ArrayList<SuppliersDTO> allSupp = supplyloadFormBO.getAllSuppliers();
+
+            for (SuppliersDTO i : allSupp) {
+                cmbsuppid.getItems().add(i.getSupplierId());
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+        /*try {
             ObservableList<String> EmpList = SupplyModel.getAll();
 
             cmbsuppid.getItems().addAll(EmpList);
 
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
-        }
+        }*/
     }
+
+    @FXML
+    void cmbSuppIdOnAction(ActionEvent event) {
+        String supp_id = String.valueOf(cmbsuppid.getValue());
+
+        try {
+            String name = supplyloadFormBO.getSupplierName(supp_id);
+            lblchangingsuppname.setText(name);
+        } catch (Exception e) {
+            System.out.println(e);
+            new Alert(Alert.AlertType.ERROR, "Exception!").show();
+        }
+        cmbsuppid.setStyle("-fx-text-fill: white");
+        cmbsuppid.setStyle("-fx-prompt-text-fill:white");
+    }
+
     void onActionGetAllItemCode() {
 
         try {
-            ObservableList<String> EmpList = SupplyModel.getAllItemCode();
-
-            cmbitemcode.getItems().addAll(EmpList);
-
+            ArrayList<ItemDTO> EmpList = supplyloadFormBO.getAllItem();
+            for (ItemDTO i : EmpList) {
+                cmbitemcode.getItems().addAll(i.getItemCode());
+            }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
     }
+
+
+    int QTYMyUse;
+    @FXML
+    void cmbitemcodeOnAction(ActionEvent event) {
+        String itemcode= String.valueOf(cmbitemcode.getValue());
+
+        try {
+            ArrayList<ItemDTO> arrayList = supplyloadFormBO.searchItem(itemcode);
+
+            for (ItemDTO item : arrayList) {
+                lblchangingitmname.setText(item.getItemName());
+                lblchangingcategory.setText(item.getCategory());
+                lblchangingqtyonhands.setText(String.valueOf(item.getQty()));
+                QTYMyUse= Integer.parseInt(item.getQty());
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
     private void generateNextLoadId() {
         try {
-            String id = SupplyModel.getNextSupplyLoadId();
+            String id = supplyloadFormBO.getNextSupplyLoadId();
             lblloadid.setText(id);
         } catch (Exception e) {
             System.out.println(e);

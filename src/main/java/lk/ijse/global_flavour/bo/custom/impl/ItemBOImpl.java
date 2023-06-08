@@ -1,5 +1,6 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
+import lk.ijse.global_flavour.bo.custom.ItemBO;
 import lk.ijse.global_flavour.dao.custom.ItemDAO;
 import lk.ijse.global_flavour.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.global_flavour.dto.ItemDTO;
@@ -7,8 +8,9 @@ import lk.ijse.global_flavour.dto.ItemDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemBOImpl {
+public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = new ItemDAOImpl();
+
     public boolean saveItem(ItemDTO itemDTO) throws SQLException {
         return itemDAO.save(itemDTO);
     }

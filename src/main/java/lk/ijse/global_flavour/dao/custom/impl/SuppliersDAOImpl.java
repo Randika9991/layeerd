@@ -39,7 +39,7 @@ public class SuppliersDAOImpl implements SuppliersDAO {
 
     @Override
     public ArrayList<SuppliersDTO> search(String salId) throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM supplier WHERE supId = ?");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM supplier WHERE supId = ?",salId);
 
         ArrayList<SuppliersDTO> arrayList = new ArrayList<>();
 
@@ -54,4 +54,14 @@ public class SuppliersDAOImpl implements SuppliersDAO {
         return SQLUtil.execute("DELETE FROM supplier WHERE supId = ?",id);
     }
 
+    @Override
+    public String getSupplierName(String supp_id) throws SQLException {
+
+        ResultSet resultSet = SQLUtil.execute("SELECT supName FROM supplier WHERE supId=?",supp_id);
+
+        if(resultSet.next()){
+            return (new String(resultSet.getString(1)));
+        }
+        return null;
+    }
 }

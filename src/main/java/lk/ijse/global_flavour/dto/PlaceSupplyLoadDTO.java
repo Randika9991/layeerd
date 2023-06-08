@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class PlaceSupplyLoad {
+public class PlaceSupplyLoadDTO {
     private String itemcode;
     private Integer suppqty;
 }

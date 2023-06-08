@@ -13,7 +13,7 @@ import lk.ijse.global_flavour.bo.custom.impl.OrderFormBOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
-import lk.ijse.global_flavour.model.PlaceOrderModel;
+//import lk.ijse.global_flavour.model.PlaceOrderModel;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.sql.SQLException;

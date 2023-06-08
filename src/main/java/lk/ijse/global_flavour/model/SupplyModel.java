@@ -1,10 +1,11 @@
+/*
 package lk.ijse.global_flavour.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.ItemDTO;
-import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
+import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
 import java.sql.Connection;
@@ -16,7 +17,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class SupplyModel {
-    public static ObservableList<String> getAll() throws SQLException {
+    */
+/*public static ObservableList<String> getAll() throws SQLException {
         String sql = "SELECT supId from supplier";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -31,9 +33,11 @@ public class SupplyModel {
             }
             return dataList;
         }
-    }
+    }*//*
 
-    public static ObservableList<String> getAllItemCode() throws SQLException {
+
+    */
+/*public static ObservableList<String> getAllItemCode() throws SQLException {
         String sql = "SELECT itemCode from item";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -48,9 +52,11 @@ public class SupplyModel {
             }
             return dataList;
         }
-    }
+    }*//*
 
-    public static String getSupplierName(String supp_id) throws SQLException {
+
+    */
+/*public static String getSupplierName(String supp_id) throws SQLException {
         String sql = "SELECT supName FROM supplier WHERE supId=?";
         ResultSet resultSet = SQLUtil.execute(sql,supp_id);
 
@@ -60,9 +66,11 @@ public class SupplyModel {
             ));
         }
         return null;
-    }
+    }*//*
 
-    public static String getNextSupplyLoadId() throws SQLException {
+
+   */
+/* public static String getNextSupplyLoadId() throws SQLException {
         String sql = "SELECT loadId FROM SupplyLoadDetail ORDER BY loadId DESC LIMIT 1";
 
         ResultSet resultSet = SQLUtil.execute(sql);
@@ -82,18 +90,20 @@ public class SupplyModel {
             return "LOAD-" + digit;
         }
         return "LOAD-001";
-    }
+    }*//*
 
-    public static boolean placeLoad(String loadid, String suppid, String totalprice, List<PlaceSupplyLoad> placeSupplyLoadList) throws SQLException {
+
+    */
+/*public static boolean placeLoad(String loadid, String suppid, String totalprice, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
 
         Connection con = null;
         try {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
 
-            boolean isSaved = save(loadid,suppid,totalprice, LocalDate.now(), LocalTime.now(),placeSupplyLoadList);
+            boolean isSaved = save(loadid,suppid,totalprice, LocalDate.now(), LocalTime.now(), placeSupplyLoadDTOList);
             if(isSaved) {
-                boolean isUpdated = ItemModel.addQty(placeSupplyLoadList);
+                boolean isUpdated = ItemModel.addQty(placeSupplyLoadDTOList);
                 if(isUpdated) {
                     con.commit();                                                                                                                                                 //database ekata save eka
                     return true;
@@ -108,17 +118,19 @@ public class SupplyModel {
             System.out.println("finally");
             con.setAutoCommit(true);
         }
-    }
+    }*//*
 
-    private static boolean save(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, List<PlaceSupplyLoad> placeSupplyLoadList) throws SQLException {
-        for(PlaceSupplyLoad placeSupplyLoad : placeSupplyLoadList) {
-            if(!savesupplyloaddetails(loadid,suppid,totalprice,now,now1,placeSupplyLoad)) {
+
+    */
+/*private static boolean save(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
+        for(PlaceSupplyLoadDTO placeSupplyLoadDTO : placeSupplyLoadDTOList) {
+            if(!savesupplyloaddetails(loadid,suppid,totalprice,now,now1, placeSupplyLoadDTO)) {
                 return false;
             }
         }
         return true;
     }
-    private static boolean savesupplyloaddetails(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, PlaceSupplyLoad placeSupplyLoad) throws SQLException {
+    private static boolean savesupplyloaddetails(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, PlaceSupplyLoadDTO placeSupplyLoadDTO) throws SQLException {
         String sql = "INSERT INTO SupplyLoadDetail(loadId,supId,itemCode,qty,date,time,price)" +
                 "VALUES(?,?,?,?,?,?,?)";
 
@@ -126,14 +138,16 @@ public class SupplyModel {
                 sql,
                 loadid,
                 suppid,
-                placeSupplyLoad.getItemcode(),
-                placeSupplyLoad.getSuppqty(),
+                placeSupplyLoadDTO.getItemcode(),
+                placeSupplyLoadDTO.getSuppqty(),
                 now,
                 now1,
                 totalprice
         );
-    }
-    public static ItemDTO findById(String itemcode) throws SQLException {
+    }*//*
+
+    */
+/*public static ItemDTO findById(String itemcode) throws SQLException {
         String sql = "SELECT * FROM item WHERE itemCode=?";
 
         ResultSet resultSet = SQLUtil.execute(sql,itemcode);
@@ -147,5 +161,7 @@ public class SupplyModel {
             ));
         }
         return null;
-    }
+    }*//*
+
 }
+*/

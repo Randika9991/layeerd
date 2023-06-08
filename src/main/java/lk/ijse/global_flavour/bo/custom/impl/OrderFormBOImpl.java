@@ -1,5 +1,6 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
+import lk.ijse.global_flavour.bo.custom.OrderFormBO;
 import lk.ijse.global_flavour.dao.custom.*;
 import lk.ijse.global_flavour.dao.custom.impl.*;
 import lk.ijse.global_flavour.db.DBConnection;
@@ -17,7 +18,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderFormBOImpl {
+public class OrderFormBOImpl implements OrderFormBO {
 
     OrderFormDAO orderFormDAO = new OrderFormDAOImpl();
     CashierCustomerDAO customerDAO = new CashierCustomerDAOImpl();

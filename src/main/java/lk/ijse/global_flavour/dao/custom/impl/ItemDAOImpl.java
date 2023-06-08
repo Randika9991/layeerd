@@ -6,6 +6,7 @@ import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
+import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,9 +46,7 @@ public class ItemDAOImpl implements ItemDAO {
         if (resultSet.next()) {
             arrayList.add(new ItemDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4), resultSet.getString(5)));
         }
-
         return arrayList;
-
     }
 
     @Override
@@ -67,6 +66,7 @@ public class ItemDAOImpl implements ItemDAO {
         return true;
     }
 
+
     private static boolean updateQty(OrderCartDTO dto) throws SQLException {
         String sql = "UPDATE item SET qtyOnHand = (qtyOnHand - ?) WHERE itemCode = ?";
         return SQLUtil.execute(
@@ -75,4 +75,24 @@ public class ItemDAOImpl implements ItemDAO {
                 dto.getCode()
         );
     }
+
+    public boolean addQty(List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
+        for(PlaceSupplyLoadDTO placeSupplyLoadDTO : placeSupplyLoadDTOList) {
+            if(!addQty(placeSupplyLoadDTO)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean addQty(PlaceSupplyLoadDTO placeSupplyLoadDTO) throws SQLException {
+        String sql = "UPDATE item SET qtyOnHand = (qtyOnHand + ?) WHERE itemCode = ?";
+
+        return SQLUtil.execute(
+                sql,
+                placeSupplyLoadDTO.getSuppqty(),
+                placeSupplyLoadDTO.getItemcode()
+        );
+    }
+
+
 }

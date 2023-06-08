@@ -1,23 +1,15 @@
+/*
 package lk.ijse.global_flavour.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import lk.ijse.global_flavour.db.DBConnection;
-import lk.ijse.global_flavour.dto.ItemDTO;
-import lk.ijse.global_flavour.dto.OrderCartDTO;
-import lk.ijse.global_flavour.dto.PlaceSupplyLoad;
-import lk.ijse.global_flavour.view.tdm.ItemTM;
+import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemModel {
-    /*public static boolean save(ItemDTO itmAdd) throws SQLException {  //data baes ekata dana set eka
+    */
+/*public static boolean save(ItemDTO itmAdd) throws SQLException {  //data baes ekata dana set eka
         String sql = "INSERT INTO item(itemCode, ItemName, unitPrice, category ,QtyONHand) " +
                 "VALUES(?, ?, ?, ? ,?)";
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -30,8 +22,10 @@ public class ItemModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }*/
-    /*public static boolean update(ItemDTO supAdd) throws SQLException {
+    }*//*
+
+    */
+/*public static boolean update(ItemDTO supAdd) throws SQLException {
 
         String sql = "UPDATE item SET ItemName = ?, unitPrice = ?, category = ?, QtyONHand = ? WHERE itemCode = ?";
 
@@ -45,9 +39,11 @@ public class ItemModel {
 
             return pstm.executeUpdate() > 0;
         }
-    }*/
+    }*//*
 
-    /*public static boolean delete(String id) throws SQLException {
+
+    */
+/*public static boolean delete(String id) throws SQLException {
 
         String sql = "DELETE FROM item WHERE itemCode = ?";
 
@@ -56,9 +52,11 @@ public class ItemModel {
             pstm.setString(1, id);
             return pstm.executeUpdate() > 0;
         }
-    }*/
+    }*//*
 
-    /*public static ItemDTO search(String id) throws SQLException {
+
+    */
+/*public static ItemDTO search(String id) throws SQLException {
         String sql = "SELECT * FROM item WHERE itemCode = ?";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -78,9 +76,11 @@ public class ItemModel {
             }
             return null;
         }
-    }*/
+    }*//*
 
-    /*public static ObservableList<ItemTM> getAll() throws SQLException {
+
+    */
+/*public static ObservableList<ItemTM> getAll() throws SQLException {
         String sql = "SELECT * FROM item";
 
         try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
@@ -100,9 +100,11 @@ public class ItemModel {
             }
             return dataList;
         }
-    }*/
+    }*//*
 
-    /*public static List<String> loadCodes() throws SQLException {
+
+    */
+/*public static List<String> loadCodes() throws SQLException {
         Connection con = DBConnection.getInstance().getConnection();
         ResultSet resultSet = con.createStatement().executeQuery("SELECT itemCode FROM item");
 
@@ -112,7 +114,8 @@ public class ItemModel {
             data.add(resultSet.getString(1));
         }
         return data;
-    }*/
+    }*//*
+
 
 //    public static boolean updateQty(List<OrderCartDTO> orderDTOList) throws SQLException {
 //        for(OrderCartDTO dto : orderDTOList){
@@ -133,21 +136,24 @@ public class ItemModel {
 //        );
 //    }
 
-    public static boolean addQty(List<PlaceSupplyLoad> placeSupplyLoadList) throws SQLException {
-        for(PlaceSupplyLoad placeSupplyLoad : placeSupplyLoadList) {
-            if(!addQty(placeSupplyLoad)) {
+    */
+/*public static boolean addQty(List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
+        for(PlaceSupplyLoadDTO placeSupplyLoadDTO : placeSupplyLoadDTOList) {
+            if(!addQty(placeSupplyLoadDTO)) {
                 return false;
             }
         }
         return true;
     }
-    private static boolean addQty(PlaceSupplyLoad placeSupplyLoad) throws SQLException {
+    private static boolean addQty(PlaceSupplyLoadDTO placeSupplyLoadDTO) throws SQLException {
         String sql = "UPDATE item SET qtyOnHand = (qtyOnHand + ?) WHERE itemCode = ?";
 
         return SQLUtil.execute(
                 sql,
-                placeSupplyLoad.getSuppqty(),
-                placeSupplyLoad.getItemcode()
+                placeSupplyLoadDTO.getSuppqty(),
+                placeSupplyLoadDTO.getItemcode()
         );
-    }
+    }*//*
+
 }
+*/

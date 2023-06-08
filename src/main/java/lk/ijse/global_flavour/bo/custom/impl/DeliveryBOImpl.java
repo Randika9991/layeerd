@@ -1,5 +1,6 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
+import lk.ijse.global_flavour.bo.custom.DeliveryBO;
 import lk.ijse.global_flavour.dao.custom.CashierVehicleDAO;
 import lk.ijse.global_flavour.dao.custom.DeliveryDAO;
 import lk.ijse.global_flavour.dao.custom.EmployeeDAO;
@@ -14,7 +15,7 @@ import lk.ijse.global_flavour.dto.EmployeeDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DeliveryBOImpl {
+public class DeliveryBOImpl implements DeliveryBO {
     DeliveryDAO deliveryDAO = new DeliveryDAOImpl();
     EmployeeDAO employeeDAO = new EmployeeDAOImpl();
     CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
