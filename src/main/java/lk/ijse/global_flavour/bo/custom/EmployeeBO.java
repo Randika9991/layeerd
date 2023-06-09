@@ -1,11 +1,12 @@
 package lk.ijse.global_flavour.bo.custom;
 
+import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface EmployeeBO {
+public interface EmployeeBO extends SuperBO {
     public boolean saveEmployee(EmployeeDTO employeeDTO) throws SQLException ;
 
     public ArrayList<EmployeeDTO> getAllEmployee() throws SQLException ;

@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.AdminSalaryBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.AdminSalaryDAO;
 import lk.ijse.global_flavour.dao.custom.EmployeeDAO;
 import lk.ijse.global_flavour.dao.custom.impl.AdminSalaryDAOImpl;
@@ -12,8 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AdminSalaryBOImpl implements AdminSalaryBO {
-    AdminSalaryDAO salaryDAO = new AdminSalaryDAOImpl();
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    AdminSalaryDAO salaryDAO =  DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ADMINSALARY);
+    EmployeeDAO employeeDAO =  DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.EMPLOYEE);
 
     public boolean AdminSalarySave(AdminSalaryDTO adminSalaryDTO) throws SQLException {
         return salaryDAO.save(adminSalaryDTO);

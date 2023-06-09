@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.bo.custom.LoginPageBO;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.LoginPageBOImpl;
 import lk.ijse.global_flavour.dto.UserDTO;
 import lk.ijse.global_flavour.util.AlertController;
@@ -67,7 +67,7 @@ public class LoginPageController {
     @FXML
     private TextField txtPassword2;
 
-    LoginPageBO loginPageBO = new LoginPageBOImpl();
+    LoginPageBOImpl loginPageBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.LOGIN_PAGE);
 
     @FXML
     void loginPageOnAction(ActionEvent event) throws IOException, AWTException {

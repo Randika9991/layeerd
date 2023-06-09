@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.OrderFormBOImpl;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
@@ -141,7 +142,7 @@ public class OrderFormController implements Initializable {
 
     private ObservableList<OrderTM> obList = FXCollections.observableArrayList();
 
-    OrderFormBOImpl orderFormBO = new OrderFormBOImpl();
+    OrderFormBOImpl orderFormBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.ORDER_FORM);
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {

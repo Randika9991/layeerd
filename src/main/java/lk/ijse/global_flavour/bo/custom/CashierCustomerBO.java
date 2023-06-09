@@ -1,11 +1,12 @@
 package lk.ijse.global_flavour.bo.custom;
 
+import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CashierCustomerBO {
+public interface CashierCustomerBO extends SuperBO {
     public boolean saveCustomer(CashierCustomerDTO customerDTO) throws SQLException ;
 
     public ArrayList<CashierCustomerDTO> getAllCustomer() throws SQLException ;

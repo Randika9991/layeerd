@@ -1,12 +1,18 @@
-package lk.ijse.global_flavour.bo.custom;
+package lk.ijse.global_flavour.dao.custom;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import lk.ijse.global_flavour.dao.CrudDAO;
+import lk.ijse.global_flavour.dao.SuperDAO;
+import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface HomeFormBO {
+public interface QuaryDAO extends SuperDAO {
+
      int getTotCustomers() throws SQLException, ClassNotFoundException ;
 
      int getTotEmployee() throws SQLException, ClassNotFoundException ;
@@ -15,5 +21,6 @@ public interface HomeFormBO {
 
      int getTotalSales() throws SQLException, ClassNotFoundException ;
 
-     ObservableList<PieChart.Data> getDataToPieChart() throws SQLException, ClassNotFoundException ;
+     ObservableList<PieChart.Data> getDataToPieChart() throws SQLException, ClassNotFoundException;
+
 }

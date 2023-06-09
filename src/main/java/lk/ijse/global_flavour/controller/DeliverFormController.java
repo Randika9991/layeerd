@@ -11,14 +11,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
+import lk.ijse.global_flavour.bo.custom.DeliveryBO;
+import lk.ijse.global_flavour.bo.custom.DeliveryFormBO;
 import lk.ijse.global_flavour.bo.custom.impl.DeliveryBOImpl;
-import lk.ijse.global_flavour.dao.custom.DeliveryFormDAO;
+//import lk.ijse.global_flavour.dao.custom.DeliveryFormDAO;
+import lk.ijse.global_flavour.bo.custom.impl.DeliveryFormBOImpl;
+import lk.ijse.global_flavour.dao.custom.DeliveryDAO;
+import lk.ijse.global_flavour.dao.custom.impl.DeliveryDAOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
 import lk.ijse.global_flavour.dto.DeliverFormDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
-import lk.ijse.global_flavour.model.*;
+//import lk.ijse.global_flavour.model.*;
 import lk.ijse.global_flavour.util.AlertController;
 
 import java.sql.SQLException;
@@ -91,13 +97,13 @@ public class DeliverFormController {
     @FXML
     private JFXComboBox cmbVehicalId;
 
-    DeliveryBOImpl deliveryBO = new DeliveryBOImpl();
+    DeliveryFormBO deliveryFormBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.DELIVERY_FORM);
 
     @FXML
     void searchOrderIdOnKey(KeyEvent event) throws SQLException {
 
         String searchValue=txtsearchOrderId.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
@@ -139,7 +145,7 @@ public class DeliverFormController {
 
         String code = lblDeliverId.getText();
         try {
-            boolean isDeleted = deliveryBO.deleteDelivery(code);
+            boolean isDeleted = deliveryFormBO.deleteDelivery(code);
             if (isDeleted) {
                 AlertController.animationMesseageCorect("CONFIRMATION","Delete Success!");
                 onActionGetAllDelivery();
@@ -163,7 +169,7 @@ public class DeliverFormController {
         String employee = String.valueOf(cmbEmpId.getValue());
 
         try {
-            boolean isUpdated = deliveryBO.changelDelivery(new DeliverFormDTO(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus));
+            boolean isUpdated = deliveryFormBO.changelDelivery(new DeliverFormDTO(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus));
             if(isUpdated){
                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                 onActionGetAllDelivery();
@@ -188,7 +194,7 @@ public class DeliverFormController {
     void onActionGetAllEmployeeaddToDelivery() {
 
         try {
-            ArrayList<EmployeeDTO> EmpList = deliveryBO.getAllEmployeeId();
+            ArrayList<EmployeeDTO> EmpList = deliveryFormBO.getAllEmployeeId();
 
             for (EmployeeDTO e : EmpList) {
                 cmbEmpId.getItems().addAll(e.getEmployeeId());
@@ -214,7 +220,7 @@ public class DeliverFormController {
     void onActionGetAllVehicalIdaddToDelivery() {
 
         try {
-            ArrayList<CashierVehicleDTO> EmpList = deliveryBO.getAllVehicleId();
+            ArrayList<CashierVehicleDTO> EmpList = deliveryFormBO.getAllVehicleId();
             for (CashierVehicleDTO c : EmpList) {
                 cmbVehicalId.getItems().addAll(c.getVehicleId());
             }
@@ -237,7 +243,7 @@ public class DeliverFormController {
 
         tablOrder.getItems().clear();
         try {
-            ArrayList<DeliverFormDTO> obList = deliveryBO.getAllDeliveryId();
+            ArrayList<DeliverFormDTO> obList = deliveryFormBO.getAllDeliveryId();
 
             ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
@@ -298,7 +304,7 @@ public class DeliverFormController {
     @FXML
     public void searchDeliverOnKey(KeyEvent keyEvent) throws SQLException{
         String searchValue=txtsearchDelliverId.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
@@ -330,7 +336,7 @@ public class DeliverFormController {
     @FXML
     public void searchVehicalOnKey(KeyEvent keyEvent) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryBO.getAllDeliveryId();
+        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 

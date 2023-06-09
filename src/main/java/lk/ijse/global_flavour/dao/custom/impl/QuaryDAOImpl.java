@@ -4,38 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import lk.ijse.global_flavour.dao.custom.HomeFormDAO;
+import lk.ijse.global_flavour.dao.custom.QuaryDAO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-public class HomeFormDAOImpl implements HomeFormDAO {
-    @Override
-    public boolean save(Object SalaryAdd) throws SQLException {
-        throw new UnsupportedOperationException("This feature yet to be developed");
-    }
-
-    @Override
-    public ArrayList getAll() throws SQLException {
-        throw new UnsupportedOperationException("This feature yet to be developed");
-    }
-
-    @Override
-    public boolean update(Object adminSalary) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("This feature yet to be developed");
-    }
-
-    @Override
-    public ArrayList search(Object salId) throws SQLException {
-        throw new UnsupportedOperationException("This feature yet to be developed");
-    }
-
-    @Override
-    public boolean delete(Object id) throws SQLException {
-        throw new UnsupportedOperationException("This feature yet to be developed");
-    }
+public class QuaryDAOImpl implements QuaryDAO {
 
     @Override
     public int getTotCustomers() throws SQLException, ClassNotFoundException {

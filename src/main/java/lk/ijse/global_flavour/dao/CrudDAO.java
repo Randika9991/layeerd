@@ -6,7 +6,7 @@ import lk.ijse.global_flavour.view.tdm.AdminSalaryTM;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CrudDAO <T,t>{
+public interface CrudDAO <T,t> extends SuperDAO{
      boolean save(T SalaryAdd) throws SQLException ;
 
      ArrayList<T> getAll() throws SQLException ;

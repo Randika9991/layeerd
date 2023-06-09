@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.OrderFormBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.*;
 import lk.ijse.global_flavour.dao.custom.impl.*;
 import lk.ijse.global_flavour.db.DBConnection;
@@ -20,11 +21,11 @@ import java.util.List;
 
 public class OrderFormBOImpl implements OrderFormBO {
 
-    OrderFormDAO orderFormDAO = new OrderFormDAOImpl();
-    CashierCustomerDAO customerDAO = new CashierCustomerDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
-    DeliveryDAO deliveryDAO = new DeliveryDAOImpl();
-    OrderDetailDAO detailDAO = new OrderDetailDAOImpl();
+    OrderFormDAO orderFormDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDER);
+    CashierCustomerDAO customerDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.CASHIERCUSTOMER);
+    ItemDAO itemDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
+    DeliveryDAO deliveryDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.DELIVERY);
+    OrderDetailDAO detailDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAIL);
 
     public String getNextOrderId() throws SQLException{
         return orderFormDAO.getNextOrderId();
@@ -45,7 +46,7 @@ public class OrderFormBOImpl implements OrderFormBO {
     }
 
 
-    private  static DeliveryDTO delivery;
+    private static DeliveryDTO delivery;
 
     public boolean placeOrder(String oId, String cId, double payment, List<OrderCartDTO> orderDTOList, OrderTM orderTM, boolean delivery) throws SQLException{
 

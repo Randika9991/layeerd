@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.SuppliersBO;
 import lk.ijse.global_flavour.bo.custom.impl.SuppliersBOImpl;
 import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
@@ -91,7 +92,7 @@ public class SuppliersFormController {
     //use bo
     //only added SuppliersBOImpl
 
-    SuppliersBO suppliersBO = new SuppliersBOImpl();
+    SuppliersBO suppliersBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.SUPPLIER);
 
     @FXML
     void buttonSaveOnACT(ActionEvent event) {

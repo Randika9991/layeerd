@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.CashierCustomerBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.CashierCustomerDAO;
 import lk.ijse.global_flavour.dao.custom.impl.CashierCustomerDAOImpl;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CashierCustomerBOImpl implements CashierCustomerBO {
-    CashierCustomerDAO customerDAO = new CashierCustomerDAOImpl();
+    CashierCustomerDAO customerDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.CASHIERCUSTOMER);
 
 
     public boolean saveCustomer(CashierCustomerDTO customerDTO) throws SQLException {

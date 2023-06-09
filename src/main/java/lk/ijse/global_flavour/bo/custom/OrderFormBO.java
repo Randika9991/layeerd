@@ -1,5 +1,6 @@
 package lk.ijse.global_flavour.bo.custom;
 
+import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface OrderFormBO {
+public interface OrderFormBO extends SuperBO {
     public String getNextOrderId() throws SQLException ;
 
     public ArrayList<CashierCustomerDTO> getAllCustomer() throws SQLException;

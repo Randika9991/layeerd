@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.EmployeeBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.EmployeeDAO;
 import lk.ijse.global_flavour.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class EmployeeBOImpl implements EmployeeBO {
 
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeDAO employeeDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.EMPLOYEE);
     public boolean saveEmployee(EmployeeDTO employeeDTO) throws SQLException {
         return employeeDAO.save(employeeDTO);
     }

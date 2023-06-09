@@ -1,11 +1,12 @@
 package lk.ijse.global_flavour.bo.custom;
 
+import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ItemBO {
+public interface ItemBO extends SuperBO {
     public boolean saveItem(ItemDTO itemDTO) throws SQLException ;
 
     public ArrayList<ItemDTO> getAllItem() throws SQLException ;

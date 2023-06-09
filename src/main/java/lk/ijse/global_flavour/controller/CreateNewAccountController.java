@@ -11,6 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+//import lk.ijse.global_flavour.bo.custom.CreateNewAccountBO;
+//import lk.ijse.global_flavour.bo.custom.impl.CreateNewAccountBOImpl;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.CreateNewAccountBO;
 import lk.ijse.global_flavour.bo.custom.impl.CreateNewAccountBOImpl;
 import lk.ijse.global_flavour.dto.*;
@@ -70,7 +73,7 @@ public class CreateNewAccountController {
     //use bo
     //only added CreateNewAccountBOImpl
 
-    CreateNewAccountBO newAccountBO = new CreateNewAccountBOImpl();
+    CreateNewAccountBO newAccountBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.CREATE_NEW_ACCOUNT);
 
     @FXML
     void buttonCheckNameOnACT(ActionEvent event) {

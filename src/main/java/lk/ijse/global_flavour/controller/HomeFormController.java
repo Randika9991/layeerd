@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.global_flavour.bo.custom.HomeFormBO;
-import lk.ijse.global_flavour.bo.custom.impl.HomeFormBOImpl;
+import lk.ijse.global_flavour.bo.BOFactory;
+import lk.ijse.global_flavour.dao.DAOFactory;
+import lk.ijse.global_flavour.dao.custom.QuaryDAO;
+import lk.ijse.global_flavour.dao.custom.impl.QuaryDAOImpl;
 
 import java.sql.SQLException;
 
@@ -30,7 +32,7 @@ public class HomeFormController {
     @FXML
     private Label lblTotalEmployee;
 
-    HomeFormBO homeFormBO = new HomeFormBOImpl();
+    QuaryDAO homeFormBO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.QUARY);
 
     private void countTotalCust(){
         try {

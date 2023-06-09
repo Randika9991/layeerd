@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.CashierVehicleBO;
 import lk.ijse.global_flavour.bo.custom.impl.CashierVehicleBOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
@@ -62,7 +63,7 @@ public class CashierVehicleFormController {
     //use bo
     //only added CashierVehicleBOImpl
 
-    CashierVehicleBO vehicleBO = new CashierVehicleBOImpl();
+    CashierVehicleBO vehicleBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.CASHIER_VEHICLE);
 
     @FXML
     void buttonSaveOnACT(ActionEvent event) {

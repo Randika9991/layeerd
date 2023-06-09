@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.SupplyloadFormBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.ItemDAO;
 import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
 import lk.ijse.global_flavour.dao.custom.SupplyloadFormDAO;
@@ -24,9 +25,9 @@ public class SupplyloadFormBOImpl implements SupplyloadFormBO {
 
 
 
-    SuppliersDAO suppliersDAO = new SuppliersDAOImpl();
-    ItemDAO itemDAO = new ItemDAOImpl();
-    SupplyloadFormDAO supplyFormDAO = new SupplyloadFormDAOImpl();
+    SuppliersDAO suppliersDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLIER);
+    ItemDAO itemDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
+    SupplyloadFormDAO supplyFormDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLYLOAD);
 
     public ArrayList<SuppliersDTO> getAllSuppliers() throws SQLException{
         return suppliersDAO.getAll();

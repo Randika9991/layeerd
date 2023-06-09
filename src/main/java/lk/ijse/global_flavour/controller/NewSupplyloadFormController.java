@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.SupplyloadFormBOImpl;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
@@ -93,7 +94,7 @@ public class NewSupplyloadFormController {
     @FXML
     private JFXTextField txttotalprice;
 
-    SupplyloadFormBOImpl supplyloadFormBO = new SupplyloadFormBOImpl();
+    SupplyloadFormBOImpl supplyloadFormBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.SUPPLY_LOAD);
 
     private void setRemoveBtnOnAction(Button btn) {
         btn.setOnAction((e) -> {

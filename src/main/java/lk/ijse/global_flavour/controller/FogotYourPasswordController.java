@@ -13,12 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.bo.custom.FogotYourPasswordBO;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.FogotYourPasswordBOImpl;
 import lk.ijse.global_flavour.dto.UserDTO;
-//import lk.ijse.global_flavour.dto.FogotYourPasswordDTO;
 import lk.ijse.global_flavour.util.AlertController;
-
 import javax.mail.MessagingException;
 import java.awt.*;
 import java.io.IOException;
@@ -76,7 +74,7 @@ public class FogotYourPasswordController {
     //only added EmployeeBOImpl
    // FogotYourPasswordDAO fogotYourPasswordDAO = new FogotYourPasswordDAOImpl();
 
-    FogotYourPasswordBO fogotYourPasswordBO = new FogotYourPasswordBOImpl();
+    FogotYourPasswordBOImpl fogotYourPasswordBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.CHANGE_PASSWORD);
 
     @FXML
     void submitOnAction(ActionEvent event) {

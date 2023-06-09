@@ -1,6 +1,7 @@
 package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.SuppliersBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
 import lk.ijse.global_flavour.dao.custom.impl.SuppliersDAOImpl;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class SuppliersBOImpl implements SuppliersBO {
 
-    SuppliersDAO suppliersDAO = new SuppliersDAOImpl();
+    SuppliersDAO suppliersDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLIER);
 
     public boolean saveSuppliers(SuppliersDTO suppliersDTO) throws SQLException {
         return suppliersDAO.save(suppliersDTO);

@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.EmployeeBO;
 import lk.ijse.global_flavour.bo.custom.impl.EmployeeBOImpl;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
@@ -132,7 +133,7 @@ public class EmployeeFormController {
     //use bo
     //only added EmployeeBOImpl
 
-    EmployeeBO employeeBO = new EmployeeBOImpl();
+    EmployeeBO employeeBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.EMPLOYEE);
 
     @FXML
     void buttonSaveOnACT(ActionEvent actionEvent) {

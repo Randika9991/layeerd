@@ -1,12 +1,13 @@
 package lk.ijse.global_flavour.bo.custom;
 
+import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface AdminSalaryBO {
+public interface AdminSalaryBO extends SuperBO {
     public boolean AdminSalarySave(AdminSalaryDTO adminSalaryDTO) throws SQLException ;
 
     public ArrayList<AdminSalaryDTO> AdminSalaryGetAll() throws SQLException ;

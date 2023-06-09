@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.ItemBOImpl;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.util.AlertController;
@@ -69,7 +70,7 @@ public class ItemFormController {
     @FXML
     private Label lblInvalidItemCode;
 
-    ItemBOImpl itemBO = new ItemBOImpl();
+    ItemBOImpl itemBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.ITEM);
 
     @FXML
     void buttonSaveOnACT(ActionEvent event) {

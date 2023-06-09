@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.CashierCustomerBO;
 import lk.ijse.global_flavour.bo.custom.impl.CashierCustomerBOImpl;
 import lk.ijse.global_flavour.view.tdm.CashierCustomerTM;
@@ -85,7 +86,7 @@ public class CashiercustomerFormController {
     //use bo
     //only added CashierCustomerBOImpl
 
-    CashierCustomerBO customerBO = new CashierCustomerBOImpl();
+    CashierCustomerBO customerBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.CASHIER_CUSTOMER);
 
     @FXML
     void cusIdOnAction(ActionEvent event) {

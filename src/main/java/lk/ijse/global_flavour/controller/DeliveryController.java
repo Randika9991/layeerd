@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.impl.DeliveryBOImpl;
 import lk.ijse.global_flavour.bo.custom.impl.OrderFormBOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
@@ -45,7 +46,7 @@ public class DeliveryController {
     @FXML
     private AnchorPane deliveryAncPane;
 
-    DeliveryBOImpl deliveryBO = new DeliveryBOImpl();
+    DeliveryBOImpl deliveryBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.DELIVERY);
 
     @FXML
     void initialize() {

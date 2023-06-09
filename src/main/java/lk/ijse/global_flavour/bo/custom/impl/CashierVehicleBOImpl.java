@@ -2,6 +2,7 @@ package lk.ijse.global_flavour.bo.custom.impl;
 
 import lk.ijse.global_flavour.bo.custom.CashierCustomerBO;
 import lk.ijse.global_flavour.bo.custom.CashierVehicleBO;
+import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.CashierVehicleDAO;
 import lk.ijse.global_flavour.dao.custom.impl.CashierVehicleDAOImpl;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class CashierVehicleBOImpl implements CashierVehicleBO {
 
-    CashierVehicleDAO vehicleDAO = new CashierVehicleDAOImpl();
+    CashierVehicleDAO vehicleDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.CASHIERVEHICLE);
 
     public boolean saveVehicle(CashierVehicleDTO cashVehiDTO) throws SQLException {
         return vehicleDAO.save(cashVehiDTO);

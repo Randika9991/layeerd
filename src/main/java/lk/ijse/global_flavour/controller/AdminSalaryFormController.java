@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.global_flavour.bo.BOFactory;
 import lk.ijse.global_flavour.bo.custom.AdminSalaryBO;
 import lk.ijse.global_flavour.bo.custom.impl.AdminSalaryBOImpl;
 import lk.ijse.global_flavour.dto.AdminSalaryDTO;
@@ -91,7 +92,7 @@ public class AdminSalaryFormController {
 
 
 
-    AdminSalaryBO adminSalaryBO = new AdminSalaryBOImpl();
+    AdminSalaryBO adminSalaryBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.ADMIN_SALARY);
 
     @FXML
     void salarySaveONAct(ActionEvent event) {

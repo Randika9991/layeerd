@@ -9,9 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.global_flavour.bo.custom.ChangePasswordBO;
-import lk.ijse.global_flavour.bo.custom.impl.ChangePasswordBOImpl;
+//import lk.ijse.global_flavour.bo.custom.impl.ChangePasswordBOImpl;
 
+import lk.ijse.global_flavour.bo.BOFactory;
+import lk.ijse.global_flavour.bo.custom.impl.ChangePasswordBOImpl;
 import lk.ijse.global_flavour.dto.UserDTO;
 import lk.ijse.global_flavour.util.AlertController;
 
@@ -54,7 +55,8 @@ public class ChangePasswordController {
     //use bo
     //only added ChangePasswordBOImpl
 
-    ChangePasswordBO changePasswordBO = new ChangePasswordBOImpl();
+    ChangePasswordBOImpl changePasswordBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.CHANGE_PASSWORD);
+
     @FXML
     void SaveOnAction(ActionEvent event) {
         String userName = getNameShireChangePasswordController();
