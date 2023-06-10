@@ -7,6 +7,7 @@ import lk.ijse.global_flavour.dto.CashierCustomerDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
+import lk.ijse.global_flavour.entity.Item;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,35 +17,35 @@ import java.util.List;
 
 public class ItemDAOImpl implements ItemDAO {
     @Override
-    public boolean save(ItemDTO itemDTO) throws SQLException {
+    public boolean save(Item item) throws SQLException {
         return SQLUtil.execute("INSERT INTO item(itemCode, ItemName, unitPrice, category ,QtyONHand) " +
-                "VALUES(?, ?, ?, ? ,?)", itemDTO.getItemCode(),itemDTO.getItemName(),itemDTO.getUnitPrice(),itemDTO.getCategory(),itemDTO.getQty());
+                "VALUES(?, ?, ?, ? ,?)", item.getItemCode(),item.getItemName(),item.getUnitPrice(),item.getCategory(),item.getQtyOnHand());
 
     }
 
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException {
+    public ArrayList<Item> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM item");
-        ArrayList<ItemDTO> arrayList = new ArrayList<>();
+        ArrayList<Item> arrayList = new ArrayList<>();
         while (rst.next()) {
-            arrayList.add(new ItemDTO(rst.getString(1), rst.getString(2), rst.getString(3), rst.getString(4),rst.getString(5)));
+            arrayList.add(new Item(rst.getString(1), rst.getString(2), rst.getDouble(3), rst.getString(4),rst.getInt(5)));
         }
         return arrayList;
     }
 
     @Override
-    public boolean update(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE item SET ItemName = ?, unitPrice = ?, category = ?, QtyONHand = ? WHERE itemCode = ?", itemDTO.getItemName(), itemDTO.getUnitPrice(), itemDTO.getCategory(), itemDTO.getQty(), itemDTO.getItemCode());
+    public boolean update(Item item) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE item SET ItemName = ?, unitPrice = ?, category = ?, QtyONHand = ? WHERE itemCode = ?", item.getItemName(), item.getUnitPrice(), item.getCategory(), item.getQtyOnHand(), item.getItemCode());
 
     }
 
     @Override
-    public ArrayList<ItemDTO> search(String salId) throws SQLException {
-        ResultSet resultSet = SQLUtil.execute("SELECT * FROM item WHERE itemCode = ?", salId);
+    public ArrayList<Item> search(String salId) throws SQLException {
+        ResultSet rst = SQLUtil.execute("SELECT * FROM item WHERE itemCode = ?", salId);
 
-        ArrayList<ItemDTO> arrayList = new ArrayList<>();
-        if (resultSet.next()) {
-            arrayList.add(new ItemDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4), resultSet.getString(5)));
+        ArrayList<Item> arrayList = new ArrayList<>();
+        if (rst.next()) {
+            arrayList.add(new Item(rst.getString(1), rst.getString(2), rst.getDouble(3), rst.getString(4),rst.getInt(5)));
         }
         return arrayList;
     }

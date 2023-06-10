@@ -3,6 +3,7 @@ package lk.ijse.global_flavour.dao.custom.impl;
 import lk.ijse.global_flavour.dao.custom.UserDAO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 import lk.ijse.global_flavour.dto.UserDTO;
+import lk.ijse.global_flavour.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,25 +11,25 @@ import java.util.ArrayList;
 
 public class UserDAOImpl implements UserDAO {
     @Override
-    public boolean save(UserDTO newAccountDTO) throws SQLException {
+    public boolean save(User user) throws SQLException {
         String sql = "INSERT INTO user(userName,empId,password, email,jobTitle) VALUES (?,?, ?, ?, ?)";
-        return SQLUtil.execute(sql, newAccountDTO.getUsrname(), null, newAccountDTO.getPassword(), newAccountDTO.getEmail(), newAccountDTO.getJobtitel());
+        return SQLUtil.execute(sql, user.getUserName(), null, user.getPassword(), user.getEmail(), user.getJobTitle());
 
     }
 
     @Override
-    public ArrayList<UserDTO> getAll() throws SQLException {
+    public ArrayList<User> getAll() throws SQLException {
         return null;
     }
 
     @Override
-    public boolean update(UserDTO changePasDTO) throws SQLException, ClassNotFoundException {
+    public boolean update(User user) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE user SET empId = ?, password = ?, email = ?, jobTitle = ? WHERE userName = ?";
-        return SQLUtil.execute(sql, changePasDTO.getEmpid(), changePasDTO.getPassword(), changePasDTO.getEmail(), changePasDTO.getJobtitel(), changePasDTO.getUsrname());
+        return SQLUtil.execute(sql, user.getEmpId(), user.getPassword(), user.getEmail(), user.getJobTitle(), user.getUserName());
     }
 
     @Override
-    public ArrayList<UserDTO> search(String salId) throws SQLException {
+    public ArrayList<User> search(String salId) throws SQLException {
         return null;
     }
 

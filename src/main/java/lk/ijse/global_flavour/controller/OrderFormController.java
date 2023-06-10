@@ -263,10 +263,10 @@ public class OrderFormController implements Initializable {
     private void fillItemFields(ItemDTO item) {
         lblItemName.setText(item.getItemName());
         ItemName=item.getItemName();
-        lblUnitPrice.setText(item.getUnitPrice());
+        lblUnitPrice.setText(String.valueOf(Double.valueOf(item.getUnitPrice())));
         lblCategory.setText(item.getCategory());
-        QTYMyUse= Integer.parseInt(item.getQty());
-        lblQtyOnHand.setText(item.getQty());
+        QTYMyUse= item.getQty();
+        lblQtyOnHand.setText(String.valueOf(item.getQty()));
         txtQty.requestFocus();
     }
 

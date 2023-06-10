@@ -312,7 +312,7 @@ public class NewSupplyloadFormController {
                 lblchangingitmname.setText(item.getItemName());
                 lblchangingcategory.setText(item.getCategory());
                 lblchangingqtyonhands.setText(String.valueOf(item.getQty()));
-                QTYMyUse= Integer.parseInt(item.getQty());
+                QTYMyUse= Integer.parseInt(String.valueOf(item.getQty()));
             }
 
         } catch (Exception e) {

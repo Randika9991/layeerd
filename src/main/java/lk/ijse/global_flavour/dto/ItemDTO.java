@@ -11,7 +11,7 @@ import lombok.*;
 public class ItemDTO {
     private String itemCode;
     private String itemName;
-    private String unitPrice;
+    private Double unitPrice;
     private String category;
-    private String Qty;
+    private Integer Qty;
 }

@@ -12,6 +12,8 @@ import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
 import lk.ijse.global_flavour.dto.SuppliersDTO;
+import lk.ijse.global_flavour.entity.Item;
+import lk.ijse.global_flavour.entity.Supplier;
 //import lk.ijse.global_flavour.model.ItemModel;
 
 import java.sql.Connection;
@@ -30,7 +32,12 @@ public class SupplyloadFormBOImpl implements SupplyloadFormBO {
     SupplyloadFormDAO supplyFormDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.SUPPLYLOAD);
 
     public ArrayList<SuppliersDTO> getAllSuppliers() throws SQLException{
-        return suppliersDAO.getAll();
+        ArrayList<Supplier> arrayList = suppliersDAO.getAll();
+        ArrayList<SuppliersDTO> dtoArrayList = new ArrayList<>();
+        for (Supplier suppliers: arrayList) {
+            dtoArrayList.add(new SuppliersDTO(suppliers.getSupId(),suppliers.getSupName(),suppliers.getAddress(),suppliers.getEmail(),suppliers.getContactNo()));
+        }
+        return dtoArrayList;
     }
 
     public String getSupplierName(String supp_id) throws SQLException{
@@ -38,11 +45,25 @@ public class SupplyloadFormBOImpl implements SupplyloadFormBO {
     }
 
     public ArrayList<ItemDTO> getAllItem() throws SQLException{
-        return itemDAO.getAll();
+        ArrayList<Item> arrayList = itemDAO.getAll();
+        ArrayList<ItemDTO> dtoArrayList = new ArrayList<>();
+
+        for (Item item : arrayList) {
+            dtoArrayList.add(new ItemDTO(item.getItemCode(),item.getItemName(),
+                    item.getUnitPrice(),item.getCategory(),item.getQtyOnHand()));
+        }
+        return dtoArrayList;
     }
 
-    public ArrayList<ItemDTO> searchItem(String salId) throws SQLException{
-        return itemDAO.search(salId);
+    public ArrayList<ItemDTO> searchItem(String id) throws SQLException{
+        ArrayList<Item> arrayList = itemDAO.search(id);
+        ArrayList<ItemDTO> dtoArrayList = new ArrayList<>();
+
+        for (Item item : arrayList) {
+            dtoArrayList.add(new ItemDTO(item.getItemCode(),item.getItemName(),
+                    item.getUnitPrice(),item.getCategory(),item.getQtyOnHand()));
+        }
+        return dtoArrayList;
     }
 
     public String getNextSupplyLoadId() throws SQLException{

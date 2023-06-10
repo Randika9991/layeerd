@@ -2,6 +2,8 @@ package lk.ijse.global_flavour.view.tdm;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,7 +14,7 @@ public class EmployeeTM {
     private String employeeId;
     private String employeeName;
     private String Address;
-    private String DOB;
+    private String dob;
     private String cotactNo;
     private String email;
     private String nic;

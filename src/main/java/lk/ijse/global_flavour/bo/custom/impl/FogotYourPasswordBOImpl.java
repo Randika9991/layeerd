@@ -14,6 +14,7 @@ public class FogotYourPasswordBOImpl implements FogotYourPasswordBO {
     UserDAO fogotYourPasswordDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.USER);
 
     public UserDTO FogotYourPasswordsearchUser(String email) throws SQLException {
+
         return fogotYourPasswordDAO.searchUserEmail(email);
     }
 }

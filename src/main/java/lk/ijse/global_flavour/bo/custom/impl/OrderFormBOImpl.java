@@ -10,6 +10,8 @@ import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 //import lk.ijse.global_flavour.model.*;
+import lk.ijse.global_flavour.entity.Customer;
+import lk.ijse.global_flavour.entity.Item;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 
 import java.sql.Connection;
@@ -31,18 +33,45 @@ public class OrderFormBOImpl implements OrderFormBO {
         return orderFormDAO.getNextOrderId();
     }
     public ArrayList<CashierCustomerDTO> getAllCustomer() throws SQLException{
-        return customerDAO.getAll();
+        ArrayList<Customer> arrayList = customerDAO.getAll();
+        ArrayList<CashierCustomerDTO> dtoArrayList = new ArrayList<>();
+        for (Customer c: arrayList) {
+            dtoArrayList.add(new CashierCustomerDTO(c.getCustId(), c.getCustName(), c.getContactNo(),
+                    c.getAddress(), c.getEmail()));
+        }
+        return dtoArrayList;
     }
 
     public ArrayList<CashierCustomerDTO> searchCustomer(String salId) throws SQLException{
-        return customerDAO.search(salId);
+        ArrayList<Customer> arrayList = customerDAO.search(salId);
+
+        ArrayList<CashierCustomerDTO> customerArrayList = new ArrayList<>();
+        for (Customer c : arrayList) {
+            customerArrayList.add(new CashierCustomerDTO(c.getCustId(), c.getCustName(), c.getContactNo(),
+                    c.getAddress(), c.getEmail()));
+        }
+        return customerArrayList;
     }
     public ArrayList<ItemDTO> getAllItem() throws SQLException{
-        return itemDAO.getAll();
+        ArrayList<Item> arrayList = itemDAO.getAll();
+        ArrayList<ItemDTO> dtoArrayList = new ArrayList<>();
+
+        for (Item item : arrayList) {
+            dtoArrayList.add(new ItemDTO(item.getItemCode(),item.getItemName(),
+                    item.getUnitPrice(),item.getCategory(),item.getQtyOnHand()));
+        }
+        return dtoArrayList;
     }
 
     public ArrayList<ItemDTO> searchItem(String id) throws SQLException {
-        return itemDAO.search(id);
+        ArrayList<Item> arrayList = itemDAO.search(id);
+        ArrayList<ItemDTO> dtoArrayList = new ArrayList<>();
+
+        for (Item item : arrayList) {
+            dtoArrayList.add(new ItemDTO(item.getItemCode(),item.getItemName(),
+                    item.getUnitPrice(),item.getCategory(),item.getQtyOnHand()));
+        }
+        return dtoArrayList;
     }
 
 

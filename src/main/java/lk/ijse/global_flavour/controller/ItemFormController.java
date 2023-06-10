@@ -82,9 +82,9 @@ public class ItemFormController {
                     lblInvalidItemCode.setVisible(false);
                     String itemId = txtItemId.getText();
                     String itemName = txtItemName.getText();
-                    String itemPri = txtItemPrice.getText();
+                    Double itemPri = Double.valueOf(txtItemPrice.getText());
                     String itemCate = txtItemCatogory.getText();
-                    String itemQTY = txtItemQTY.getText();
+                    int itemQTY = Integer.parseInt(txtItemQTY.getText());
 
                     try {
 //            boolean isSaved = ItemModel.save(code, description, unitPrice, qtyOnHand);
@@ -145,9 +145,9 @@ public class ItemFormController {
         }else {
             String itemId = txtItemId.getText();
             String itemName = txtItemName.getText();
-            String itemPri = txtItemPrice.getText();
+            Double itemPri = Double.valueOf(txtItemPrice.getText());
             String itemCate = txtItemCatogory.getText();
-            String itemQTY = txtItemQTY.getText();
+            int itemQTY = Integer.parseInt(txtItemQTY.getText());
 
             try {
                 boolean isUpdated = itemBO.updateItem(new ItemDTO(itemId, itemName, itemPri,itemCate,itemQTY));
@@ -167,12 +167,16 @@ public class ItemFormController {
         try {
             ArrayList<ItemDTO> arrayList = itemBO.searchItem(id);
 
+            /*lblUnitPrice.setText(String.valueOf(Double.valueOf(item.getUnitPrice())));
+            lblCategory.setText(item.getCategory());
+            QTYMyUse= Integer.parseInt(String.valueOf(Double.valueOf(item.getQty())));
+            lblQtyOnHand.setText(String.valueOf(Double.valueOf(item.getQty())));*/
             for (ItemDTO cust : arrayList) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
-                txtItemPrice.setText(cust.getUnitPrice());
+                txtItemPrice.setText(String.valueOf(Double.valueOf(cust.getUnitPrice())));
                 txtItemCatogory.setText(cust.getCategory());
-                txtItemQTY.setText(cust.getQty());
+                txtItemQTY.setText(String.valueOf(Double.valueOf(cust.getQty())));
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -189,9 +193,9 @@ public class ItemFormController {
             for (ItemDTO cust : arrayList) {
                 txtItemId.setText(cust.getItemCode());
                 txtItemName.setText(cust.getItemName());
-                txtItemPrice.setText(cust.getUnitPrice());
+                txtItemPrice.setText(String.valueOf(Double.valueOf(cust.getUnitPrice())));
                 txtItemCatogory.setText(cust.getCategory());
-                txtItemQTY.setText(cust.getQty());
+                txtItemQTY.setText(String.valueOf(Double.valueOf(cust.getQty())));
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -248,7 +252,6 @@ public class ItemFormController {
 
     void onActionGetAllItem() {
 
-
         mainCOMItem.getItems().clear();
         try {
             ArrayList<ItemDTO> supList = itemBO.getAllItem();
@@ -256,12 +259,9 @@ public class ItemFormController {
                 mainCOMItem.getItems().add(new ItemTM(a.getItemCode(), a.getItemName(), a.getUnitPrice(), a.getCategory(),a.getQty()));
             }
 
-
-
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
-
     }
 
     void setCellValuefactory(){

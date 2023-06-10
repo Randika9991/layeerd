@@ -313,6 +313,7 @@ public class EmployeeFormController {
             ArrayList<EmployeeDTO> arrayList = employeeBO.searchEmployee(empid);
             for (EmployeeDTO cust : arrayList){
                 tablEmplyee.getItems().add(new EmployeeTM(cust.getEmployeeId(), cust.getEmployeeName(), cust.getAddress(), cust.getDOB(),cust.getCotactNo(),cust.getEmail(),cust.getNic(),cust.getJobTittle()));
+                System.out.println(cust.getDOB());
             }
         } catch (SQLException e) {
             AlertController.animationMesseagewrong("Error","something went wrong!");
@@ -358,7 +359,7 @@ public class EmployeeFormController {
         tablEmployeeID.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         tablEmployeeName.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         tablEmployeeNIC.setCellValueFactory(new PropertyValueFactory<>("nic"));
-        tablEmployeeDOB.setCellValueFactory(new PropertyValueFactory<>("DOB"));
+        tablEmployeeDOB.setCellValueFactory(new PropertyValueFactory<>("dob"));
         tablEmployeeJT.setCellValueFactory(new PropertyValueFactory<>("jobTittle"));
         tablEmployeeContact.setCellValueFactory(new PropertyValueFactory<>("cotactNo"));
         tablEmployeeAddrsss.setCellValueFactory(new PropertyValueFactory<>("address"));
