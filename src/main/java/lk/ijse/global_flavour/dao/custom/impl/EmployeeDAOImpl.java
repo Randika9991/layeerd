@@ -62,4 +62,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return SQLUtil.execute("DELETE FROM employee WHERE empId = ?",id);
     }
 
+    @Override
+    public int getTotEmployee() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet= SQLUtil.execute("SELECT COUNT(empId) FROM employee");
+        int count=0;
+        while (resultSet.next()){
+            count=resultSet.getInt(1);
+        }
+        return count;
+    }
+
 }

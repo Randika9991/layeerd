@@ -2,7 +2,8 @@ package lk.ijse.global_flavour.bo.custom;
 
 import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
-import lk.ijse.global_flavour.dto.DeliverFormDTO;
+//import lk.ijse.global_flavour.dto.DeliverFormDTO;
+import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public interface DeliveryFormBO extends SuperBO {
 
     public boolean deleteDelivery(String id) throws SQLException ;
 
-    public ArrayList<DeliverFormDTO> getAllDeliveryId() throws SQLException;
+    public ArrayList<DeliveryDTO> getAllDeliveryId() throws SQLException;
 
-    public boolean changelDelivery(DeliverFormDTO deliverFormDTO) throws SQLException;
+    public boolean changelDelivery(DeliveryDTO deliverFormDTO) throws SQLException, ClassNotFoundException;
 }

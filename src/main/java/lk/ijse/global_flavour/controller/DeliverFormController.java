@@ -20,7 +20,7 @@ import lk.ijse.global_flavour.bo.custom.impl.DeliveryFormBOImpl;
 import lk.ijse.global_flavour.dao.custom.DeliveryDAO;
 import lk.ijse.global_flavour.dao.custom.impl.DeliveryDAOImpl;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
-import lk.ijse.global_flavour.dto.DeliverFormDTO;
+//import lk.ijse.global_flavour.dto.DeliverFormDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 import lk.ijse.global_flavour.view.tdm.DeliverFormTM;
@@ -103,11 +103,11 @@ public class DeliverFormController {
     void searchOrderIdOnKey(KeyEvent event) throws SQLException {
 
         String searchValue=txtsearchOrderId.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
+        ArrayList<DeliveryDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
-        for(DeliverFormDTO d : obList){
+        for(DeliveryDTO d : obList){
             observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
         }
 
@@ -169,13 +169,13 @@ public class DeliverFormController {
         String employee = String.valueOf(cmbEmpId.getValue());
 
         try {
-            boolean isUpdated = deliveryFormBO.changelDelivery(new DeliverFormDTO(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus));
+            boolean isUpdated = deliveryFormBO.changelDelivery(new DeliveryDTO(deliverId, employee, orderId, VehicalId, location, deliverDate, dueDate, deliverStatus));
             if(isUpdated){
                 AlertController.animationMesseageCorect("CONFIRMATION","Employee updated!");
                 onActionGetAllDelivery();
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             AlertController.animationMesseagewrong("Error","something went wrong!");
         }
@@ -243,11 +243,11 @@ public class DeliverFormController {
 
         tablOrder.getItems().clear();
         try {
-            ArrayList<DeliverFormDTO> obList = deliveryFormBO.getAllDeliveryId();
+            ArrayList<DeliveryDTO> obList = deliveryFormBO.getAllDeliveryId();
 
             ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
-            for (DeliverFormDTO d : obList){
+            for (DeliveryDTO d : obList){
                 observableList.add(new DeliverFormTM(d.getDeliverId(), d.getEmpId(), d.getOrderId(), d.getVehicalId(), d.getLocation(), d.getDeliverDate(), d.getDueDate(), d.getDeliverStatus()));
 
                 tablOrder.setItems(observableList);
@@ -304,11 +304,11 @@ public class DeliverFormController {
     @FXML
     public void searchDeliverOnKey(KeyEvent keyEvent) throws SQLException{
         String searchValue=txtsearchDelliverId.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
+        ArrayList<DeliveryDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
-        for(DeliverFormDTO d : obList){
+        for(DeliveryDTO d : obList){
             observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
         }
 
@@ -336,11 +336,11 @@ public class DeliverFormController {
     @FXML
     public void searchVehicalOnKey(KeyEvent keyEvent) throws SQLException {
         String searchValue=txtsearchVehical.getText().trim();
-        ArrayList<DeliverFormDTO> obList= deliveryFormBO.getAllDeliveryId();
+        ArrayList<DeliveryDTO> obList= deliveryFormBO.getAllDeliveryId();
 
         ObservableList<DeliverFormTM> observableList = FXCollections.observableArrayList();
 
-        for(DeliverFormDTO d : obList){
+        for(DeliveryDTO d : obList){
             observableList.add(new DeliverFormTM(d.getDeliverId(),d.getEmpId(),d.getOrderId(),d.getVehicalId(),d.getLocation(),d.getDeliverDate(),d.getDueDate(),d.getDeliverStatus()));
         }
 

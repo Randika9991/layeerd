@@ -3,6 +3,7 @@ package lk.ijse.global_flavour.dao.custom.impl;
 import lk.ijse.global_flavour.dao.custom.SupplyloadFormDAO;
 import lk.ijse.global_flavour.dao.custom.impl.util.SQLUtil;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
+import lk.ijse.global_flavour.entity.SupplyLoadDetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,22 +14,34 @@ import java.util.List;
 
 public class SupplyloadFormDAOImpl implements SupplyloadFormDAO {
     @Override
-    public boolean save(PlaceSupplyLoadDTO SalaryAdd) throws SQLException {
-        return false;
+    public boolean save(SupplyLoadDetail supplyLoadDetail) throws SQLException {
+        String sql = "INSERT INTO SupplyLoadDetail(loadId,supId,itemCode,qty,date,time,price)" +
+                "VALUES(?,?,?,?,?,?,?)";
+
+        return SQLUtil.execute(
+                sql,
+                supplyLoadDetail.getLoadId(),
+                supplyLoadDetail.getSupId(),
+                supplyLoadDetail.getItemCode(),
+                supplyLoadDetail.getQty(),
+                supplyLoadDetail.getDate(),
+                supplyLoadDetail.getTime(),
+                supplyLoadDetail.getPrice()
+        );
     }
 
     @Override
-    public ArrayList<PlaceSupplyLoadDTO> getAll() throws SQLException {
+    public ArrayList<SupplyLoadDetail> getAll() throws SQLException {
         return null;
     }
 
     @Override
-    public boolean update(PlaceSupplyLoadDTO adminSalary) throws SQLException, ClassNotFoundException {
+    public boolean update(SupplyLoadDetail adminSalary) throws SQLException, ClassNotFoundException {
         return false;
     }
 
     @Override
-    public ArrayList<PlaceSupplyLoadDTO> search(String salId) throws SQLException {
+    public ArrayList<SupplyLoadDetail> search(String salId) throws SQLException {
         return null;
     }
 
@@ -58,14 +71,15 @@ public class SupplyloadFormDAOImpl implements SupplyloadFormDAO {
         return "LOAD-001";
     }
 
-    public  boolean saveloadDetail(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
-        for(PlaceSupplyLoadDTO placeSupplyLoadDTO : placeSupplyLoadDTOList) {
+    /*public  boolean saveloadDetail(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1,Integer qty,String itemCode ) throws SQLException {
+
             if(!savesupplyloaddetails(loadid,suppid,totalprice,now,now1, placeSupplyLoadDTO)) {
                 return false;
             }
-        }
+
         return true;
     }
+
     private static boolean savesupplyloaddetails(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, PlaceSupplyLoadDTO placeSupplyLoadDTO) throws SQLException {
         String sql = "INSERT INTO SupplyLoadDetail(loadId,supId,itemCode,qty,date,time,price)" +
                 "VALUES(?,?,?,?,?,?,?)";
@@ -80,6 +94,25 @@ public class SupplyloadFormDAOImpl implements SupplyloadFormDAO {
                 now1,
                 totalprice
         );
-    }
+    }*/
+
+
+
+
+    /*private static boolean savesupplyloaddetails(String loadid, String suppid, String totalprice, LocalDate now, LocalTime now1, PlaceSupplyLoadDTO placeSupplyLoadDTO) throws SQLException {
+        String sql = "INSERT INTO SupplyLoadDetail(loadId,supId,itemCode,qty,date,time,price)" +
+                "VALUES(?,?,?,?,?,?,?)";
+
+        return SQLUtil.execute(
+                sql,
+                loadid,
+                suppid,
+                placeSupplyLoadDTO.getItemcode(),
+                placeSupplyLoadDTO.getSuppqty(),
+                now,
+                now1,
+                totalprice
+        );
+    }*/
 
 }

@@ -20,5 +20,5 @@ public interface SupplyloadFormBO extends SuperBO {
 
     public String getNextSupplyLoadId() throws SQLException;
 
-    public boolean placeLoad(String loadid, String suppid, String totalprice, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException;
+    public boolean placeLoad(String loadid, String suppid, Double totalprice, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException;
 }

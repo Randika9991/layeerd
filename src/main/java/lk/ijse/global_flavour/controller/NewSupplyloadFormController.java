@@ -178,9 +178,9 @@ public class NewSupplyloadFormController {
         if (!txttotalprice.getText().isEmpty()) {
             String loadid = lblloadid.getText();
             String suppid = String.valueOf(cmbsuppid.getValue());
-            String totalprice = txttotalprice.getText();
+            Double totalprice = Double.valueOf(txttotalprice.getText());
 
-            if(ValidateField.priceCheck(totalprice)) {
+            if(ValidateField.priceCheck(String.valueOf(totalprice))) {
 
                 List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList = new ArrayList<>();
 

@@ -5,16 +5,13 @@ import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.ItemDAO;
 import lk.ijse.global_flavour.dao.custom.SuppliersDAO;
 import lk.ijse.global_flavour.dao.custom.SupplyloadFormDAO;
-import lk.ijse.global_flavour.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.global_flavour.dao.custom.impl.SuppliersDAOImpl;
-import lk.ijse.global_flavour.dao.custom.impl.SupplyloadFormDAOImpl;
 import lk.ijse.global_flavour.db.DBConnection;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.PlaceSupplyLoadDTO;
 import lk.ijse.global_flavour.dto.SuppliersDTO;
 import lk.ijse.global_flavour.entity.Item;
 import lk.ijse.global_flavour.entity.Supplier;
-//import lk.ijse.global_flavour.model.ItemModel;
+import lk.ijse.global_flavour.entity.SupplyLoadDetail;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -70,23 +67,28 @@ public class SupplyloadFormBOImpl implements SupplyloadFormBO {
         return supplyFormDAO.getNextSupplyLoadId();
     }
 
-    public boolean placeLoad(String loadid, String suppid, String totalprice, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
+    public boolean placeLoad(String loadid, String suppid, Double totalprice, List<PlaceSupplyLoadDTO> placeSupplyLoadDTOList) throws SQLException {
 
         Connection con = null;
         try {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
 
-            boolean isSaved = supplyFormDAO.saveloadDetail(loadid,suppid,totalprice, LocalDate.now(), LocalTime.now(), placeSupplyLoadDTOList);
-            if(isSaved) {
-                System.out.println("saved");
-                boolean isUpdated = itemDAO.addQty(placeSupplyLoadDTOList);
-                if(isUpdated) {
-                    System.out.println("updated");
-                    con.commit();                                                                                                                                                 //database ekata save eka
-                    return true;
+            for (PlaceSupplyLoadDTO p : placeSupplyLoadDTOList){
+
+                boolean isSaved = supplyFormDAO.save(new SupplyLoadDetail(loadid,p.getItemcode(),suppid,LocalDate.now(),totalprice,p.getSuppqty(), LocalTime.now()));
+
+                if(isSaved) {
+                    System.out.println("saved");
+                    boolean isUpdated = itemDAO.addQty(placeSupplyLoadDTOList);
+                    if(isUpdated) {
+                        System.out.println("updated");
+                        con.commit();                                                                                                                                                 //database ekata save eka
+                        return true;
+                    }
                 }
             }
+
             return false;
         } catch (SQLException er) {
             System.out.println(er);

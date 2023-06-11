@@ -2,7 +2,7 @@ package lk.ijse.global_flavour.bo.custom;
 
 import lk.ijse.global_flavour.bo.SuperBO;
 import lk.ijse.global_flavour.dto.CashierVehicleDTO;
-import lk.ijse.global_flavour.dto.DeliverFormDTO;
+//import lk.ijse.global_flavour.dto.DeliverFormDTO;
 import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.EmployeeDTO;
 

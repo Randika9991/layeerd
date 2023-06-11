@@ -13,14 +13,6 @@ import java.sql.SQLException;
 
 public interface QuaryDAO extends SuperDAO {
 
-     int getTotCustomers() throws SQLException, ClassNotFoundException ;
-
-     int getTotEmployee() throws SQLException, ClassNotFoundException ;
-
-     XYChart.Series lineChartData() throws SQLException, ClassNotFoundException ;
-
-     int getTotalSales() throws SQLException, ClassNotFoundException ;
-
      ObservableList<PieChart.Data> getDataToPieChart() throws SQLException, ClassNotFoundException;
 
 }

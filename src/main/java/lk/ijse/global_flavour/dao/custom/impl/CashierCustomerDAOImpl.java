@@ -54,4 +54,13 @@ public class CashierCustomerDAOImpl implements CashierCustomerDAO {
         return SQLUtil.execute("DELETE FROM customer WHERE custId = ?",id);
     }
 
+    @Override
+    public int getTotCustomers() throws SQLException {
+        ResultSet resultSet= SQLUtil.execute("SELECT COUNT(custId) FROM Customer");
+        int count=0;
+        while (resultSet.next()){count=resultSet.getInt(1);
+        }
+        return count;
+    }
+
 }

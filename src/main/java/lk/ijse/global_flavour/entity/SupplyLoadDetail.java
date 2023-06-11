@@ -1,7 +1,15 @@
 package lk.ijse.global_flavour.entity;
 
-import java.time.LocalDate;
+import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class SupplyLoadDetail {
     private String loadId;
     private String itemCode;
@@ -9,5 +17,10 @@ public class SupplyLoadDetail {
     private LocalDate date;
     private Double price;
     private Integer qty;
-    private LocalDate time;
+    private LocalTime time;
+
+    /*public SupplyLoadDetail(String itemcode, Integer suppqty) {
+        this.itemCode = itemcode;
+        this.qty = suppqty;
+    }*/
 }

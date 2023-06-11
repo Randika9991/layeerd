@@ -10,8 +10,7 @@ import lk.ijse.global_flavour.dto.DeliveryDTO;
 import lk.ijse.global_flavour.dto.ItemDTO;
 import lk.ijse.global_flavour.dto.OrderCartDTO;
 //import lk.ijse.global_flavour.model.*;
-import lk.ijse.global_flavour.entity.Customer;
-import lk.ijse.global_flavour.entity.Item;
+import lk.ijse.global_flavour.entity.*;
 import lk.ijse.global_flavour.view.tdm.OrderTM;
 
 import java.sql.Connection;
@@ -27,7 +26,7 @@ public class OrderFormBOImpl implements OrderFormBO {
     CashierCustomerDAO customerDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.CASHIERCUSTOMER);
     ItemDAO itemDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
     DeliveryDAO deliveryDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.DELIVERY);
-    OrderDetailDAO detailDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAIL);
+    OrderDetailDAO OrderdetailDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAIL);
 
     public String getNextOrderId() throws SQLException{
         return orderFormDAO.getNextOrderId();
@@ -85,21 +84,24 @@ public class OrderFormBOImpl implements OrderFormBO {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
 
-            boolean isSaved = orderFormDAO.saveOrder(oId, cId, payment, LocalDate.now(), LocalTime.now(), orderDTOList,delivery);
+            boolean isSaved = orderFormDAO.save(new Orders(oId, cId, payment, LocalTime.now(), LocalDate.now(),delivery));
             if (isSaved) {
                 boolean isUpdate = itemDAO.updateQty(orderDTOList);
                 if (isUpdate) {
-                    boolean isOrdered = detailDAO.save(oId, orderDTOList);
-                    if (isOrdered) {
-                        if(delivery){
-                            boolean isDelivered = deliveryDAO.save(OrderFormBOImpl.delivery);
-                            if(isDelivered){
+
+                    for (OrderCartDTO o : orderDTOList) {
+                        boolean isOrdered = OrderdetailDAO.save(new OrderDetail(oId,o.getCode(),o.getQty(),o.getUnitPrice()));
+                        if (isOrdered) {
+                            if(delivery){
+                                boolean isDelivered = deliveryDAO.save(new Delivery(OrderFormBOImpl.delivery.getDeliverId(),OrderFormBOImpl.delivery.getEmpId(),OrderFormBOImpl.delivery.getOrderId(),OrderFormBOImpl.delivery.getVehicalId(),OrderFormBOImpl.delivery.getLocation(),OrderFormBOImpl.delivery.getDeliverDate(),OrderFormBOImpl.delivery.getDueDate(),OrderFormBOImpl.delivery.getDeliverStatus()));
+                                if(isDelivered){
+                                    con.commit();
+                                    return true;
+                                }
+                            }else {
                                 con.commit();
                                 return true;
                             }
-                        }else {
-                            con.commit();
-                            return true;
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.global_flavour.bo.BOFactory;
+import lk.ijse.global_flavour.bo.custom.HomeBO;
 import lk.ijse.global_flavour.dao.DAOFactory;
 import lk.ijse.global_flavour.dao.custom.QuaryDAO;
 import lk.ijse.global_flavour.dao.custom.impl.QuaryDAOImpl;
@@ -33,10 +34,11 @@ public class HomeFormController {
     private Label lblTotalEmployee;
 
     QuaryDAO homeFormBO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.QUARY);
+    HomeBO homeBO = BOFactory.getBOFactory().getBO(BOFactory.BOType.HOME);
 
     private void countTotalCust(){
         try {
-            int count = homeFormBO.getTotCustomers();
+            int count = homeBO.getTotCustomersfgf();
             lblTotalCustomer.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -47,7 +49,7 @@ public class HomeFormController {
 
     private void countTotalEmp(){
         try {
-            int count = homeFormBO.getTotEmployee();
+            int count = homeBO.getTotEmployeeHome();
             lblTotalEmployee.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -58,7 +60,7 @@ public class HomeFormController {
 
     private void countTotalSales(){
         try {
-            int count = homeFormBO.getTotalSales();
+            int count = homeBO.getTotalSales();
             lblTotalSales.setText(String.valueOf(count));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -96,7 +98,7 @@ public class HomeFormController {
 
 
         try {
-            XYChart.Series series = homeFormBO.lineChartData();
+            XYChart.Series series = homeBO.lineChartData(); //lineChartData();
             series.setName("Income Chart");
             lineChart.getData().add(series);
         } catch (SQLException throwables) {
